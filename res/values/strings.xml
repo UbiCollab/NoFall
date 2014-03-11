@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="hello">Hello World, Todo!</string>
+  <string name="app_name">NoFall</string>
+  <string name="no_user">Currently there are no Users registered</string>
+  <string name="menu_insert">Add User</string>
+  <string name="menu_delete">Delete Name</string>
+  <string name="user_age">Age</string>
+  <string name="user_name">Name</string>
+  <string name="user_edit_age">Age</string>
+  <string name="user_edit_name">Name</string>
+  <string name="user_edit_confirm">Confirm</string>
+  <string name="action_settings">Settings</string>
+</resources> 
