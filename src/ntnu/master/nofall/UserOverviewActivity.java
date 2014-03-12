@@ -21,7 +21,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 /*
- * TodosOverviewActivity displays the existing todo items
+ * UserOverviewActivity displays the existing users
  * in a list
  * 
  * You can create new ones via the ActionBar entry "Insert"
@@ -101,7 +101,7 @@ public class UserOverviewActivity extends ListActivity implements
 
 		// Fields from the database (projection)
 		// Must include the _id column for the adapter to work
-		String[] from = new String[] { UserTable.COLUMN_AGE };
+		String[] from = new String[] { UserTable.COLUMN_NAME };
 		// Fields on the UI to which we map
 		int[] to = new int[] { R.id.label };
 
@@ -122,7 +122,7 @@ public class UserOverviewActivity extends ListActivity implements
 	// creates a new loader after the initLoader () call
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		String[] projection = { UserTable.COLUMN_ID, UserTable.COLUMN_AGE };
+		String[] projection = { UserTable.COLUMN_ID, UserTable.COLUMN_NAME };
 		CursorLoader cursorLoader = new CursorLoader(this,
 				UserContentProvider.CONTENT_URI, projection, null, null, null);
 		return cursorLoader;

@@ -7,7 +7,7 @@
   <string name="menu_delete">Delete Name</string>
   <string name="user_age">Age</string>
   <string name="user_name">Name</string>
-  <string name="user_edit_age">Age</string>
+  <string name="user_edit_age">Age: dd.mm.yy</string>
   <string name="user_edit_name">Name</string>
   <string name="user_edit_confirm">Confirm</string>
   <string name="action_settings">Settings</string>
