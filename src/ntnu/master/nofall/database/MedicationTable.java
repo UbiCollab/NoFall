@@ -8,7 +8,7 @@ public class MedicationTable {
 	public static final String TABLE_MED = "med";
 	public static final String COLUMN_ID = "_id";
 	public static final String COLUMN_NAME = "name";
-	public static final String COLUMN_TYPE = "age";
+	public static final String COLUMN_TYPE = "type";
 	public static final String COLUMN_DESC = "desc";
 
 	// Database creation SQL statement

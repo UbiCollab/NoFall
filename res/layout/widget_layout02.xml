@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout"
+    android:id="@+id/layout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="8dip"
     android:background="@drawable/myshape" >
 
-    <TextView
+    <!--
+         <TextView
         android:id="@+id/update"
         style="@android:style/TextAppearance.Medium"
         android:layout_width="match_parent"
@@ -16,5 +17,20 @@
         android:layout_margin="4dip"
         android:text="ST" >
     </TextView>
+    -->
 
+    <ImageView
+        android:id="@+id/img_led"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal|center_vertical"
+        android:contentDescription="@string/desc"
+        android:layout_margin="4dip"
+        android:src="@drawable/ic_launcher" 
+        android:clickable="true"
+        android:focusable="true"
+        />
+
+    
 </LinearLayout>

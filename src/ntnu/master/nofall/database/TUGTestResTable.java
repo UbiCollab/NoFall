@@ -7,13 +7,15 @@ public class TUGTestResTable {
 	// Database table
 	public static final String TABLE_TUGRES = "TUGres";
 	public static final String COLUMN_ID = "_id";
-	public static final String COLUMN_TIME = "name";
+	public static final String COLUMN_TIME = "time";
+	public static final String COLUMN_DATE = "date";
 
 	// Database creation SQL statement
 	  private static final String DATABASE_CREATE = "create table " 
 		      + TABLE_TUGRES
 		      + "(" 
 		      + COLUMN_ID + " integer primary key autoincrement, " 
+		      + COLUMN_DATE + " text not null," 
 		      + COLUMN_TIME
 		      + " text not null" 
 		      + ");";
