@@ -1,6 +1,7 @@
 package ntnu.master.nofall.contentprovider;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 
 import android.content.ContentProvider;
@@ -15,7 +16,6 @@ import android.text.TextUtils;
 
 import ntnu.master.nofall.database.NoFallDBHelper;
 import ntnu.master.nofall.database.UserTable;
-
 
 public class UserContentProvider extends ContentProvider {
 	// database
@@ -78,7 +78,7 @@ public class UserContentProvider extends ContentProvider {
 		SQLiteDatabase db = database.getWritableDatabase();
 		Cursor cursor = queryBuilder.query(db, projection, selection,
 				selectionArgs, null, null, sortOrder);
-		
+
 		// make sure that potential listeners are getting notified
 		cursor.setNotificationUri(getContext().getContentResolver(), uri);
 
@@ -94,7 +94,7 @@ public class UserContentProvider extends ContentProvider {
 	public Uri insert(Uri uri, ContentValues values) {
 		int uriType = sURIMatcher.match(uri);
 		SQLiteDatabase sqlDB = database.getWritableDatabase();
-		int rowsDeleted = 0;		
+		int rowsDeleted = 0;
 		long id = 0;
 
 		switch (uriType) {

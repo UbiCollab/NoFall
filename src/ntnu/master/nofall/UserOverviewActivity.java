@@ -81,6 +81,11 @@ public class UserOverviewActivity extends ListActivity implements
 		return super.onContextItemSelected(item);
 	}
 
+	public void OpenMedRegActivity(View view){
+		Intent intent = new Intent(UserOverviewActivity.this, MedicationRegActivity.class);
+		startActivity(intent);
+	}
+	
 	private void createTodo() {
 		Intent i = new Intent(this, UserDetailActivity.class);
 		startActivity(i);

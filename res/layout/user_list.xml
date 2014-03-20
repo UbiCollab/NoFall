@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" >    
 
     <ListView
         android:id="@android:id/list"
@@ -15,5 +15,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/no_user" />
-
+    
+    <Button
+        android:background="@drawable/custom_button"
+        android:id="@+id/btnStartProcess"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnStartRegTxt"
+        android:onClick="OpenMedRegActivity"
+        style="@style/button_text" />
 </LinearLayout> 
