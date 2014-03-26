@@ -39,12 +39,12 @@ public class UserDetailActivity extends Activity {
 
 		// check from the saved Instance
 		userUri = (bundle == null) ? null : (Uri) bundle
-				.getParcelable(UserContentProvider.CONTENT_ITEM_TYPE);
+				.getParcelable(UserContentProvider.CONTENT_ITEM_TYPE_USER);
 
 		// Or passed from the other activity
 		if (extras != null) {
 			userUri = extras
-					.getParcelable(UserContentProvider.CONTENT_ITEM_TYPE);
+					.getParcelable(UserContentProvider.CONTENT_ITEM_TYPE_USER);
 
 			fillData(userUri);
 		}
@@ -92,7 +92,7 @@ public class UserDetailActivity extends Activity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		saveState();
-		outState.putParcelable(UserContentProvider.CONTENT_ITEM_TYPE, userUri);
+		outState.putParcelable(UserContentProvider.CONTENT_ITEM_TYPE_USER, userUri);
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class UserDetailActivity extends Activity {
 		if (userUri == null) {
 			// New todo
 			userUri = getContentResolver().insert(
-					UserContentProvider.CONTENT_URI, values);
+					UserContentProvider.CONTENT_URI_USER, values);
 		} else {
 			// Update todo
 			getContentResolver().update(userUri, values, null, null);

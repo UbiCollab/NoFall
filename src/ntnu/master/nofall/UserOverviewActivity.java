@@ -73,7 +73,7 @@ public class UserOverviewActivity extends ListActivity implements
 			AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
 					.getMenuInfo();
 			Uri uri = Uri
-					.parse(UserContentProvider.CONTENT_URI + "/" + info.id);
+					.parse(UserContentProvider.CONTENT_URI_USER + "/" + info.id);
 			getContentResolver().delete(uri, null, null);
 			fillData();
 			return true;
@@ -96,8 +96,8 @@ public class UserOverviewActivity extends ListActivity implements
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		Intent i = new Intent(this, UserDetailActivity.class);
-		Uri todoUri = Uri.parse(UserContentProvider.CONTENT_URI + "/" + id);
-		i.putExtra(UserContentProvider.CONTENT_ITEM_TYPE, todoUri);
+		Uri todoUri = Uri.parse(UserContentProvider.CONTENT_URI_USER + "/" + id);
+		i.putExtra(UserContentProvider.CONTENT_ITEM_TYPE_USER, todoUri);
 
 		startActivity(i);
 	}
@@ -129,7 +129,7 @@ public class UserOverviewActivity extends ListActivity implements
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 		String[] projection = { UserTable.COLUMN_ID, UserTable.COLUMN_NAME };
 		CursorLoader cursorLoader = new CursorLoader(this,
-				UserContentProvider.CONTENT_URI, projection, null, null, null);
+				UserContentProvider.CONTENT_URI_USER, projection, null, null, null);
 		return cursorLoader;
 	}
 

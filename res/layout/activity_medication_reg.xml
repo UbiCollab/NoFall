@@ -1,8 +1,54 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ntnu.master.nofall.MedicationRegActivity"
-    tools:ignore="MergeRootFrame" />
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="ntnu.master.nofall.MedicationRegActivity$PlaceholderFragment" >
 
+    <TextView
+        android:id="@+id/medDescTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/medication_desc_txt"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/spinner_nmb_medication"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/medDescTextView"
+        android:layout_below="@+id/medDescTextView"
+        android:layout_marginTop="40dp" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/spinner_nmb_medication"
+        android:layout_below="@+id/medDescTextView"
+        android:layout_marginTop="22dp"
+        android:text="@string/number_of_med" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnAddMedication"
+        android:layout_alignLeft="@+id/btnAddMedication"
+        android:text="@string/type_of_medication" />
+
+    <Button
+        android:id="@+id/btnAddMedication"
+        style="@style/button_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/spinner_nmb_medication"
+        android:layout_centerVertical="true"
+        android:background="@drawable/custom_button"
+        android:onClick="OpenSelectMedActivity"
+        android:text="@string/btnAddMedication" />
+
+</RelativeLayout>

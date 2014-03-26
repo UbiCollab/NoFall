@@ -1,14 +1,11 @@
 package ntnu.master.nofall;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -18,16 +15,17 @@ public class MedicationRegActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_medication_reg);
-			
-		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
+		Spinner mspin = (Spinner) findViewById(R.id.spinner_nmb_medication);
+		Integer[] items = new Integer[]{0,1,2,3,4,5,6,7,8};
+		ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, items);
+		mspin.setAdapter(adapter);
 		
-//		Spinner mspin = (Spinner) findViewById(R.id.spinner_nmb_medication);
-//		Integer[] items = new Integer[]{0,1,2,3,4,5,6,7,8};
-//		ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, items);
-//		mspin.setAdapter(adapter);
+		
+		
+//		if (savedInstanceState == null) {
+//			getFragmentManager().beginTransaction()
+//					.add(R.id.container, new PlaceholderFragment()).commit();
+//		}
 	}
 
 	
@@ -56,22 +54,23 @@ public class MedicationRegActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
-			
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_select_med,
-					container, false);
-			return rootView;
-		}
-	}
+//	/**
+//	 * A placeholder fragment containing a simple view.
+//	 */
+//	public class PlaceholderFragment extends Fragment {
+//		import android.widget.ArrayAdapter;
+//		
+//		public PlaceholderFragment() {
+//
+//		}
+//
+//		@Override
+//		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//				Bundle savedInstanceState) {
+//			View rootView = inflater.inflate(R.layout.fragment_select_med,
+//					container, false);
+//			return rootView;
+//		}
+//	}
 
 }

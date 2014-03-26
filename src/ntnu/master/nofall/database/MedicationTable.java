@@ -15,15 +15,20 @@ public class MedicationTable {
 	  private static final String DATABASE_CREATE = "create table " 
 		      + TABLE_MED
 		      + "(" 
-		      + COLUMN_ID + " integer primary key autoincrement, " 
-		      + COLUMN_NAME + " text not null," 
-		      + COLUMN_DESC + " text not null,"
-		      + COLUMN_TYPE
-		      + " text not null" 
-		      + ");";
+		      + COLUMN_ID   + " integer primary key autoincrement, " 
+		      + COLUMN_NAME + " text not null, " 
+		      + COLUMN_DESC + " text not null, "
+		      + COLUMN_TYPE + " text not null " + ");";
 
 	public static void onCreate(SQLiteDatabase database) {
-		database.execSQL(DATABASE_CREATE);
+		try
+		{
+			database.execSQL(DATABASE_CREATE);
+		}
+		catch(Exception e)
+		{
+			Log.w("SQL ERROR", e);
+		}
 	}
 
 	public static void onUpgrade(SQLiteDatabase database, int oldVersion,

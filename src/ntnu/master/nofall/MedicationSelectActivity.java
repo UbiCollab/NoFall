@@ -2,43 +2,45 @@ package ntnu.master.nofall;
 
 import java.util.ArrayList;
 
-import ntnu.master.nofall.adapter.TeamListViewAdapter;
+import ntnu.master.nofall.adapter.MedListViewAdapter;
+import ntnu.master.nofall.contentprovider.UserContentProvider;
+import ntnu.master.nofall.database.MedicationTable;
 import android.app.Activity;
+import android.app.LoaderManager;
+import android.content.CursorLoader;
+import android.content.Loader;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
-public class MedicationSelectActivity extends Activity {
-	ArrayList<Team> myTeams;
-	TeamListViewAdapter myAdapter;
-	ListView myListView;
-	Button myButton;
-
+public class MedicationSelectActivity extends Activity implements
+LoaderManager.LoaderCallbacks<Cursor>{
+	private MedListViewAdapter myAdapter;
+	private ListView myListView;
+	private Button myButton;
+	private SimpleCursorAdapter adapter;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		myTeams = new ArrayList<Team>();
-		// Add a few teams to display.
-		myTeams.add(new Team("Winners", 10));
-		myTeams.add(new Team("Philidelphia Flyers", 5));
-		myTeams.add(new Team("Detroit Red Wings", 1));
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_medication_select);
 		myListView = (ListView) findViewById(R.id.myListView);
 		myButton = (Button) findViewById(R.id.buttonStart);
-		// Construct our adapter, using our own layout and myTeams
-		myAdapter = new TeamListViewAdapter(this, R.layout.row_team_layout,
-				myTeams);
-		myListView.setAdapter(myAdapter);
+		fillData();
+		myListView.setAdapter(adapter);
 		myListView.setItemsCanFocus(false);
 
 		myButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				ArrayList<Team> selectedTeams = new ArrayList<Team>();
+				ArrayList<Medication> selectedTeams = new ArrayList<Medication>();
 				final SparseBooleanArray checkedItems = myListView
 						.getCheckedItemPositions();
 				int checkedItemsCount = checkedItems.size();
@@ -55,10 +57,45 @@ public class MedicationSelectActivity extends Activity {
 							Toast.LENGTH_SHORT).show();
 				else {
 					// Just logging the output.
-					for (Team t : selectedTeams)
+					for (Medication t : selectedTeams)
 						Log.d("SELECTED TEAMS: ", t.getTeamName());
 				}
 			}
 		});
+
+	}
+
+	private void fillData() {
+
+		// Fields from the database (projection)
+		// Must include the _id column for the adapter to work
+		String[] from = new String[] { MedicationTable.COLUMN_NAME };
+		// Fields on the UI to which we map
+		int[] to = new int[] { R.id.listview_TeamDescription };
+
+		getLoaderManager().initLoader(0, null, this);
+		adapter = new SimpleCursorAdapter(this, R.layout.row_team_layout, null, from,
+				to, 0);
+		
+	}
+
+	// creates a new loader after the initLoader () call
+	@Override
+	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+		String[] projection = { MedicationTable.COLUMN_ID, MedicationTable.COLUMN_NAME };
+		CursorLoader cursorLoader = new CursorLoader(this,
+				UserContentProvider.CONTENT_URI_MED, projection, null, null, null);
+		return cursorLoader;
+	}
+
+	@Override
+	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+		adapter.swapCursor(data);
+	}
+
+	@Override
+	public void onLoaderReset(Loader<Cursor> loader) {
+		// data is not available anymore, delete reference
+		adapter.swapCursor(null);
 	}
 }
