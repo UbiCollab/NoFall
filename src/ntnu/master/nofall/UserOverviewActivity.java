@@ -1,6 +1,6 @@
 package ntnu.master.nofall;
 
-import ntnu.master.nofall.contentprovider.UserContentProvider;
+import ntnu.master.nofall.contentprovider.MyContentProvider;
 import ntnu.master.nofall.database.UserTable;
 import android.app.ListActivity;
 import android.app.LoaderManager;
@@ -73,7 +73,7 @@ public class UserOverviewActivity extends ListActivity implements
 			AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
 					.getMenuInfo();
 			Uri uri = Uri
-					.parse(UserContentProvider.CONTENT_URI_USER + "/" + info.id);
+					.parse(MyContentProvider.CONTENT_URI_USER + "/" + info.id);
 			getContentResolver().delete(uri, null, null);
 			fillData();
 			return true;
@@ -96,8 +96,8 @@ public class UserOverviewActivity extends ListActivity implements
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		Intent i = new Intent(this, UserDetailActivity.class);
-		Uri todoUri = Uri.parse(UserContentProvider.CONTENT_URI_USER + "/" + id);
-		i.putExtra(UserContentProvider.CONTENT_ITEM_TYPE_USER, todoUri);
+		Uri todoUri = Uri.parse(MyContentProvider.CONTENT_URI_USER + "/" + id);
+		i.putExtra(MyContentProvider.CONTENT_ITEM_TYPE_USER, todoUri);
 
 		startActivity(i);
 	}
@@ -129,7 +129,7 @@ public class UserOverviewActivity extends ListActivity implements
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 		String[] projection = { UserTable.COLUMN_ID, UserTable.COLUMN_NAME };
 		CursorLoader cursorLoader = new CursorLoader(this,
-				UserContentProvider.CONTENT_URI_USER, projection, null, null, null);
+				MyContentProvider.CONTENT_URI_USER, projection, null, null, null);
 		return cursorLoader;
 	}
 

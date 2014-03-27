@@ -1,6 +1,6 @@
 package ntnu.master.nofall;
 
-import ntnu.master.nofall.contentprovider.UserContentProvider;
+import ntnu.master.nofall.contentprovider.MyContentProvider;
 import ntnu.master.nofall.database.UserTable;
 import android.app.Activity;
 import android.content.ContentValues;
@@ -39,12 +39,12 @@ public class UserDetailActivity extends Activity {
 
 		// check from the saved Instance
 		userUri = (bundle == null) ? null : (Uri) bundle
-				.getParcelable(UserContentProvider.CONTENT_ITEM_TYPE_USER);
+				.getParcelable(MyContentProvider.CONTENT_ITEM_TYPE_USER);
 
 		// Or passed from the other activity
 		if (extras != null) {
 			userUri = extras
-					.getParcelable(UserContentProvider.CONTENT_ITEM_TYPE_USER);
+					.getParcelable(MyContentProvider.CONTENT_ITEM_TYPE_USER);
 
 			fillData(userUri);
 		}
@@ -92,7 +92,7 @@ public class UserDetailActivity extends Activity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		saveState();
-		outState.putParcelable(UserContentProvider.CONTENT_ITEM_TYPE_USER, userUri);
+		outState.putParcelable(MyContentProvider.CONTENT_ITEM_TYPE_USER, userUri);
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class UserDetailActivity extends Activity {
 		if (userUri == null) {
 			// New todo
 			userUri = getContentResolver().insert(
-					UserContentProvider.CONTENT_URI_USER, values);
+					MyContentProvider.CONTENT_URI_USER, values);
 		} else {
 			// Update todo
 			getContentResolver().update(userUri, values, null, null);

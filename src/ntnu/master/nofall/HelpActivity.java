@@ -1,6 +1,7 @@
 package ntnu.master.nofall;
 
 import ntnu.master.nofall.adapter.MyExpandableListAdapter;
+import ntnu.master.nofall.object.FAQ;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -28,7 +29,7 @@ public class HelpActivity extends Activity {
 	// }
 
 	// more efficient than HashMap for mapping integers to objects
-	SparseArray<Group> groups = new SparseArray<Group>();
+	SparseArray<FAQ> groups = new SparseArray<FAQ>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +44,12 @@ public class HelpActivity extends Activity {
 
 	public void createData() {
 		// FAQs
-		Group group = new Group("Why should I use this application?");
+		FAQ group = new FAQ("Why should I use this application?");
 		group.children.add("The risk of falling for senior citizens are incredble high[...] Facts n shizzle[...]" +
 				"this application can help you with a quick and easy assessment and give advice.");
 		groups.append(0, group);
 		
-		group = new Group("Does any information get stored?");
+		group = new FAQ("Does any information get stored?");
 		group.children.add("All the data you provide for this application is only stored on this phone. " +
 				"It will not be accessible for anyone else, but the those who have access to this phone.");
 		groups.append(1, group);

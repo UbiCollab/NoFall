@@ -9,7 +9,8 @@ public class MedicationTable {
 	public static final String COLUMN_ID = "_id";
 	public static final String COLUMN_NAME = "name";
 	public static final String COLUMN_TYPE = "type";
-	public static final String COLUMN_DESC = "desc";
+	public static final String COLUMN_NUMBER = "number";
+	
 
 	// Database creation SQL statement
 	  private static final String DATABASE_CREATE = "create table " 
@@ -17,7 +18,7 @@ public class MedicationTable {
 		      + "(" 
 		      + COLUMN_ID   + " integer primary key autoincrement, " 
 		      + COLUMN_NAME + " text not null, " 
-		      + COLUMN_DESC + " text not null, "
+		      + COLUMN_NUMBER + " text not null, "
 		      + COLUMN_TYPE + " text not null " + ");";
 
 	public static void onCreate(SQLiteDatabase database) {

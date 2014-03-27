@@ -1,7 +1,7 @@
 package ntnu.master.nofall.adapter;
 
-import ntnu.master.nofall.Group;
 import ntnu.master.nofall.R;
+import ntnu.master.nofall.object.FAQ;
 import android.app.Activity;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -17,13 +17,13 @@ import android.widget.Toast;
 
 public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
-	private final SparseArray<Group> groups;
+	private final SparseArray<FAQ> groups;
 	private int lastExpandedPosition = -1;
 	public LayoutInflater inflater;
 	public Activity activity;
 	private ExpandableListView lv;
 	
-	public MyExpandableListAdapter(Activity act, SparseArray<Group> groups, ListView listView) {
+	public MyExpandableListAdapter(Activity act, SparseArray<FAQ> groups, ListView listView) {
 		activity = act;
 		this.groups = groups;
 		inflater = act.getLayoutInflater();
@@ -102,7 +102,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.listrow_group, null);
 		}
-		Group group = (Group) getGroup(groupPosition);
+		FAQ group = (FAQ) getGroup(groupPosition);
 		((CheckedTextView) convertView).setText(group.string);
 		((CheckedTextView) convertView).setChecked(isExpanded);
 		return convertView;
