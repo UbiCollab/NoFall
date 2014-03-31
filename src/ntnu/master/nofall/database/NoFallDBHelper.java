@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class NoFallDBHelper extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "nofall.db";
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 
 	public NoFallDBHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);

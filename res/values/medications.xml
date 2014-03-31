@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <string-array name="Antidepressant">
+
+        <!-- First item is the type of drug -->
+        <item name="Antidepressant">Antidepressant</item>
+        <!-- Different kinds -->
+        <item name="Amitriptyine">Amitriptyine</item>
+        <item name="Bupropion">Bupropion</item>
+        <item name="Citalopram">Citalopram</item>
+        <item name="Clomipramine">Clomipramine</item>
+        <item name="Desipramine">Desipramine</item>
+        <item name="Doxepin">Doxepin</item>
+        <item name="Escitalopram">Escitalopram</item>
+        <item name="Fluoxetine">Fluoxetine</item>
+        <item name="Fluvoxamine">Fluvoxamine</item>
+        <item name="Imipramine">Imipramine</item>
+        <item name="Maprotiline">Maprotiline</item>
+        <item name="Mirtazapine">Mirtazapine</item>
+        <item name="Moclobemide">Moclobemide</item>
+        <item name="Nortriptyline">Nortriptyline</item>
+        <item name="Paroxetine">Paroxetine</item>
+        <item name="Phenelzine 1,2,3 ">Phenelzine 1,2,3</item>
+        <item name="Sertraline">Sertraline</item>
+        <item name="Tranylcypromine 2,3">Tranylcypromine 2,3 </item>
+        <item name="Trazodone">Trazodone</item>
+        <item name="Trimipramine">Trimipramine</item>
+        <item name="Venlafaxine">Venlafaxine</item>
+    </string-array>
+    <string-array name="ACE_Inhibitors">
+
+        <!-- First item is the type of drug -->
+        <item name="ACE_Inhibitors">ACE Inhibitors</item>
+        <!-- Different kinds -->
+        <item name="Benazepril">Benazepril</item>
+        <item name="Captopril">Captopril</item>
+        <item name="Cilazapril">Cilazapril</item>
+        <item name="Enalapril/enalaprilat ">Enalapril/enalaprilat </item>
+        <item name="Fosinopril">Fosinopril</item>
+        <item name="Lisinopril">Lisinopril</item>
+        <item name="Perindopril">Perindopril</item>
+        <item name="Quinapril">Quinapril</item>
+        <item name="Ramipril">Ramipril</item>
+        <item name="Trandolapril">Trandolapril</item>
+    </string-array>
+    <string-array name="Alpha_Receptor_Blockers">
+
+        <!-- First item is the type of drug -->
+        <item name="Alpha_Receptor_Blockers">Alpha Receptor Blockers</item>
+        <!-- Different kinds -->
+        <item name="Alfuzosin">Alfuzosin</item>
+        <item name="Doxazosin">Doxazosin</item>
+        <item name="Prazosin">Prazosin</item>
+        <item name="Tamsulosin">Tamsulosin</item>
+        <item name="Terazosin">Terazosin</item>
+    </string-array>
+    <string-array name="Anticoagulants">
+
+        <!-- First item is the type of drug -->
+        <item name="Anticoagulants">Anticoagulants</item>
+        <!-- Different kinds -->
+        <item name="Dalteparin">Dalteparin</item>
+        <item name="Danaparoid">Danaparoid</item>
+        <item name="Enoxaparin">Enoxaparin</item>
+        <item name="Heparin">Heparin</item>
+        <item name="Nadroparin">Nadroparin</item>
+        <item name="Nicoumalone">Nicoumalone</item>
+        <item name="Tinzaparin">Tinzaparin</item>
+        <item name="Warfarin">Warfarin</item>
+    </string-array>
+    <string-array name="Anticonvulsants">
+
+        <!-- First item is the type of drug -->
+        <item name="Anticonvulsants">Anticonvulsants</item>
+        <!-- Different kinds -->
+        <item name="Carbamazepine">Carbamazepine</item>
+        <item name="Ethosuximide">Ethosuximide</item>
+        <item name="Fosphenytoin">Fosphenytoin</item>
+        <item name="Gabapentin">Gabapentin</item>
+        <item name="Lamotrigine">Lamotrigine</item>
+        <item name="Levetiracetam">Levetiracetam</item>
+        <item name="Methsuximide">Methsuximide</item>
+        <item name="Oxcarbazepine">Oxcarbazepine</item>
+        <item name="Phenobarbital">Phenobarbital</item>
+        <item name="Phenytoin">Phenytoin</item>
+        <item name="Primidone">Primidone</item>
+        <item name="Topiramate">Topiramate</item>
+        <item name="Valproic">Valproic</item>
+        <item name="Vigabatrin">Vigabatrin</item>
+    </string-array>
+    <string-array name="Antihistamines">
+
+        <!-- First item is the type of drug -->
+        <item name="Antihistamines">Antihistamines</item>
+        <!-- Different kinds -->
+        <item name="Azatadine">Azatadine</item>
+        <item name="Brompheniramine">Brompheniramine</item>
+        <item name="Cetirizine">Cetirizine</item>
+        <item name="Chlorpheniramine">Chlorpheniramine</item>
+        <item name="Clemastine">Clemastine</item>
+        <item name="Cyproheptadine">Cyproheptadine</item>
+        <item name="Diphenhydramine">Diphenhydramine</item>
+        <item name="Hydroxyzine">Hydroxyzine</item>
+        <item name="Meclizine">Meclizine</item>
+        <item name="Promethazine">Promethazine</item>
+        <item name="Trimeprazine">Trimeprazine</item>
+    </string-array>
+    <string-array name="Antipsychotics">
+
+        <!-- First item is the type of drug -->
+        <item name="Antipsychotics">Antipsychotics</item>
+        <!-- Different kinds -->
+        <item name="Chlorpromazine">Chlorpromazine</item>
+        <item name="Clozapine">Clozapine</item>
+        <item name="Flupenthixol">Flupenthixol</item>
+        <item name="Fluphenazine">Fluphenazine</item>
+        <item name="Haloperidol">Haloperidol</item>
+        <item name="Loxapine">Loxapine</item>
+        <item name="Methotrimeprazine">Methotrimeprazine</item>
+        <item name="Olanzapine">Olanzapine</item>
+        <item name="Paliperidone">Paliperidone</item>
+        <item name="Perphenazine">Perphenazine</item>
+        <item name="Pimozide">Pimozide</item>
+        <item name="Pipotiazine">Pipotiazine</item>
+        <item name="Prochlorperazine">Prochlorperazine</item>
+        <item name="Quetiapine">Quetiapine</item>
+        <item name="Risperidone">Risperidone</item>
+        <item name="Thioproperazine">Thioproperazine</item>
+        <item name="Thiothixene">Thiothixene</item>
+        <item name="Trifluoperazine">Trifluoperazine</item>
+        <item name="Zuclopenthixol">Zuclopenthixol</item>
+    </string-array>
+    <string-array name="Corticosteroids">
+
+        <!-- First item is the type of drug -->
+        <item name="Corticosteroids">Corticosteroids</item>
+        <!-- Different kinds -->
+        <item name="Beclomethasone">Beclomethasone</item>
+        <item name="Betamethasone">Betamethasone</item>
+        <item name="Budesonide">Budesonide</item>
+        <item name="Cortisone">Cortisone</item>
+        <item name="Dexamethasone">Dexamethasone</item>
+        <item name="Fludrocortisone">Fludrocortisone</item>
+        <item name="Fluticasone">Fluticasone</item>
+        <item name="Hydrocortisone">Hydrocortisone</item>
+        <item name="Methylprednisolone">Methylprednisolone</item>
+        <item name="Prednisolone">Prednisolone</item>
+        <item name="Prednisone">Prednisone</item>
+        <item name="Triamcinolone">Triamcinolone</item>
+    </string-array>
+    <string-array name="Muscle_Relaxants">
+
+        <!-- First item is the type of drug -->
+        <item name="Muscle_Relaxants">Muscle Relaxants</item>
+        <!-- Different kinds -->
+        <item name="Baclofen">Baclofen</item>
+        <item name="Carisoprodol">Carisoprodol</item>
+        <item name="Chlorzoxazone">Chlorzoxazone</item>
+        <item name="Cyclobenzaprine">Cyclobenzaprine</item>
+        <item name="Dantrolene">Dantrolene</item>
+        <item name="Methocarbamol">Methocarbamol</item>
+        <item name="Orphenadrine">Orphenadrine</item>
+        <item name="Tizanidine">Tizanidine</item>
+    </string-array>
+
+</resources>

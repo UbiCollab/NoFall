@@ -33,7 +33,7 @@ public class UserDetailActivity extends Activity {
 		mCategory = (Spinner) findViewById(R.id.category);
 		mTitleText = (EditText) findViewById(R.id.user_edit_name);
 		mBodyText = (EditText) findViewById(R.id.user_edit_age);
-		Button confirmButton = (Button) findViewById(R.id.user_edit_button);
+		Button confirmButton = (Button) findViewById(R.id.btnConfirmUser);
 
 		Bundle extras = getIntent().getExtras();
 

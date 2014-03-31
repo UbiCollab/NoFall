@@ -30,8 +30,8 @@ public class MyContentProvider extends ContentProvider {
 
 	private static final String AUTHORITY = "ntnu.master.nofall.contentprovider";
 
-	private static final String BASE_PATH_USER = "user";
-	private static final String BASE_PATH_MED = "med";
+	private static final String BASE_PATH_USER = "tblUser";
+	private static final String BASE_PATH_MED = "tblMed";
 
 	public static final Uri CONTENT_URI_USER = Uri.parse("content://" + AUTHORITY
 			+ "/" + BASE_PATH_USER);
@@ -39,14 +39,14 @@ public class MyContentProvider extends ContentProvider {
 			+ "/" + BASE_PATH_MED);
 
 	public static final String CONTENT_TYPE_USER = ContentResolver.CURSOR_DIR_BASE_TYPE
-			+ "/user";
+			+ "/tblUser";
 	public static final String CONTENT_ITEM_TYPE_USER = ContentResolver.CURSOR_ITEM_BASE_TYPE
-			+ "/user";
+			+ "/tblUser";
 
 	public static final String CONTENT_TYPE_MED = ContentResolver.CURSOR_DIR_BASE_TYPE
-			+ "/med";
+			+ "/tblMed";
 	public static final String CONTENT_ITEM_TYPE_MED = ContentResolver.CURSOR_ITEM_BASE_TYPE
-			+ "/med";
+			+ "/tblMed";
 
 	private static final UriMatcher sURIMatcher = new UriMatcher(
 			UriMatcher.NO_MATCH);

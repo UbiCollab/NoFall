@@ -5,7 +5,7 @@ import android.util.Log;
 
 public class UserTable {
 	// Database table
-	public static final String TABLE_USER = "user";
+	public static final String TABLE_USER = "tblUser";
 	public static final String COLUMN_ID = "_id";
 	public static final String COLUMN_NAME = "name";
 	public static final String COLUMN_AGE = "age";
@@ -25,7 +25,7 @@ public class UserTable {
 		}
 		catch(Exception e)
 		{
-			Log.w("SQL ERROR", e);
+			Log.w("SQL ERROR", e.toString());
 		}
 	}
 

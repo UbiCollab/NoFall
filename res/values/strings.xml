@@ -3,6 +3,8 @@
 
     <string name="hello">Hello World, Todo!</string>
     <string name="app_name">NoFall</string>
+    <string name="btnOk">OK</string>
+    <string name="btnConfirm">Confirm</string>
     <string name="no_user">Currently there are no Users registered</string>
     <string name="menu_insert">Add User</string>
     <string name="menu_delete">Delete Name</string>
@@ -23,7 +25,7 @@
     <string name="btnHelpTxt">Help</string>
     <string name="title_activity_help">HelpActivity</string>
     <string name="title_activity_medication_reg">MedicationRegActivity</string>
-        <string name="title_activity_medication_select">MedicationSelectActivity</string>
+    <string name="title_activity_medication_select">MedicationSelectActivity</string>
     <string name="medication_desc_txt">On this page you should fill in as much information as you can!</string>
     <string name="number_of_med">How many medications are you taking at the moment?</string>
     <string name="btnAddMedication">Select Medication</string>

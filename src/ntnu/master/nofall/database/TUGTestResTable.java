@@ -5,7 +5,7 @@ import android.util.Log;
 
 public class TUGTestResTable {
 	// Database table
-	public static final String TABLE_TUGRES = "TUGres";
+	public static final String TABLE_TUGRES = "tblTUGres";
 	public static final String COLUMN_ID = "_id";
 	public static final String COLUMN_TIME = "time";
 	public static final String COLUMN_DATE = "date";
@@ -21,7 +21,14 @@ public class TUGTestResTable {
 		      + ");";
 
 	public static void onCreate(SQLiteDatabase database) {
-		database.execSQL(DATABASE_CREATE);
+		try
+		{
+			database.execSQL(DATABASE_CREATE);
+		}
+		catch(Exception e)
+		{
+			Log.w("SQL ERROR", e.toString());
+		}
 	}
 
 	public static void onUpgrade(SQLiteDatabase database, int oldVersion,

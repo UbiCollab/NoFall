@@ -36,11 +36,12 @@
         android:imeOptions="actionNext" >
     </EditText>
 
-    <Button
-        android:id="@+id/user_edit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/user_edit_confirm" >
-    </Button>
+<Button
+    android:id="@+id/btnConfirmUser"
+    style="@style/button_text"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/custom_button"
+    android:text="@string/btnConfirm" />
 
 </LinearLayout> 
