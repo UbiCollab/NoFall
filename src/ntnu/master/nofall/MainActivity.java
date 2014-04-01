@@ -36,6 +36,11 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 	
+	public void OpenTUGActivity(View view){
+		Intent intent = new Intent(MainActivity.this, TUGActivity.class);
+		startActivity(intent);
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 

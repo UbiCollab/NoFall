@@ -64,6 +64,10 @@
             android:name="ntnu.master.nofall.MedicationSelectActivity"
             android:label="@string/title_activity_medication_select" >
         </activity>
+                <activity
+            android:name="ntnu.master.nofall.TUGActivity"
+            android:label="@string/title_activity_tug_test" >
+        </activity>
     </application>
 
 </manifest>

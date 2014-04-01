@@ -28,4 +28,15 @@
         android:onClick="OpenHelpActivity"
         android:text="@string/btnHelpTxt" />
 
+        <Button
+        android:id="@+id/btnTest"
+        style="@style/button_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/btnHelp"
+        android:background="@drawable/custom_button"
+        android:onClick="OpenTUGActivity"
+        android:text="TUG" />
+        
 </RelativeLayout>
