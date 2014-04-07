@@ -20,7 +20,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>
             -->
         </activity>
         <activity
@@ -64,9 +64,13 @@
             android:name="ntnu.master.nofall.MedicationSelectActivity"
             android:label="@string/title_activity_medication_select" >
         </activity>
-                <activity
+        <activity
             android:name="ntnu.master.nofall.TUGActivity"
             android:label="@string/title_activity_tug_test" >
+        </activity>
+        <activity
+            android:name="ntnu.master.nofall.SurveyActivity"
+            android:label="@string/title_activity_survey" >
         </activity>
     </application>
 

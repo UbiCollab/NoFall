@@ -41,6 +41,11 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 	
+	public void OpenSurveyActivity(View view){
+		Intent intent = new Intent(MainActivity.this, SurveyActivity.class);
+		startActivity(intent);
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -49,6 +54,7 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
@@ -56,7 +62,8 @@ public class MainActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
-			return true;
+			Intent intent = new Intent(MainActivity.this, HelpActivity.class);
+			startActivity(intent);
 		}
 		return super.onOptionsItemSelected(item);
 	}

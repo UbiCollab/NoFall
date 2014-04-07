@@ -15,18 +15,20 @@
     <string name="user_edit_confirm">Confirm</string>
     <string name="action_settings">Settings</string>
     <string name="desc">Some description</string>
-    <string name="title_activity_start_page">StartPageActivity</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-    <string name="title_activity_main">MainActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="btnStartRegTxt">Start Process</string>
     <string name="btnHelpTxt">Help</string>
+    
+    <!-- Titles -->
     <string name="title_activity_help">HelpActivity</string>
     <string name="title_activity_medication_reg">MedicationRegActivity</string>
     <string name="title_activity_medication_select">MedicationSelectActivity</string>
     <string name="title_activity_tug_test">TUGTestActivity</string>
+    <string name="title_activity_survey">SurveyActivity</string>
+    <string name="title_activity_start_page">StartPageActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+    
+    <string name="btnNext">Next</string>
     <string name="medication_desc_txt">On this page you should fill in as much information as you can!</string>
     <string name="number_of_med">How many medications are you taking at the moment?</string>
     <string name="btnAddMedication">Select Medication</string>
@@ -36,4 +38,5 @@
 	<string name="tugDescText">Press "Start" to start the TUG test</string>
 	<string name="btnStart">Start</string>
 	<string name="tugTimer">00.00.00</string>
+	<string name="menu_settings">Menu</string>
 </resources>
