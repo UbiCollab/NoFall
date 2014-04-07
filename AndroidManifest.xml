@@ -72,6 +72,10 @@
             android:name="ntnu.master.nofall.SurveyActivity"
             android:label="@string/title_activity_survey" >
         </activity>
+        <activity
+            android:name="ntnu.master.nofall.XYPlotActivity"
+            android:label="@string/title_activity_survey" >
+        </activity>
     </application>
 
 </manifest>

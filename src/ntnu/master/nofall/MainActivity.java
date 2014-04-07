@@ -46,6 +46,11 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 	
+	public void OpenXYPlotActivity(View view){
+		Intent intent = new Intent(MainActivity.this, XYPlotActivity.class);
+		startActivity(intent);
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 

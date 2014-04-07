@@ -44,10 +44,23 @@
         style="@style/button_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnHelp"
-        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/btnTest"
+        android:layout_below="@+id/btnSurvey"
+        android:layout_marginTop="15dp"
         android:background="@drawable/custom_button"
         android:onClick="OpenSurveyActivity"
         android:text="Survey" />
+
+    <Button
+        android:id="@+id/btnSurvey"
+        style="@style/button_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/btnTest"
+        android:layout_below="@+id/btnTest"
+        android:layout_marginTop="82dp"
+        android:background="@drawable/custom_button"
+        android:onClick="OpenXYPlotActivity"
+        android:text="XYPlot" />
 
 </RelativeLayout>
