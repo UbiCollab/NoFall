@@ -12,7 +12,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
-            android:name="ntnu.master.nofall.UserOverviewActivity"
+            android:name="ntnu.master.nofall.activity.UserOverviewActivity"
             android:label="@string/app_name" >
 
             <!--
@@ -20,11 +20,11 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>
             -->
         </activity>
         <activity
-            android:name="ntnu.master.nofall.UserDetailActivity"
+            android:name="ntnu.master.nofall.activity.UserDetailActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" >
         </activity>
 
@@ -44,7 +44,7 @@
         </receiver>
 
         <activity
-            android:name="ntnu.master.nofall.MainActivity"
+            android:name="ntnu.master.nofall.activity.MainActivity"
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,28 +53,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ntnu.master.nofall.HelpActivity"
+            android:name="ntnu.master.nofall.activity.HelpActivity"
             android:label="@string/title_activity_help" >
         </activity>
         <activity
-            android:name="ntnu.master.nofall.MedicationRegActivity"
+            android:name="ntnu.master.nofall.activity.MedicationRegActivity"
             android:label="@string/title_activity_medication_reg" >
         </activity>
         <activity
-            android:name="ntnu.master.nofall.MedicationSelectActivity"
+            android:name="ntnu.master.nofall.activity.MedicationSelectActivity"
             android:label="@string/title_activity_medication_select" >
         </activity>
         <activity
-            android:name="ntnu.master.nofall.TUGActivity"
+            android:name="ntnu.master.nofall.activity.TUGActivity"
             android:label="@string/title_activity_tug_test" >
         </activity>
         <activity
-            android:name="ntnu.master.nofall.SurveyActivity"
+            android:name="ntnu.master.nofall.activity.SurveyActivity"
             android:label="@string/title_activity_survey" >
         </activity>
         <activity
-            android:name="ntnu.master.nofall.XYPlotActivity"
-            android:label="@string/title_activity_survey" >
+            android:name="ntnu.master.nofall.activity.XYPlotActivity"
+            android:label="@string/title_activity_tug_test" >
         </activity>
     </application>
 

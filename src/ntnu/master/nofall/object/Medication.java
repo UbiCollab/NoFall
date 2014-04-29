@@ -2,18 +2,10 @@ package ntnu.master.nofall.object;
 
 public class Medication {
 	private String medName;
-	//private int medWins;
 
 	public Medication(String name) {
-		medName = name;
-		//teamWins = wins;
+		this.medName = name;
 	}
 
-	public String getTeamName() {
-		return medName;
-	}
 
-//	public int getTeamWins() {
-//		return teamWins;
-//	}
 }
