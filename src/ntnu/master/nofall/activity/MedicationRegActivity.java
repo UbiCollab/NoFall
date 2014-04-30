@@ -4,9 +4,12 @@ import ntnu.master.nofall.R;
 import ntnu.master.nofall.R.id;
 import ntnu.master.nofall.R.layout;
 import ntnu.master.nofall.R.menu;
+import ntnu.master.nofall.database.NoFallDBHelper;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,12 +17,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 public class MedicationRegActivity extends Activity {
-
+	Spinner mspin;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_medication_reg);
-		Spinner mspin = (Spinner) findViewById(R.id.spinner_nmb_medication);
+		mspin = (Spinner) findViewById(R.id.spinner_nmb_medication);
 		Integer[] items = new Integer[]{0,1,2,3,4,5,6,7,8};
 		ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, items);
 		mspin.setAdapter(adapter);
@@ -33,14 +37,35 @@ public class MedicationRegActivity extends Activity {
 	}
 
 	
-	public void OpenSelectMedActivity(View view){
-		Intent intent = new Intent(MedicationRegActivity.this, MedicationSelectActivity.class);
+	public void OpenNextActivity(View view){
+		Intent intent = new Intent(MedicationRegActivity.this, TUGActivity.class);
 	    startActivity(intent);
+	}
+	
+	// Saves the number of medications they take, and opens up the next activity
+	public void OpenSelectMedActivity(View view){		
+		int numberOfMed = (Integer) mspin.getSelectedItem();
+		int id = -1;
+		
+		if(numberOfMed > 0){
+			NoFallDBHelper db = new NoFallDBHelper(this);
+			Uri temp = db.insertNumberOfMedication(numberOfMed);
+			String path = temp.getPath();
+			String idStr = path.substring(path.lastIndexOf('/') + 1);
+			id = Integer.parseInt(idStr);
+		}
+		
+		Intent intent = new Intent(MedicationRegActivity.this, MedicationSelectActivity.class);
+		Bundle b = new Bundle();
+		if(id > -1) b.putInt("listID", id); 
+		b.putInt("numberOfMed", numberOfMed);
+		intent.putExtras(b); 
+		startActivity(intent);
+		finish();
 	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.medication_reg, menu);
 		return true;
@@ -57,24 +82,4 @@ public class MedicationRegActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
-//	/**
-//	 * A placeholder fragment containing a simple view.
-//	 */
-//	public class PlaceholderFragment extends Fragment {
-//		import android.widget.ArrayAdapter;
-//		
-//		public PlaceholderFragment() {
-//
-//		}
-//
-//		@Override
-//		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//				Bundle savedInstanceState) {
-//			View rootView = inflater.inflate(R.layout.fragment_select_med,
-//					container, false);
-//			return rootView;
-//		}
-//	}
-
 }

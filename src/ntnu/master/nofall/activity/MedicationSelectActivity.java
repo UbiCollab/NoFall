@@ -1,12 +1,8 @@
 package ntnu.master.nofall.activity;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import ntnu.master.nofall.R;
-import ntnu.master.nofall.R.array;
-import ntnu.master.nofall.R.id;
-import ntnu.master.nofall.R.layout;
 import ntnu.master.nofall.adapter.ChkbxExpandableListViewAdapter;
 import ntnu.master.nofall.database.NoFallDBHelper;
 import ntnu.master.nofall.object.Category;
@@ -25,44 +21,21 @@ public class MedicationSelectActivity extends Activity {
 	private ExpandableListView expandableListview;
 	private ChkbxExpandableListViewAdapter adapter;
 	private ArrayList<Category> category_array = new ArrayList<Category>();
-	private String[] mAnticoagulantsArray;
-	private String[] mAnticonvulsantsArray;
-	private String[] mAntidepressantArray;
-	private String[] mAntihistaminesArray;
-	private String[] mAntipsychoticsArray;
-	private String[] mCorticosteroidsArray;
-	private String[] mACEInhibitorsArray;
-	private String[] mARBArray;
-	private String[] mMRArray;
-	
-
-
+	private int listID = -1;
+	private int numberOfMed = 0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_expandable_list_view);
-
-//		// Data
-//		this.mAnticoagulantsArray =  getResources().getStringArray(R.array.Anticoagulants);
-//		fillData(mAnticoagulantsArray);
-//		this.mAnticonvulsantsArray =  getResources().getStringArray(R.array.Anticonvulsants);
-//		fillData(mAnticonvulsantsArray);
-//		this.mAntidepressantArray =  getResources().getStringArray(R.array.Antidepressant);
-//		fillData(mAntidepressantArray);
-//		this.mAntihistaminesArray =  getResources().getStringArray(R.array.Antihistamines);
-//		fillData(mAntihistaminesArray);
-//		this.mAntipsychoticsArray =  getResources().getStringArray(R.array.Antipsychotics);
-//		fillData(mAntipsychoticsArray);
-//		this.mCorticosteroidsArray =  getResources().getStringArray(R.array.Corticosteroids);
-//		fillData(mCorticosteroidsArray);
-//		this.mACEInhibitorsArray =  getResources().getStringArray(R.array.ACE_Inhibitors);
-//		fillData(mACEInhibitorsArray);
-//		this.mARBArray =  getResources().getStringArray(R.array.Alpha_Receptor_Blockers);
-//		fillData(mARBArray);
-//		this.mMRArray =  getResources().getStringArray(R.array.Muscle_Relaxants);
-//		fillData(mMRArray);
+		
+		// Gets the ID for the list of number of medications table
+		Bundle b = getIntent().getExtras();
+		if(b != null) {
+			listID = b.getInt("listID");
+			numberOfMed = b.getInt("numberOfMed");
+		}
+		// Data
 		fillData();
-		//TO-DO: Add check for the medications in table, to set them as selected in the list
 
 		expandableListview = (ExpandableListView) findViewById(R.id.expandableListView);
 		adapter = new ChkbxExpandableListViewAdapter(MedicationSelectActivity.this,
@@ -92,14 +65,33 @@ public class MedicationSelectActivity extends Activity {
 	
 	// Buttonclick for Confirm button
 	public void ConfirmMed(View view){
-		
-		//TO-DO Add code for query to add the selected medication to the medication table
-		
+		insertToDBSelectedMedication();
 		Intent intent = new Intent(MedicationSelectActivity.this, MedicationRegActivity.class);
 	    startActivity(intent);
 	}
 	
-	// Adds the data from DB to the objects used in the expandable list
+	/**
+	 * Inserts the selected medications associated with the correct listID
+	 */
+	private void insertToDBSelectedMedication(){
+		NoFallDBHelper db = new NoFallDBHelper(this);
+		int temp = 0;
+		for(Category cat: category_array){
+			for(SubCategory sCat: cat.subcategory_array){
+				if(sCat.selected) 
+					db.insertRegistreredMedication(sCat.medID, listID);
+					temp++;
+			}
+		}
+		
+		if(temp > numberOfMed){
+			db.updateNumberOfMed(listID, numberOfMed);
+		}
+	}
+	
+	/**
+	 * Adds the data from DB to the objects used in the expandable list
+	 */
 	private void fillData(){
 		NoFallDBHelper db = new NoFallDBHelper(this);
 		Cursor cur = db.getMedCategories();
@@ -112,7 +104,8 @@ public class MedicationSelectActivity extends Activity {
 			//For each category add the medications
 			while(cur2.moveToNext()){
 				SubCategory subcategory = new SubCategory();
-				subcategory.subcategory_name = " " +  cur2.getString(0);
+				subcategory.medID = Integer.parseInt(cur2.getString(0));
+				subcategory.subcategory_name = " " +  cur2.getString(1);
 				category.subcategory_array.add(subcategory);
 			}
 			cur2.close();

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import ntnu.master.nofall.R;
 import ntnu.master.nofall.contentprovider.MyContentProvider;
 import ntnu.master.nofall.object.Category;
-import ntnu.master.nofall.object.Medication;
 import ntnu.master.nofall.object.SubCategory;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
@@ -15,6 +14,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
@@ -162,16 +162,14 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		}
 	}
 	
-
 	/**
 	 * Returns Medication to a given category
 	 * @param foreignKey
-	 * @return Cursor: 0 = COLUMN_NAME
+	 * @return Cursor: 0 = COLUMN_ID, 1 = COLUMN_NAME
 	 */
 	public Cursor getMedicationByCategory(int foreignKey){		
-		
 		String selection = "fkCategory = \"" + foreignKey + "\"";
-		String[] projection = {MedicationTable.COLUMN_NAME};
+		String[] projection = {MedicationTable.COLUMN_ID, MedicationTable.COLUMN_NAME};
 		    	
 		Cursor cursor = myCR.query(MyContentProvider.CONTENT_URI_MED, 
 		              projection, selection, null,
@@ -179,16 +177,6 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		return cursor;
 	}
 	
-	public Cursor test(){
-		//String selection = "fkCategory = \"" + foreignKey + "\"";
-		//String[] projection = {null};
-		    	
-		Cursor cursor = myCR.query(MyContentProvider.CONTENT_URI_MED, 
-		              null, null, null,
-		    	        null);
-		return cursor;
-	}
-	// Endre metode til å hente ut medikamenter som stemmer med ID til categoriene, bedre query!!!
 	/**
 	 * Returns all categories
 	 * @return Cursor: 0 = COLUMN_ID, 1 = COLUMN_NAME
@@ -200,5 +188,40 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		              projection, null, null,
 		    	        null);
 		return cursor;
+	}
+	
+	/**
+	 * Inserts the number of medications the user takes
+	 * @param value
+	 */
+	public Uri insertNumberOfMedication(int value){
+		ContentValues values = new ContentValues();
+		values.put(MedRegTable.COLUMN_NUMBER_OF, value);
+		 
+		Uri temp = myCR.insert(MyContentProvider.CONTENT_URI_MED_REG, values);
+		
+		return temp;
+	}
+	
+	/**
+	 * Binds the number of medications the user takes and which specific medications they take
+	 * @param medID
+	 * @param listID
+	 */
+	public void insertRegistreredMedication(int medID, int listID){
+		ContentValues values = new ContentValues();
+		values.put(MedRegListTable.COLUMN_FK_MED, medID);
+		values.put(MedRegListTable.COLUMN_FK_MED_REG, listID);
+		
+		myCR.insert(MyContentProvider.CONTENT_URI_MED_REG_LIST, values);
+	}
+	
+	public void updateNumberOfMed(int listID, int number){
+		ContentValues values = new ContentValues();
+		String selection = "_id = \"" + listID + "\"";
+		values.put(MedRegTable.COLUMN_NUMBER_OF, number);
+		 
+		myCR.update(MyContentProvider.CONTENT_URI_MED_REG, values, selection, null);
+		
 	}
 }

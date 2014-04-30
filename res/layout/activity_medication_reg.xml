@@ -51,4 +51,14 @@
         android:onClick="OpenSelectMedActivity"
         android:text="@string/btnAddMedication" />
 
+    <Button
+        android:id="@+id/btnNextActivity"
+        style="@style/button_text"
+        android:layout_alignParentBottom="true"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_button"
+        android:onClick="OpenNextActivity"
+        android:text="@string/btnNext" />
+
 </RelativeLayout>
