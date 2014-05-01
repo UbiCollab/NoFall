@@ -3,12 +3,12 @@ package ntnu.master.nofall.contentprovider;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import ntnu.master.nofall.database.MedCategoryTable;
-import ntnu.master.nofall.database.MedRegListTable;
-import ntnu.master.nofall.database.MedRegTable;
-import ntnu.master.nofall.database.MedicationTable;
 import ntnu.master.nofall.database.NoFallDBHelper;
 import ntnu.master.nofall.database.UserTable;
+import ntnu.master.nofall.database.medication.MedCategorySpecTable;
+import ntnu.master.nofall.database.medication.MedListLogTable;
+import ntnu.master.nofall.database.medication.MedLogTable;
+import ntnu.master.nofall.database.medication.MedicationSpecTable;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -139,64 +139,64 @@ public class MyContentProvider extends ContentProvider {
 		case MED:
 			checkColumnsMed(projection);
 			// Set the table
-			queryBuilder.setTables(MedicationTable.TABLE_MED);
+			queryBuilder.setTables(MedicationSpecTable.TABLE_MED);
 			break;
 		case MED_ID:
 			// check if the caller has requested a column which does not exists
 			checkColumnsMed(projection);
 			// Set the table
-			queryBuilder.setTables(MedicationTable.TABLE_MED);
+			queryBuilder.setTables(MedicationSpecTable.TABLE_MED);
 			
 			// adding the ID to the original query
-			queryBuilder.appendWhere(MedicationTable.COLUMN_ID + "="
+			queryBuilder.appendWhere(MedicationSpecTable.COLUMN_ID + "="
 					+ uri.getLastPathSegment());
 			break;
 			
 		case MED_CAT:
 			//checkColumnsMed(projection);
 			// Set the table
-			queryBuilder.setTables(MedCategoryTable.TABLE_MED_CAT);
+			queryBuilder.setTables(MedCategorySpecTable.TABLE_MED_CAT);
 			break;
 		case MED_CAT_ID:
 			// check if the caller has requested a column which does not exists
 			//checkColumnsMed(projection);
 			// Set the table
-			queryBuilder.setTables(MedCategoryTable.TABLE_MED_CAT);
+			queryBuilder.setTables(MedCategorySpecTable.TABLE_MED_CAT);
 			
 			// adding the ID to the original query
-			queryBuilder.appendWhere(MedCategoryTable.COLUMN_ID + "="
+			queryBuilder.appendWhere(MedCategorySpecTable.COLUMN_ID + "="
 					+ uri.getLastPathSegment());
 			break;
 			
 		case MED_REG:
 			//checkColumnsMed(projection);
 			// Set the table
-			queryBuilder.setTables(MedRegTable.TABLE_MED_REG);
+			queryBuilder.setTables(MedLogTable.TABLE_MED_REG);
 			break;
 		case MED_REG_ID:
 			// check if the caller has requested a column which does not exists
 			//checkColumnsMed(projection);
 			// Set the table
-			queryBuilder.setTables(MedRegTable.TABLE_MED_REG);
+			queryBuilder.setTables(MedLogTable.TABLE_MED_REG);
 			
 			// adding the ID to the original query
-			queryBuilder.appendWhere(MedRegTable.COLUMN_ID + "="
+			queryBuilder.appendWhere(MedLogTable.COLUMN_ID + "="
 					+ uri.getLastPathSegment());
 			break;
 			
 		case MED_REG_LIST:
 			//checkColumnsMed(projection);
 			// Set the table
-			queryBuilder.setTables(MedRegListTable.TABLE_MED_REG_LIST);
+			queryBuilder.setTables(MedListLogTable.TABLE_MED_REG_LIST);
 			break;
 		case MED_REG_LIST_ID:
 			// check if the caller has requested a column which does not exists
 			//checkColumnsMed(projection);
 			// Set the table
-			queryBuilder.setTables(MedRegListTable.TABLE_MED_REG_LIST);
+			queryBuilder.setTables(MedListLogTable.TABLE_MED_REG_LIST);
 			
 			// adding the ID to the original query
-			queryBuilder.appendWhere(MedRegListTable.COLUMN_ID + "="
+			queryBuilder.appendWhere(MedListLogTable.COLUMN_ID + "="
 					+ uri.getLastPathSegment());
 			break;
 			
@@ -234,22 +234,22 @@ public class MyContentProvider extends ContentProvider {
 			return Uri.parse(BASE_PATH_USER + "/" + id);
 			
 		case MED:
-			id = sqlDB.insert(MedicationTable.TABLE_MED, null, values);
+			id = sqlDB.insert(MedicationSpecTable.TABLE_MED, null, values);
 			getContext().getContentResolver().notifyChange(uri, null);
 			return Uri.parse(BASE_PATH_MED + "/" + id);
 			
 		case MED_CAT:
-			id = sqlDB.insert(MedCategoryTable.TABLE_MED_CAT, null, values);
+			id = sqlDB.insert(MedCategorySpecTable.TABLE_MED_CAT, null, values);
 			getContext().getContentResolver().notifyChange(uri, null);
 			return Uri.parse(BASE_PATH_MED_CAT + "/" + id);
 			
 		case MED_REG:
-			id = sqlDB.insert(MedRegTable.TABLE_MED_REG, null, values);
+			id = sqlDB.insert(MedLogTable.TABLE_MED_REG, null, values);
 			getContext().getContentResolver().notifyChange(uri, null);
 			return Uri.parse(BASE_PATH_MED_REG + "/" + id);
 			
 		case MED_REG_LIST:
-			id = sqlDB.insert(MedRegListTable.TABLE_MED_REG_LIST, null, values);
+			id = sqlDB.insert(MedListLogTable.TABLE_MED_REG_LIST, null, values);
 			getContext().getContentResolver().notifyChange(uri, null);
 			return Uri.parse(BASE_PATH_MED_REG_LIST + "/" + id);
 			
@@ -283,65 +283,65 @@ public class MyContentProvider extends ContentProvider {
 			break;	
 			
 		case MED:
-			rowsDeleted = sqlDB.delete(MedicationTable.TABLE_MED, selection,
+			rowsDeleted = sqlDB.delete(MedicationSpecTable.TABLE_MED, selection,
 					selectionArgs);
 			break;
 		case MED_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsDeleted = sqlDB.delete(MedicationTable.TABLE_MED,
-						MedicationTable.COLUMN_ID + "=" + id, null);
+				rowsDeleted = sqlDB.delete(MedicationSpecTable.TABLE_MED,
+						MedicationSpecTable.COLUMN_ID + "=" + id, null);
 			} else {
-				rowsDeleted = sqlDB.delete(MedicationTable.TABLE_MED,
-						MedicationTable.COLUMN_ID + "=" + id + " and " + selection,
+				rowsDeleted = sqlDB.delete(MedicationSpecTable.TABLE_MED,
+						MedicationSpecTable.COLUMN_ID + "=" + id + " and " + selection,
 						selectionArgs);
 			}
 			break;
 			
 		case MED_CAT:
-			rowsDeleted = sqlDB.delete(MedCategoryTable.TABLE_MED_CAT, selection,
+			rowsDeleted = sqlDB.delete(MedCategorySpecTable.TABLE_MED_CAT, selection,
 					selectionArgs);
 			break;
 		case MED_CAT_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsDeleted = sqlDB.delete(MedCategoryTable.TABLE_MED_CAT,
-						MedCategoryTable.COLUMN_ID + "=" + id, null);
+				rowsDeleted = sqlDB.delete(MedCategorySpecTable.TABLE_MED_CAT,
+						MedCategorySpecTable.COLUMN_ID + "=" + id, null);
 			} else {
-				rowsDeleted = sqlDB.delete(MedCategoryTable.TABLE_MED_CAT,
-						MedCategoryTable.COLUMN_ID + "=" + id + " and " + selection,
+				rowsDeleted = sqlDB.delete(MedCategorySpecTable.TABLE_MED_CAT,
+						MedCategorySpecTable.COLUMN_ID + "=" + id + " and " + selection,
 						selectionArgs);
 			}
 			break;
 			
 		case MED_REG:
-			rowsDeleted = sqlDB.delete(MedRegTable.TABLE_MED_REG, selection,
+			rowsDeleted = sqlDB.delete(MedLogTable.TABLE_MED_REG, selection,
 					selectionArgs);
 			break;
 		case MED_REG_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsDeleted = sqlDB.delete(MedRegTable.TABLE_MED_REG,
-						MedRegTable.COLUMN_ID + "=" + id, null);
+				rowsDeleted = sqlDB.delete(MedLogTable.TABLE_MED_REG,
+						MedLogTable.COLUMN_ID + "=" + id, null);
 			} else {
-				rowsDeleted = sqlDB.delete(MedRegTable.TABLE_MED_REG,
-						MedRegTable.COLUMN_ID + "=" + id + " and " + selection,
+				rowsDeleted = sqlDB.delete(MedLogTable.TABLE_MED_REG,
+						MedLogTable.COLUMN_ID + "=" + id + " and " + selection,
 						selectionArgs);
 			}
 			break;
 			
 		case MED_REG_LIST:
-			rowsDeleted = sqlDB.delete(MedRegListTable.TABLE_MED_REG_LIST, selection,
+			rowsDeleted = sqlDB.delete(MedListLogTable.TABLE_MED_REG_LIST, selection,
 					selectionArgs);
 			break;
 		case MED_REG_LIST_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsDeleted = sqlDB.delete(MedRegListTable.TABLE_MED_REG_LIST,
-						MedRegListTable.COLUMN_ID + "=" + id, null);
+				rowsDeleted = sqlDB.delete(MedListLogTable.TABLE_MED_REG_LIST,
+						MedListLogTable.COLUMN_ID + "=" + id, null);
 			} else {
-				rowsDeleted = sqlDB.delete(MedRegListTable.TABLE_MED_REG_LIST,
-						MedRegListTable.COLUMN_ID + "=" + id + " and " + selection,
+				rowsDeleted = sqlDB.delete(MedListLogTable.TABLE_MED_REG_LIST,
+						MedListLogTable.COLUMN_ID + "=" + id + " and " + selection,
 						selectionArgs);
 			}
 			break;
@@ -379,65 +379,65 @@ public class MyContentProvider extends ContentProvider {
 			break;
 			
 		case MED:
-			rowsUpdated = sqlDB.update(MedicationTable.TABLE_MED, values, selection,
+			rowsUpdated = sqlDB.update(MedicationSpecTable.TABLE_MED, values, selection,
 					selectionArgs);
 			break;
 		case MED_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsUpdated = sqlDB.update(MedicationTable.TABLE_MED, values,
-						MedicationTable.COLUMN_ID + "=" + id, null);
+				rowsUpdated = sqlDB.update(MedicationSpecTable.TABLE_MED, values,
+						MedicationSpecTable.COLUMN_ID + "=" + id, null);
 			} else {
-				rowsUpdated = sqlDB.update(MedicationTable.TABLE_MED, values,
-						MedicationTable.COLUMN_ID + "=" + id + " and " + selection,
+				rowsUpdated = sqlDB.update(MedicationSpecTable.TABLE_MED, values,
+						MedicationSpecTable.COLUMN_ID + "=" + id + " and " + selection,
 						selectionArgs);
 			}
 			break;
 			
 		case MED_CAT:
-			rowsUpdated = sqlDB.update(MedCategoryTable.TABLE_MED_CAT, values, selection,
+			rowsUpdated = sqlDB.update(MedCategorySpecTable.TABLE_MED_CAT, values, selection,
 					selectionArgs);
 			break;
 		case MED_CAT_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsUpdated = sqlDB.update(MedCategoryTable.TABLE_MED_CAT, values,
-						MedCategoryTable.COLUMN_ID + "=" + id, null);
+				rowsUpdated = sqlDB.update(MedCategorySpecTable.TABLE_MED_CAT, values,
+						MedCategorySpecTable.COLUMN_ID + "=" + id, null);
 			} else {
-				rowsUpdated = sqlDB.update(MedCategoryTable.TABLE_MED_CAT, values,
-						MedCategoryTable.COLUMN_ID + "=" + id + " and " + selection,
+				rowsUpdated = sqlDB.update(MedCategorySpecTable.TABLE_MED_CAT, values,
+						MedCategorySpecTable.COLUMN_ID + "=" + id + " and " + selection,
 						selectionArgs);
 			}
 			break;
 			
 		case MED_REG:
-			rowsUpdated = sqlDB.update(MedRegTable.TABLE_MED_REG, values, selection,
+			rowsUpdated = sqlDB.update(MedLogTable.TABLE_MED_REG, values, selection,
 					selectionArgs);
 			break;
 		case MED_REG_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsUpdated = sqlDB.update(MedRegTable.TABLE_MED_REG, values,
-						MedRegTable.COLUMN_ID + "=" + id, null);
+				rowsUpdated = sqlDB.update(MedLogTable.TABLE_MED_REG, values,
+						MedLogTable.COLUMN_ID + "=" + id, null);
 			} else {
-				rowsUpdated = sqlDB.update(MedRegTable.TABLE_MED_REG, values,
-						MedRegTable.COLUMN_ID + "=" + id + " and " + selection,
+				rowsUpdated = sqlDB.update(MedLogTable.TABLE_MED_REG, values,
+						MedLogTable.COLUMN_ID + "=" + id + " and " + selection,
 						selectionArgs);
 			}
 			break;
 			
 		case MED_REG_LIST:
-			rowsUpdated = sqlDB.update(MedRegListTable.TABLE_MED_REG_LIST, values, selection,
+			rowsUpdated = sqlDB.update(MedListLogTable.TABLE_MED_REG_LIST, values, selection,
 					selectionArgs);
 			break;
 		case MED_REG_LIST_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsUpdated = sqlDB.update(MedRegListTable.TABLE_MED_REG_LIST, values,
-						MedRegListTable.COLUMN_ID + "=" + id, null);
+				rowsUpdated = sqlDB.update(MedListLogTable.TABLE_MED_REG_LIST, values,
+						MedListLogTable.COLUMN_ID + "=" + id, null);
 			} else {
-				rowsUpdated = sqlDB.update(MedRegListTable.TABLE_MED_REG_LIST, values,
-						MedRegListTable.COLUMN_ID + "=" + id + " and " + selection,
+				rowsUpdated = sqlDB.update(MedListLogTable.TABLE_MED_REG_LIST, values,
+						MedListLogTable.COLUMN_ID + "=" + id + " and " + selection,
 						selectionArgs);
 			}
 			break;
@@ -466,8 +466,8 @@ public class MyContentProvider extends ContentProvider {
 	}
 	
 	private void checkColumnsMed(String[] projection) {
-		String[] available = { MedicationTable.COLUMN_NAME, MedicationTable.COLUMN_FK_CATEGORY, MedicationTable.COLUMN_FK_ID,
-				MedicationTable.COLUMN_ID };
+		String[] available = { MedicationSpecTable.COLUMN_NAME, MedicationSpecTable.COLUMN_FK_CATEGORY, MedicationSpecTable.COLUMN_FK_ID,
+				MedicationSpecTable.COLUMN_ID };
 
 		if (projection != null) {
 			HashSet<String> requestedColumns = new HashSet<String>(
