@@ -1,6 +1,5 @@
 package ntnu.master.nofall.database.test;
 
-import ntnu.master.nofall.database.UserTable;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -41,7 +40,7 @@ public class TestLogTable {
 
 	public static void onUpgrade(SQLiteDatabase database, int oldVersion,
 			int newVersion) {
-		Log.w(UserTable.class.getName(), "Upgrading database from version "
+		Log.w("Throwing DB", "Upgrading database from version "
 				+ oldVersion + " to " + newVersion
 				+ ", which will destroy all old data");
 		database.execSQL("DROP TABLE IF EXISTS " + TABLE_TEST_LOG);
