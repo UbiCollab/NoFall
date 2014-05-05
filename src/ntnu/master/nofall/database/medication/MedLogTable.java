@@ -5,7 +5,7 @@ import android.util.Log;
 
 public class MedLogTable {
 	// Database table
-	public static final String TABLE_MED_REG = "tblMedReg";
+	public static final String TABLE_MED_LOG = "tblMedLog";
 	public static final String COLUMN_ID = "_id";
 	public static final String COLUMN_NUMBER_OF = "numberOf";
 	public static final String COLUMN_DATE = "date";
@@ -13,7 +13,7 @@ public class MedLogTable {
 
 	// Database creation SQL statement
 	  private static final String DATABASE_CREATE = "create table " 
-		      + TABLE_MED_REG
+		      + TABLE_MED_LOG
 		      + "(" 
 		      + COLUMN_ID   + " integer primary key autoincrement, " 
 		      + COLUMN_DATE + " date, " 
@@ -35,7 +35,7 @@ public class MedLogTable {
 		Log.w("Throwing DB", "Upgrading database from version "
 				+ oldVersion + " to " + newVersion
 				+ ", which will destroy all old data");
-		database.execSQL("DROP TABLE IF EXISTS " + TABLE_MED_REG);
+		database.execSQL("DROP TABLE IF EXISTS " + TABLE_MED_LOG);
 		onCreate(database);
 	}
 }

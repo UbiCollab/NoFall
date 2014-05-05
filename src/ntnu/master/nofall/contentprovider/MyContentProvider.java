@@ -30,18 +30,18 @@ public class MyContentProvider extends ContentProvider {
 	private static final int MED_ID = 21;
 	private static final int MED_CAT = 12;
 	private static final int MED_CAT_ID = 22;
-	private static final int MED_REG = 13;
-	private static final int MED_REG_ID = 23;
-	private static final int MED_REG_LIST = 14;
-	private static final int MED_REG_LIST_ID = 24;
+	private static final int MED_LIST_LOG = 13;
+	private static final int MED_LIST_LOG_ID = 23;
+	private static final int MED_LOG = 14;
+	private static final int MED_LOG_ID = 24;
 
 	private static final String AUTHORITY = "ntnu.master.nofall.contentprovider";
 
 	private static final String BASE_PATH_USER = "tblUser";
 	private static final String BASE_PATH_MED = "tblMed";
 	private static final String BASE_PATH_MED_CAT = "tblMedCat";
-	private static final String BASE_PATH_MED_REG = "tblMedReg";
-	private static final String BASE_PATH_MED_REG_LIST = "tblMedRegList";
+	private static final String BASE_PATH_MED_LIST_LOG = "tblMedListLog";
+	private static final String BASE_PATH_MED_LOG = "tblMedLog";
 
 	public static final Uri CONTENT_URI_USER = Uri.parse("content://" + AUTHORITY
 			+ "/" + BASE_PATH_USER);
@@ -49,10 +49,10 @@ public class MyContentProvider extends ContentProvider {
 			+ "/" + BASE_PATH_MED);	
 	public static final Uri CONTENT_URI_MED_CAT = Uri.parse("content://" + AUTHORITY
 			+ "/" + BASE_PATH_MED_CAT);
-	public static final Uri CONTENT_URI_MED_REG = Uri.parse("content://" + AUTHORITY
-			+ "/" + BASE_PATH_MED_REG);
-	public static final Uri CONTENT_URI_MED_REG_LIST = Uri.parse("content://" + AUTHORITY
-			+ "/" + BASE_PATH_MED_REG_LIST);
+	public static final Uri CONTENT_URI_MED_LOG = Uri.parse("content://" + AUTHORITY
+			+ "/" + BASE_PATH_MED_LOG);
+	public static final Uri CONTENT_URI_MED_LIST_LOG = Uri.parse("content://" + AUTHORITY
+			+ "/" + BASE_PATH_MED_LIST_LOG);
 
 	public static final String CONTENT_TYPE_USER = ContentResolver.CURSOR_DIR_BASE_TYPE
 			+ "/tblUser";
@@ -69,15 +69,15 @@ public class MyContentProvider extends ContentProvider {
 	public static final String CONTENT_ITEM_TYPE_MED_CAT = ContentResolver.CURSOR_ITEM_BASE_TYPE
 			+ "/tblMedCat";
 	
-	public static final String CONTENT_TYPE_MED_REG = ContentResolver.CURSOR_DIR_BASE_TYPE
-			+ "/tblMedReg";
-	public static final String CONTENT_ITEM_TYPE_MED_REG = ContentResolver.CURSOR_ITEM_BASE_TYPE
-			+ "/tblMedReg";
+	public static final String CONTENT_TYPE_MED_LOG = ContentResolver.CURSOR_DIR_BASE_TYPE
+			+ "/tblMedLog";
+	public static final String CONTENT_ITEM_TYPE_MED_LOG = ContentResolver.CURSOR_ITEM_BASE_TYPE
+			+ "/tblMedLog";
 	
-	public static final String CONTENT_TYPE_MED_REG_LIST = ContentResolver.CURSOR_DIR_BASE_TYPE
-			+ "/tblMedRegList";
-	public static final String CONTENT_ITEM_TYPE_MED_REG_LIST = ContentResolver.CURSOR_ITEM_BASE_TYPE
-			+ "/tblMedRegList";
+	public static final String CONTENT_TYPE_MED_LIST_LOG = ContentResolver.CURSOR_DIR_BASE_TYPE
+			+ "/tblMedListLog";
+	public static final String CONTENT_ITEM_TYPE_MED_LIST_LOG = ContentResolver.CURSOR_ITEM_BASE_TYPE
+			+ "/tblMedListLog";
 
 	private static final UriMatcher sURIMatcher = new UriMatcher(
 			UriMatcher.NO_MATCH);
@@ -91,11 +91,11 @@ public class MyContentProvider extends ContentProvider {
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MED_CAT, MED_CAT);
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MED_CAT + "/#", MED_CAT_ID);
 		
-		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MED_REG, MED_REG);
-		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MED_REG + "/#", MED_REG_ID);
+		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MED_LIST_LOG, MED_LIST_LOG);
+		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MED_LIST_LOG + "/#", MED_LIST_LOG_ID);
 		
-		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MED_REG_LIST, MED_REG_LIST);
-		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MED_REG_LIST + "/#", MED_REG_LIST_ID);
+		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MED_LOG, MED_LOG);
+		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MED_LOG + "/#", MED_LOG_ID);
 	}
 
 	@Override
@@ -168,32 +168,32 @@ public class MyContentProvider extends ContentProvider {
 					+ uri.getLastPathSegment());
 			break;
 			
-		case MED_REG:
+		case MED_LOG:
 			//checkColumnsMed(projection);
 			// Set the table
-			queryBuilder.setTables(MedLogTable.TABLE_MED_REG);
+			queryBuilder.setTables(MedLogTable.TABLE_MED_LOG);
 			break;
-		case MED_REG_ID:
+		case MED_LOG_ID:
 			// check if the caller has requested a column which does not exists
 			//checkColumnsMed(projection);
 			// Set the table
-			queryBuilder.setTables(MedLogTable.TABLE_MED_REG);
+			queryBuilder.setTables(MedLogTable.TABLE_MED_LOG);
 			
 			// adding the ID to the original query
 			queryBuilder.appendWhere(MedLogTable.COLUMN_ID + "="
 					+ uri.getLastPathSegment());
 			break;
 			
-		case MED_REG_LIST:
+		case MED_LIST_LOG:
 			//checkColumnsMed(projection);
 			// Set the table
-			queryBuilder.setTables(MedListLogTable.TABLE_MED_REG_LIST);
+			queryBuilder.setTables(MedListLogTable.TABLE_MED_LIST_LOG);
 			break;
-		case MED_REG_LIST_ID:
+		case MED_LIST_LOG_ID:
 			// check if the caller has requested a column which does not exists
 			//checkColumnsMed(projection);
 			// Set the table
-			queryBuilder.setTables(MedListLogTable.TABLE_MED_REG_LIST);
+			queryBuilder.setTables(MedListLogTable.TABLE_MED_LIST_LOG);
 			
 			// adding the ID to the original query
 			queryBuilder.appendWhere(MedListLogTable.COLUMN_ID + "="
@@ -243,15 +243,15 @@ public class MyContentProvider extends ContentProvider {
 			getContext().getContentResolver().notifyChange(uri, null);
 			return Uri.parse(BASE_PATH_MED_CAT + "/" + id);
 			
-		case MED_REG:
-			id = sqlDB.insert(MedLogTable.TABLE_MED_REG, null, values);
+		case MED_LOG:
+			id = sqlDB.insert(MedLogTable.TABLE_MED_LOG, null, values);
 			getContext().getContentResolver().notifyChange(uri, null);
-			return Uri.parse(BASE_PATH_MED_REG + "/" + id);
+			return Uri.parse(BASE_PATH_MED_LOG + "/" + id);
 			
-		case MED_REG_LIST:
-			id = sqlDB.insert(MedListLogTable.TABLE_MED_REG_LIST, null, values);
+		case MED_LIST_LOG:
+			id = sqlDB.insert(MedListLogTable.TABLE_MED_LIST_LOG, null, values);
 			getContext().getContentResolver().notifyChange(uri, null);
-			return Uri.parse(BASE_PATH_MED_REG_LIST + "/" + id);
+			return Uri.parse(BASE_PATH_MED_LIST_LOG + "/" + id);
 			
 		default:
 			throw new IllegalArgumentException("Unknown URI: " + uri);
@@ -314,33 +314,33 @@ public class MyContentProvider extends ContentProvider {
 			}
 			break;
 			
-		case MED_REG:
-			rowsDeleted = sqlDB.delete(MedLogTable.TABLE_MED_REG, selection,
+		case MED_LOG:
+			rowsDeleted = sqlDB.delete(MedLogTable.TABLE_MED_LOG, selection,
 					selectionArgs);
 			break;
-		case MED_REG_ID:
+		case MED_LOG_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsDeleted = sqlDB.delete(MedLogTable.TABLE_MED_REG,
+				rowsDeleted = sqlDB.delete(MedLogTable.TABLE_MED_LOG,
 						MedLogTable.COLUMN_ID + "=" + id, null);
 			} else {
-				rowsDeleted = sqlDB.delete(MedLogTable.TABLE_MED_REG,
+				rowsDeleted = sqlDB.delete(MedLogTable.TABLE_MED_LOG,
 						MedLogTable.COLUMN_ID + "=" + id + " and " + selection,
 						selectionArgs);
 			}
 			break;
 			
-		case MED_REG_LIST:
-			rowsDeleted = sqlDB.delete(MedListLogTable.TABLE_MED_REG_LIST, selection,
+		case MED_LIST_LOG:
+			rowsDeleted = sqlDB.delete(MedListLogTable.TABLE_MED_LIST_LOG, selection,
 					selectionArgs);
 			break;
-		case MED_REG_LIST_ID:
+		case MED_LIST_LOG_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsDeleted = sqlDB.delete(MedListLogTable.TABLE_MED_REG_LIST,
+				rowsDeleted = sqlDB.delete(MedListLogTable.TABLE_MED_LIST_LOG,
 						MedListLogTable.COLUMN_ID + "=" + id, null);
 			} else {
-				rowsDeleted = sqlDB.delete(MedListLogTable.TABLE_MED_REG_LIST,
+				rowsDeleted = sqlDB.delete(MedListLogTable.TABLE_MED_LIST_LOG,
 						MedListLogTable.COLUMN_ID + "=" + id + " and " + selection,
 						selectionArgs);
 			}
@@ -410,33 +410,33 @@ public class MyContentProvider extends ContentProvider {
 			}
 			break;
 			
-		case MED_REG:
-			rowsUpdated = sqlDB.update(MedLogTable.TABLE_MED_REG, values, selection,
+		case MED_LOG:
+			rowsUpdated = sqlDB.update(MedLogTable.TABLE_MED_LOG, values, selection,
 					selectionArgs);
 			break;
-		case MED_REG_ID:
+		case MED_LOG_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsUpdated = sqlDB.update(MedLogTable.TABLE_MED_REG, values,
+				rowsUpdated = sqlDB.update(MedLogTable.TABLE_MED_LOG, values,
 						MedLogTable.COLUMN_ID + "=" + id, null);
 			} else {
-				rowsUpdated = sqlDB.update(MedLogTable.TABLE_MED_REG, values,
+				rowsUpdated = sqlDB.update(MedLogTable.TABLE_MED_LOG, values,
 						MedLogTable.COLUMN_ID + "=" + id + " and " + selection,
 						selectionArgs);
 			}
 			break;
 			
-		case MED_REG_LIST:
-			rowsUpdated = sqlDB.update(MedListLogTable.TABLE_MED_REG_LIST, values, selection,
+		case MED_LIST_LOG:
+			rowsUpdated = sqlDB.update(MedListLogTable.TABLE_MED_LIST_LOG, values, selection,
 					selectionArgs);
 			break;
-		case MED_REG_LIST_ID:
+		case MED_LIST_LOG_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsUpdated = sqlDB.update(MedListLogTable.TABLE_MED_REG_LIST, values,
+				rowsUpdated = sqlDB.update(MedListLogTable.TABLE_MED_LIST_LOG, values,
 						MedListLogTable.COLUMN_ID + "=" + id, null);
 			} else {
-				rowsUpdated = sqlDB.update(MedListLogTable.TABLE_MED_REG_LIST, values,
+				rowsUpdated = sqlDB.update(MedListLogTable.TABLE_MED_LIST_LOG, values,
 						MedListLogTable.COLUMN_ID + "=" + id + " and " + selection,
 						selectionArgs);
 			}

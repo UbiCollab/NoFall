@@ -5,7 +5,7 @@ import android.util.Log;
 
 public class MedListLogTable {
 	// Database table
-	public static final String TABLE_MED_REG_LIST = "tblMedRegList";
+	public static final String TABLE_MED_LIST_LOG = "tblMedListLog";
 	public static final String COLUMN_ID = "_id";
 	public static final String COLUMN_FK_MED = "fkMed";
 	public static final String COLUMN_FK_MED_REG = "fkMedReg";
@@ -20,7 +20,7 @@ public class MedListLogTable {
 
 	// Database creation SQL statement
 	  private static final String DATABASE_CREATE = "create table " 
-		      + TABLE_MED_REG_LIST
+		      + TABLE_MED_LIST_LOG
 		      + "(" 
 		      + COLUMN_ID   + " integer primary key autoincrement, " 
 		      + COLUMN_FK_MED + " integer, "
@@ -44,7 +44,7 @@ public class MedListLogTable {
 		Log.w("Throwing DB", "Upgrading database from version "
 				+ oldVersion + " to " + newVersion
 				+ ", which will destroy all old data");
-		database.execSQL("DROP TABLE IF EXISTS " + TABLE_MED_REG_LIST);
+		database.execSQL("DROP TABLE IF EXISTS " + TABLE_MED_LIST_LOG);
 		onCreate(database);
 	}
 }

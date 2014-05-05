@@ -219,7 +219,7 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		ContentValues values = new ContentValues();
 		values.put(MedLogTable.COLUMN_NUMBER_OF, value);
 		 
-		Uri temp = myCR.insert(MyContentProvider.CONTENT_URI_MED_REG, values);
+		Uri temp = myCR.insert(MyContentProvider.CONTENT_URI_MED_LOG, values);
 		
 		return temp;
 	}
@@ -234,15 +234,21 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		values.put(MedListLogTable.COLUMN_FK_MED, medID);
 		values.put(MedListLogTable.COLUMN_FK_MED_REG, listID);
 		
-		myCR.insert(MyContentProvider.CONTENT_URI_MED_REG_LIST, values);
+		myCR.insert(MyContentProvider.CONTENT_URI_MED_LIST_LOG, values);
 	}
 	
+	/**
+	 * Updates the numberOf to be the same as number of selected medications in the MedicationSelectActivity.
+	 * If the user selects more than they chose on the Spinner.
+	 * @param listID
+	 * @param number
+	 */
 	public void updateNumberOfMed(int listID, int number){
 		ContentValues values = new ContentValues();
 		String selection = "_id = \"" + listID + "\"";
 		values.put(MedLogTable.COLUMN_NUMBER_OF, number);
 		 
-		myCR.update(MyContentProvider.CONTENT_URI_MED_REG, values, selection, null);
+		myCR.update(MyContentProvider.CONTENT_URI_MED_LOG, values, selection, null);
 		
 	}
 }
