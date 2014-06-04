@@ -23,7 +23,7 @@ public class MedicationRegActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_medication_reg);
-		mspin = (Spinner) findViewById(R.id.spinner_nmb_medication);
+		mspin = (Spinner) findViewById(R.id.activity_med_spinner_nmb_medication);
 		Integer[] items = new Integer[]{0,1,2,3,4,5,6,7,8};
 		ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, items);
 		mspin.setAdapter(adapter);

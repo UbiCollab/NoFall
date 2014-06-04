@@ -37,9 +37,9 @@ public class TUGActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tug);
 
-		timerTextView = (TextView) findViewById(R.id.timertextview);
+		timerTextView = (TextView) findViewById(R.id.activity_TUG_TV_timer);
 
-		Button b = (Button) findViewById(R.id.btnStartTUG);
+		Button b = (Button) findViewById(R.id.activity_TUG_btn_StartTUG);
 		b.setText("Start");
 		b.setOnClickListener(new View.OnClickListener() {
 
@@ -62,7 +62,7 @@ public class TUGActivity extends Activity {
 	public void onPause() {
 		super.onPause();
 		timerHandler.removeCallbacks(timerRunnable);
-		Button b = (Button) findViewById(R.id.btnStartTUG);
+		Button b = (Button) findViewById(R.id.activity_TUG_btn_StartTUG);
 		b.setText("Start");
 	}
 

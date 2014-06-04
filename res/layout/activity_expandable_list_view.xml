@@ -12,7 +12,7 @@
     </ExpandableListView>
     
     <Button
-    android:id="@+id/btnConfirmMed"
+    android:id="@+id/activity_explist_btn_ConfirmMed"
     style="@style/button_text"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"

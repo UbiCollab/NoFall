@@ -9,22 +9,22 @@
     tools:context="ntnu.master.nofall.MedicationRegActivity$PlaceholderFragment" >
 
     <TextView
-        android:id="@+id/tugDescText"
+        android:id="@+id/activity_TUG_TV_Desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tugDescText"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/timertextview"
+        android:id="@+id/activity_TUG_TV_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tugDescText"
+        android:layout_below="@+id/activity_TUG_TV_Desc"
         android:layout_marginTop="22dp"
         android:hint="@string/tugTimer" />
 
     <Button
-        android:id="@+id/btnStartTUG"
+        android:id="@+id/activity_TUG_btn_StartTUG"
         style="@style/button_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

@@ -9,7 +9,7 @@
     tools:context="ntnu.master.nofall.MainActivity$PlaceholderFragment" >
 
     <Button
-        android:id="@+id/btnStartProcess"
+        android:id="@+id/fragment_main_btn_StartProcess"
         style="@style/button_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -18,49 +18,61 @@
         android:text="@string/btnStartRegTxt" />
 
     <Button
-        android:id="@+id/btnHelp"
+        android:id="@+id/fragment_main_btn_Help"
         style="@style/button_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnStartProcess"
+        android:layout_below="@+id/fragment_main_btn_StartProcess"
         android:layout_centerHorizontal="true"
         android:background="@drawable/custom_button"
         android:onClick="OpenHelpActivity"
         android:text="@string/btnHelpTxt" />
 
     <Button
-        android:id="@+id/btnTest"
+        android:id="@+id/fragment_main_btn_Test"
         style="@style/button_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnHelp"
+        android:layout_below="@+id/fragment_main_btn_Help"
         android:layout_centerHorizontal="true"
         android:background="@drawable/custom_button"
         android:onClick="OpenTUGActivity"
         android:text="TUG" />
 
     <Button
-        android:id="@+id/btnSurvey"
+        android:id="@+id/fragment_main_btn_Survey"
         style="@style/button_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnTest"
-        android:layout_below="@+id/btnSurvey"
+        android:layout_alignLeft="@+id/fragment_main_btn_Test"
+        android:layout_below="@+id/btnXYPlot"
         android:layout_marginTop="15dp"
         android:background="@drawable/custom_button"
         android:onClick="OpenSurveyActivity"
         android:text="Survey" />
 
     <Button
-        android:id="@+id/btnSurvey"
+        android:id="@+id/btnXYPlot"
         style="@style/button_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/btnTest"
-        android:layout_below="@+id/btnTest"
+        android:layout_alignRight="@+id/fragment_main_btn_Test"
+        android:layout_below="@+id/fragment_main_btn_Test"
         android:layout_marginTop="82dp"
         android:background="@drawable/custom_button"
         android:onClick="OpenXYPlotActivity"
         android:text="XYPlot" />
+
+    <Button
+        android:id="@+id/fragment_main_btn_Pedometer"
+        style="@style/button_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/fragment_main_btn_Survey"
+        android:layout_below="@+id/fragment_main_btn_Survey"
+        android:layout_marginBottom="56dp"
+        android:background="@drawable/custom_button"
+        android:onClick="OpenPedometerActivity"
+        android:text="Pedometer" />
 
 </RelativeLayout>

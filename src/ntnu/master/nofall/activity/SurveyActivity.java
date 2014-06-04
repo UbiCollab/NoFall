@@ -65,7 +65,7 @@ public class SurveyActivity extends Activity{
 //	        }
 	        
 	        
-	        surveyQuestion = (TextView) findViewById(R.id.SurveyQuestion);
+	        surveyQuestion = (TextView) findViewById(R.id.activity_survey_TV_SurveyQuestion);
 	        
 	       // displayQuestion();
 	       
