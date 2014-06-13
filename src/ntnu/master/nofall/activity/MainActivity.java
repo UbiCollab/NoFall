@@ -1,12 +1,8 @@
 package ntnu.master.nofall.activity;
 
 import ntnu.master.nofall.R;
-import ntnu.master.nofall.R.id;
-import ntnu.master.nofall.R.layout;
-import ntnu.master.nofall.R.menu;
 import ntnu.master.nofall.pedometer.Pedometer;
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 
 public class MainActivity extends Activity {
 	private final String PREFS_NAME = "MyPrefsFile";

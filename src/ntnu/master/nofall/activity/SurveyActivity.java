@@ -1,17 +1,9 @@
 package ntnu.master.nofall.activity;
 
-import java.io.IOException;
-
 import ntnu.master.nofall.R;
-import ntnu.master.nofall.R.id;
-import ntnu.master.nofall.R.layout;
-
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;

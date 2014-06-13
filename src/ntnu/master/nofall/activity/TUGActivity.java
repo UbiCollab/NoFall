@@ -1,8 +1,6 @@
 package ntnu.master.nofall.activity;
 
 import ntnu.master.nofall.R;
-import ntnu.master.nofall.R.id;
-import ntnu.master.nofall.R.layout;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;

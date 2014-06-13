@@ -3,9 +3,6 @@ package ntnu.master.nofall.activity;
 import java.util.Arrays;
 
 import ntnu.master.nofall.R;
-import ntnu.master.nofall.R.id;
-import ntnu.master.nofall.R.layout;
-
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;

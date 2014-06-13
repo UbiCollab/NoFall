@@ -1,10 +1,6 @@
 package ntnu.master.nofall.activity;
 
 import ntnu.master.nofall.R;
-import ntnu.master.nofall.R.id;
-import ntnu.master.nofall.R.layout;
-import ntnu.master.nofall.R.menu;
-import ntnu.master.nofall.R.string;
 import ntnu.master.nofall.contentprovider.MyContentProvider;
 import ntnu.master.nofall.database.UserTable;
 import android.app.ListActivity;

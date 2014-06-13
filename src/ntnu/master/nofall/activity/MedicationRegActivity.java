@@ -1,15 +1,11 @@
 package ntnu.master.nofall.activity;
 
 import ntnu.master.nofall.R;
-import ntnu.master.nofall.R.id;
-import ntnu.master.nofall.R.layout;
-import ntnu.master.nofall.R.menu;
 import ntnu.master.nofall.database.NoFallDBHelper;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,13 +23,6 @@ public class MedicationRegActivity extends Activity {
 		Integer[] items = new Integer[]{0,1,2,3,4,5,6,7,8};
 		ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, items);
 		mspin.setAdapter(adapter);
-		
-		
-		
-//		if (savedInstanceState == null) {
-//			getFragmentManager().beginTransaction()
-//					.add(R.id.container, new PlaceholderFragment()).commit();
-//		}
 	}
 
 	
