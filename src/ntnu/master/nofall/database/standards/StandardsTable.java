@@ -1,28 +1,25 @@
-package ntnu.master.nofall.database.test;
+package ntnu.master.nofall.database.standards;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-public class TestLogTable {
+public class StandardsTable {
 	// Database table
-	public static final String TABLE_TEST_LOG = "tblTestLog";
+	public static final String TABLE_STANDARDS = "tblStandards";
 	public static final String COLUMN_ID = "_id";
-	public static final String COLUMN_DATE = "date";
-	public static final String COLUMN_TOTAL_RISK = "totalRisk";
+	public static final String COLUMN_MEASURE_TYPE = "measureType";
+	public static final String COLUMN_DATA_TYPE = "dataType";
+	public static final String COLUMN_DATA_UNIT = "dataUnit";
 	
-	// foreign keys: Test Spec
-	public static final String COLUMN_FK_TEST = "fkTest";
-	public static final String TABLE_FK_TEST = "tblTestSpec";
-	public static final String COLUMN_FK_TEST_ID = "_id";
 
 	// Database creation SQL statement
 	  private static final String DATABASE_CREATE = "create table " 
-		      + TABLE_TEST_LOG
+		      + TABLE_STANDARDS
 		      + "(" 
 		      + COLUMN_ID   + " integer primary key autoincrement, " 
-		      + COLUMN_DATE + " date, "  
-		      + COLUMN_FK_TEST + " integer, "
-		      + " FOREIGN KEY ("+COLUMN_FK_TEST+") REFERENCES "+TABLE_FK_TEST+" ("+COLUMN_FK_TEST_ID+") ON DELETE CASCADE );";
+		      + COLUMN_MEASURE_TYPE + " text not null, "
+		      + COLUMN_DATA_TYPE + " text not null, "
+		      + COLUMN_DATA_UNIT + " text not null "  + ");";
 
 	public static void onCreate(SQLiteDatabase database) {
 		try
@@ -40,7 +37,7 @@ public class TestLogTable {
 		Log.w("Throwing DB", "Upgrading database from version "
 				+ oldVersion + " to " + newVersion
 				+ ", which will destroy all old data");
-		database.execSQL("DROP TABLE IF EXISTS " + TABLE_TEST_LOG);
+		database.execSQL("DROP TABLE IF EXISTS " + TABLE_STANDARDS);
 		onCreate(database);
 	}
 }

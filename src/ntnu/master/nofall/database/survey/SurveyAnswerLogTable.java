@@ -7,8 +7,6 @@ public class SurveyAnswerLogTable {
 	// Database table
 	public static final String TABLE_SURVEY_ANSWER_LOG = "tblSurveyAnswerLog";
 	public static final String COLUMN_ID = "_id";
-	public static final String COLUMN_ANSWER = "answer";
-	public static final String COLUMN_CALCULATED_RISK = "calculatedRisk";
 	
 	// foreign keys
 	public static final String COLUMN_FK_SURVEY_LOG = "fkSurvey";
@@ -24,8 +22,6 @@ public class SurveyAnswerLogTable {
 		      + TABLE_SURVEY_ANSWER_LOG
 		      + "(" 
 		      + COLUMN_ID   + " integer primary key autoincrement, " 
-		      + COLUMN_CALCULATED_RISK + " integer, "  
-		      + COLUMN_ANSWER + " text not null, " 
 		      + COLUMN_FK_SURVEY_LOG + " integer, "
 		      + COLUMN_FK_SURVEY_Q_RISK_SPEC + " integer, "
 		      + " FOREIGN KEY ("+COLUMN_FK_SURVEY_LOG+") REFERENCES "+TABLE_FK_SURVEY_LOG+" ("+COLUMN_FK_SURVEY_LOG_ID+") ON DELETE CASCADE"

@@ -8,31 +8,26 @@ public class TestSpecTable {
 	public static final String TABLE_TEST_SPEC = "tblTestSpec";
 	public static final String COLUMN_ID = "_id";
 	public static final String COLUMN_NAME = "name";
-	
+	public static final String COLUMN_OWNER_ID = "ownerId";
 
 	// Database creation SQL statement
-	  private static final String DATABASE_CREATE = "create table " 
-		      + TABLE_TEST_SPEC
-		      + "(" 
-		      + COLUMN_ID   + " integer primary key autoincrement, " 
-		      + COLUMN_NAME + " text not null "  + ");";
+	private static final String DATABASE_CREATE = "create table "
+			+ TABLE_TEST_SPEC + "(" + COLUMN_ID
+			+ " integer primary key autoincrement, " + COLUMN_OWNER_ID
+			+ " text not null, " + COLUMN_NAME + " text not null " + ");";
 
 	public static void onCreate(SQLiteDatabase database) {
-		try
-		{
+		try {
 			database.execSQL(DATABASE_CREATE);
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			Log.w("SQL ERROR", e.toString());
 		}
 	}
 
 	public static void onUpgrade(SQLiteDatabase database, int oldVersion,
 			int newVersion) {
-		Log.w("Throwing DB", "Upgrading database from version "
-				+ oldVersion + " to " + newVersion
-				+ ", which will destroy all old data");
+		Log.w("Throwing DB", "Upgrading database from version " + oldVersion
+				+ " to " + newVersion + ", which will destroy all old data");
 		database.execSQL("DROP TABLE IF EXISTS " + TABLE_TEST_SPEC);
 		onCreate(database);
 	}

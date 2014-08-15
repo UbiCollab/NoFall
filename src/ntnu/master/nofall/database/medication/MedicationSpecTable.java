@@ -7,11 +7,14 @@ public class MedicationSpecTable {
 	// Database table
 	public static final String TABLE_MED = "tblMed";
 	public static final String COLUMN_ID = "_id";
-	public static final String COLUMN_NAME = "name";
-	public static final String COLUMN_RISK = "risk";
+	public static final String COLUMN_NAME = "name";	
+		
+	//foreign key: Foreign Risk Standard
+	public static final String COLUMN_FK_RISK_STAND_MAP = "fkRiskStandMap";
+	public static final String COLUMN_FK_TBL_RISK_STAND_MAP = "tblRiskStandMap";
+	public static final String COLUMN_FK_ID_RISK_STAND_MAP= "_id";
+	// Foreign key: Category
 	public static final String COLUMN_FK_CATEGORY = "fkCategory";
-	
-	// Foreign key
 	public static final String TABLE_MED_CAT = "tblMedCat";
 	public static final String COLUMN_FK_ID = "_id";
 	
@@ -22,8 +25,9 @@ public class MedicationSpecTable {
 		      + "(" 
 		      + COLUMN_ID   + " integer primary key autoincrement, " 
 		      + COLUMN_NAME + " text not null, " 
-		      + COLUMN_RISK + " integer, "
+		      + COLUMN_FK_RISK_STAND_MAP + " integer, "
 		      + COLUMN_FK_CATEGORY + " integer, "
+		      + " FOREIGN KEY ("+COLUMN_FK_RISK_STAND_MAP+") REFERENCES "+COLUMN_FK_TBL_RISK_STAND_MAP+" ("+COLUMN_FK_ID_RISK_STAND_MAP+") ON DELETE CASCADE"
 		      + " FOREIGN KEY ("+COLUMN_FK_CATEGORY+") REFERENCES "+TABLE_MED_CAT+" ("+COLUMN_FK_ID+") ON DELETE CASCADE );";
 
 	public static void onCreate(SQLiteDatabase database) {

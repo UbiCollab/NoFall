@@ -8,9 +8,13 @@ public class TestRiskQuestionSpecTable {
 	public static final String TABLE_TEST_Q_RISK_SPEC = "tblTestQRisk";
 	public static final String COLUMN_ID = "_id";
 	public static final String COLUMN_ANSWER = "answer";
-	public static final String COLUMN_RISK = "risk";
 	
-	// foreign keys
+	//foreign key: Foreign Risk Standard
+	public static final String COLUMN_FK_RISK_STAND_MAP = "fkRiskStandMap";
+	public static final String COLUMN_FK_TBL_RISK_STAND_MAP = "tblRiskStandMap";
+	public static final String COLUMN_FK_ID_RISK_STAND_MAP= "_id";
+	
+	// foreign keys: Test Question
 	public static final String COLUMN_FK_TEST_QUESTION = "fkTestQuestion";
 	public static final String TABLE_FK_TEST_QUESTION = "tblTestQuestionSpec";
 	public static final String COLUMN_FK_TEST_QUESTION_ID = "_id";
@@ -22,8 +26,9 @@ public class TestRiskQuestionSpecTable {
 		      + "(" 
 		      + COLUMN_ID   + " integer primary key autoincrement, " 
 		      + COLUMN_ANSWER + " text not null, "  
-		      + COLUMN_RISK + " integer, " 
+		      + COLUMN_FK_RISK_STAND_MAP + " integer, " 
 		      + COLUMN_FK_TEST_QUESTION + " integer, "
+		      + " FOREIGN KEY ("+COLUMN_FK_RISK_STAND_MAP+") REFERENCES "+COLUMN_FK_TBL_RISK_STAND_MAP+" ("+COLUMN_FK_ID_RISK_STAND_MAP+") ON DELETE CASCADE"
 		      + " FOREIGN KEY ("+COLUMN_FK_TEST_QUESTION+") REFERENCES "+TABLE_FK_TEST_QUESTION+" ("+COLUMN_FK_TEST_QUESTION_ID+") ON DELETE CASCADE );";
 
 	public static void onCreate(SQLiteDatabase database) {

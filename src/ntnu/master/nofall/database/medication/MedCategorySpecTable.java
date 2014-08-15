@@ -8,13 +8,15 @@ public class MedCategorySpecTable {
 	public static final String TABLE_MED_CAT = "tblMedCat";
 	public static final String COLUMN_ID = "_id";
 	public static final String COLUMN_NAME = "name";
+	public static final String COLUMN_OWNER_ID = "owner";
 	
 
 	// Database creation SQL statement
 	  private static final String DATABASE_CREATE = "create table " 
 		      + TABLE_MED_CAT
 		      + "(" 
-		      + COLUMN_ID   + " integer primary key autoincrement, " 
+		      + COLUMN_ID   + " integer primary key autoincrement, "
+		      + COLUMN_OWNER_ID + " text not null, "
 		      + COLUMN_NAME + " text not null "  + ");";
 
 	public static void onCreate(SQLiteDatabase database) {

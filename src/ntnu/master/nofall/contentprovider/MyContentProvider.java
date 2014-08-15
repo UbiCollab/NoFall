@@ -9,9 +9,9 @@ import ntnu.master.nofall.database.medication.MedCategorySpecTable;
 import ntnu.master.nofall.database.medication.MedListLogTable;
 import ntnu.master.nofall.database.medication.MedLogTable;
 import ntnu.master.nofall.database.medication.MedicationSpecTable;
-import ntnu.master.nofall.database.sensor.MovementLogTable;
-import ntnu.master.nofall.database.sensor.MovementRiskSpecTable;
-import ntnu.master.nofall.database.sensor.MovementSpecTable;
+import ntnu.master.nofall.database.sensor.SensorLogTable;
+import ntnu.master.nofall.database.sensor.SensorRiskSpecTable;
+import ntnu.master.nofall.database.sensor.SensorSpecTable;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -39,12 +39,12 @@ public class MyContentProvider extends ContentProvider {
 	private static final int MED_LOG = 14;
 	private static final int MED_LOG_ID = 24;
 	// Sensor UriMatches
-	private static final int MOV_SPEC = 15;
-	private static final int MOV_SPEC_ID = 25;
-	private static final int MOV_RISK_SPEC = 16;
-	private static final int MOV_RISK_SPEC_ID = 26;
-	private static final int MOV_LOG = 17;
-	private static final int MOV_LOG_ID = 27;
+	private static final int SENS_SPEC = 15;
+	private static final int SENS_SPEC_ID = 25;
+	private static final int SENS_RISK_SPEC = 16;
+	private static final int SENS_RISK_SPEC_ID = 26;
+	private static final int SENS_LOG = 17;
+	private static final int SENS_LOG_ID = 27;
 
 	private static final String AUTHORITY = "ntnu.master.nofall.contentprovider";
 
@@ -55,99 +55,101 @@ public class MyContentProvider extends ContentProvider {
 	private static final String BASE_PATH_MED_LOG = "tblMedLog";
 	private static final String BASE_PATH_MED_LIST_LOG = "tblMedListLog";
 	// Sensor
-	private static final String BASE_PATH_MOV_SPEC = "tblMovementSpec";
-	private static final String BASE_PATH_MOV_RISK_SPEC = "tblMovementRiskSpec";
-	private static final String BASE_PATH_MOV_LOG = "tblMovementLog";
+	private static final String BASE_PATH_SENS_SPEC = "tblSensorSpec";
+	private static final String BASE_PATH_SENS_RISK_SPEC = "tblSensorRiskSpec";
+	private static final String BASE_PATH_SENS_LOG = "tblSensorLog";
 
-	public static final Uri CONTENT_URI_USER = Uri.parse("content://" + AUTHORITY
-			+ "/" + BASE_PATH_USER);
+	public static final Uri CONTENT_URI_USER = Uri.parse("content://"
+			+ AUTHORITY + "/" + BASE_PATH_USER);
 	// Medication
-	public static final Uri CONTENT_URI_MED = Uri.parse("content://" + AUTHORITY
-			+ "/" + BASE_PATH_MED);	
-	public static final Uri CONTENT_URI_MED_CAT = Uri.parse("content://" + AUTHORITY
-			+ "/" + BASE_PATH_MED_CAT);
-	public static final Uri CONTENT_URI_MED_LOG = Uri.parse("content://" + AUTHORITY
-			+ "/" + BASE_PATH_MED_LOG);
-	public static final Uri CONTENT_URI_MED_LIST_LOG = Uri.parse("content://" + AUTHORITY
-			+ "/" + BASE_PATH_MED_LIST_LOG);
+	public static final Uri CONTENT_URI_MED = Uri.parse("content://"
+			+ AUTHORITY + "/" + BASE_PATH_MED);
+	public static final Uri CONTENT_URI_MED_CAT = Uri.parse("content://"
+			+ AUTHORITY + "/" + BASE_PATH_MED_CAT);
+	public static final Uri CONTENT_URI_MED_LOG = Uri.parse("content://"
+			+ AUTHORITY + "/" + BASE_PATH_MED_LOG);
+	public static final Uri CONTENT_URI_MED_LIST_LOG = Uri.parse("content://"
+			+ AUTHORITY + "/" + BASE_PATH_MED_LIST_LOG);
 	// Sensor
-	public static final Uri CONTENT_URI_MOV_SPEC = Uri.parse("content://" + AUTHORITY
-			+ "/" + BASE_PATH_MOV_SPEC);	
-	public static final Uri CONTENT_URI_MOV_RISK_SPEC = Uri.parse("content://" + AUTHORITY
-			+ "/" + BASE_PATH_MOV_RISK_SPEC);
-	public static final Uri CONTENT_URI_MOV_LOG = Uri.parse("content://" + AUTHORITY
-			+ "/" + BASE_PATH_MOV_LOG);
+	public static final Uri CONTENT_URI_SENS_SPEC = Uri.parse("content://"
+			+ AUTHORITY + "/" + BASE_PATH_SENS_SPEC);
+	public static final Uri CONTENT_URI_SENS_RISK_SPEC = Uri.parse("content://"
+			+ AUTHORITY + "/" + BASE_PATH_SENS_RISK_SPEC);
+	public static final Uri CONTENT_URI_SENS_LOG = Uri.parse("content://"
+			+ AUTHORITY + "/" + BASE_PATH_SENS_LOG);
 
 	public static final String CONTENT_TYPE_USER = ContentResolver.CURSOR_DIR_BASE_TYPE
 			+ "/tblUser";
 	public static final String CONTENT_ITEM_TYPE_USER = ContentResolver.CURSOR_ITEM_BASE_TYPE
 			+ "/tblUser";
-	
+
 	// Medication
 	public static final String CONTENT_TYPE_MED = ContentResolver.CURSOR_DIR_BASE_TYPE
 			+ "/tblMed";
 	public static final String CONTENT_ITEM_TYPE_MED = ContentResolver.CURSOR_ITEM_BASE_TYPE
 			+ "/tblMed";
-	
+
 	public static final String CONTENT_TYPE_MED_CAT = ContentResolver.CURSOR_DIR_BASE_TYPE
 			+ "/tblMedCat";
 	public static final String CONTENT_ITEM_TYPE_MED_CAT = ContentResolver.CURSOR_ITEM_BASE_TYPE
 			+ "/tblMedCat";
-	
+
 	public static final String CONTENT_TYPE_MED_LOG = ContentResolver.CURSOR_DIR_BASE_TYPE
 			+ "/tblMedLog";
 	public static final String CONTENT_ITEM_TYPE_MED_LOG = ContentResolver.CURSOR_ITEM_BASE_TYPE
 			+ "/tblMedLog";
-	
+
 	public static final String CONTENT_TYPE_MED_LIST_LOG = ContentResolver.CURSOR_DIR_BASE_TYPE
 			+ "/tblMedListLog";
 	public static final String CONTENT_ITEM_TYPE_MED_LIST_LOG = ContentResolver.CURSOR_ITEM_BASE_TYPE
 			+ "/tblMedListLog";
-	
+
 	// Sensors
-	public static final String CONTENT_TYPE_MOV_SPEC = ContentResolver.CURSOR_DIR_BASE_TYPE
-			+ "/tblMovementSpec";
-	public static final String CONTENT_ITEM_TYPE_MOV_SPEC= ContentResolver.CURSOR_ITEM_BASE_TYPE
-			+ "/tblMovementSpec";
-	
-	public static final String CONTENT_TYPE_MED_MOV_RISK_SPEC = ContentResolver.CURSOR_DIR_BASE_TYPE
-			+ "/tblMovementRiskSpec";
-	public static final String CONTENT_ITEM_TYPE_MED_MOV_RISK_SPEC= ContentResolver.CURSOR_ITEM_BASE_TYPE
-			+ "/tblMovementRiskSpec";
-	
-	public static final String CONTENT_TYPE_MOV_LOG = ContentResolver.CURSOR_DIR_BASE_TYPE
-			+ "/tblMovementLog";
-	public static final String CONTENT_ITEM_TYPE_MOV_LOG = ContentResolver.CURSOR_ITEM_BASE_TYPE
-			+ "/tblMovementLog";
-	
+	public static final String CONTENT_TYPE_SENS_SPEC = ContentResolver.CURSOR_DIR_BASE_TYPE
+			+ "/tblSensorSpec";
+	public static final String CONTENT_ITEM_TYPE_SENS_SPEC = ContentResolver.CURSOR_ITEM_BASE_TYPE
+			+ "/tblSensorSpec";
+
+	public static final String CONTENT_TYPE_MED_SENS_RISK_SPEC = ContentResolver.CURSOR_DIR_BASE_TYPE
+			+ "/tblSensorRiskSpec";
+	public static final String CONTENT_ITEM_TYPE_MED_SENS_RISK_SPEC = ContentResolver.CURSOR_ITEM_BASE_TYPE
+			+ "/tblSensorRiskSpec";
+
+	public static final String CONTENT_TYPE_SENS_LOG = ContentResolver.CURSOR_DIR_BASE_TYPE
+			+ "/tblSensorLog";
+	public static final String CONTENT_ITEM_TYPE_SENS_LOG = ContentResolver.CURSOR_ITEM_BASE_TYPE
+			+ "/tblSensorLog";
+
 	private static final UriMatcher sURIMatcher = new UriMatcher(
 			UriMatcher.NO_MATCH);
 	static {
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH_USER, USER);
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH_USER + "/#", USER_ID);
-		
+
 		// Medication
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MED, MED);
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MED + "/#", MED_ID);
-		
+
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MED_CAT, MED_CAT);
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MED_CAT + "/#", MED_CAT_ID);
-		
+
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MED_LOG, MED_LOG);
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MED_LOG + "/#", MED_LOG_ID);
-		
+
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MED_LIST_LOG, MED_LIST_LOG);
-		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MED_LIST_LOG + "/#", MED_LIST_LOG_ID);
-		
+		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MED_LIST_LOG + "/#",
+				MED_LIST_LOG_ID);
+
 		// Sensor
-		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MOV_SPEC, MOV_SPEC);
-		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MOV_SPEC + "/#", MOV_SPEC_ID);
-		
-		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MOV_RISK_SPEC, MOV_RISK_SPEC);
-		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MOV_RISK_SPEC + "/#", MOV_RISK_SPEC_ID);
-		
-		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MOV_LOG, MOV_LOG);
-		sURIMatcher.addURI(AUTHORITY, BASE_PATH_MOV_LOG + "/#", MOV_LOG_ID);
+		sURIMatcher.addURI(AUTHORITY, BASE_PATH_SENS_SPEC, SENS_SPEC);
+		sURIMatcher.addURI(AUTHORITY, BASE_PATH_SENS_SPEC + "/#", SENS_SPEC_ID);
+
+		sURIMatcher.addURI(AUTHORITY, BASE_PATH_SENS_RISK_SPEC, SENS_RISK_SPEC);
+		sURIMatcher.addURI(AUTHORITY, BASE_PATH_SENS_RISK_SPEC + "/#",
+				SENS_RISK_SPEC_ID);
+
+		sURIMatcher.addURI(AUTHORITY, BASE_PATH_SENS_LOG, SENS_LOG);
+		sURIMatcher.addURI(AUTHORITY, BASE_PATH_SENS_LOG + "/#", SENS_LOG_ID);
 	}
 
 	@Override
@@ -162,16 +164,16 @@ public class MyContentProvider extends ContentProvider {
 
 		// Using SQLiteQueryBuilder instead of query() method
 		SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-//
-//		// check if the caller has requested a column which does not exists
-//		checkColumns(projection);
-//
-//		// Set the table
-//		queryBuilder.setTables(UserTable.TABLE_USER);
+		//
+		// // check if the caller has requested a column which does not exists
+		// checkColumns(projection);
+		//
+		// // Set the table
+		// queryBuilder.setTables(UserTable.TABLE_USER);
 
 		int uriType = sURIMatcher.match(uri);
 		switch (uriType) {
-		
+
 		case USER:
 			checkUserColumns(projection);
 			// Set the table
@@ -182,12 +184,12 @@ public class MyContentProvider extends ContentProvider {
 			checkUserColumns(projection);
 			// Set the table
 			queryBuilder.setTables(UserTable.TABLE_USER);
-			
+
 			// adding the ID to the original query
 			queryBuilder.appendWhere(UserTable.COLUMN_ID + "="
 					+ uri.getLastPathSegment());
 			break;
-			
+
 		case MED:
 			checkColumnsMed(projection);
 			// Set the table
@@ -198,108 +200,110 @@ public class MyContentProvider extends ContentProvider {
 			checkColumnsMed(projection);
 			// Set the table
 			queryBuilder.setTables(MedicationSpecTable.TABLE_MED);
-			
+
 			// adding the ID to the original query
 			queryBuilder.appendWhere(MedicationSpecTable.COLUMN_ID + "="
 					+ uri.getLastPathSegment());
 			break;
-			
+
 		case MED_CAT:
-			//checkColumnsMed(projection);
+			// checkColumnsMed(projection);
 			// Set the table
 			queryBuilder.setTables(MedCategorySpecTable.TABLE_MED_CAT);
 			break;
 		case MED_CAT_ID:
 			// check if the caller has requested a column which does not exists
-			//checkColumnsMed(projection);
+			// checkColumnsMed(projection);
 			// Set the table
 			queryBuilder.setTables(MedCategorySpecTable.TABLE_MED_CAT);
-			
+
 			// adding the ID to the original query
 			queryBuilder.appendWhere(MedCategorySpecTable.COLUMN_ID + "="
 					+ uri.getLastPathSegment());
 			break;
-			
+
 		case MED_LOG:
-			//checkColumnsMed(projection);
+			// checkColumnsMed(projection);
 			// Set the table
 			queryBuilder.setTables(MedLogTable.TABLE_MED_LOG);
 			break;
 		case MED_LOG_ID:
 			// check if the caller has requested a column which does not exists
-			//checkColumnsMed(projection);
+			// checkColumnsMed(projection);
 			// Set the table
 			queryBuilder.setTables(MedLogTable.TABLE_MED_LOG);
-			
+
 			// adding the ID to the original query
 			queryBuilder.appendWhere(MedLogTable.COLUMN_ID + "="
 					+ uri.getLastPathSegment());
 			break;
-			
+
 		case MED_LIST_LOG:
-			//checkColumnsMed(projection);
+			// checkColumnsMed(projection);
 			// Set the table
 			queryBuilder.setTables(MedListLogTable.TABLE_MED_LIST_LOG);
 			break;
 		case MED_LIST_LOG_ID:
 			// check if the caller has requested a column which does not exists
-			//checkColumnsMed(projection);
+			// checkColumnsMed(projection);
 			// Set the table
 			queryBuilder.setTables(MedListLogTable.TABLE_MED_LIST_LOG);
-			
+
 			// adding the ID to the original query
 			queryBuilder.appendWhere(MedListLogTable.COLUMN_ID + "="
 					+ uri.getLastPathSegment());
 			break;
-			
-		case MOV_SPEC:
-			//checkColumnsMed(projection);
+
+		case SENS_SPEC:
+			// checkColumnsMed(projection);
 			// Set the table
-			queryBuilder.setTables(MovementSpecTable.TABLE_MOVEMENT_SPEC);
+			queryBuilder.setTables(SensorSpecTable.TABLE_SENSOR_SPEC);
 			break;
-		case MOV_SPEC_ID:
+		case SENS_SPEC_ID:
 			// check if the caller has requested a column which does not exists
-			//checkColumnsMed(projection);
+			// checkColumnsMed(projection);
 			// Set the table
-			queryBuilder.setTables(MovementSpecTable.TABLE_MOVEMENT_SPEC);
-			
+			queryBuilder.setTables(SensorSpecTable.TABLE_SENSOR_SPEC);
+
 			// adding the ID to the original query
-			queryBuilder.appendWhere(MovementSpecTable.COLUMN_ID + "="
+			queryBuilder.appendWhere(SensorSpecTable.COLUMN_ID + "="
 					+ uri.getLastPathSegment());
 			break;
-			
-		case MOV_RISK_SPEC:
-			//checkColumnsMed(projection);
+
+		case SENS_RISK_SPEC:
+			// checkColumnsMed(projection);
 			// Set the table
-			queryBuilder.setTables(MovementRiskSpecTable.TABLE_MOVEMENT_RISK_SPEC);
+			queryBuilder
+					.setTables(SensorRiskSpecTable.TABLE_SENSOR_RISK_SPEC);
 			break;
-		case MOV_RISK_SPEC_ID:
+		case SENS_RISK_SPEC_ID:
 			// check if the caller has requested a column which does not exists
-			//checkColumnsMed(projection);
+			// checkColumnsMed(projection);
 			// Set the table
-			queryBuilder.setTables(MovementRiskSpecTable.TABLE_MOVEMENT_RISK_SPEC);
-			
+			queryBuilder
+					.setTables(SensorRiskSpecTable.TABLE_SENSOR_RISK_SPEC);
+
 			// adding the ID to the original query
-			queryBuilder.appendWhere(MovementRiskSpecTable.COLUMN_ID + "="
+			queryBuilder.appendWhere(SensorRiskSpecTable.COLUMN_ID + "="
 					+ uri.getLastPathSegment());
 			break;
-			
-		case MOV_LOG:
-			//checkColumnsMed(projection);
+
+		case SENS_LOG:
+			// checkColumnsMed(projection);
 			// Set the table
-			queryBuilder.setTables(MovementLogTable.TABLE_MOVEMENT_LOG);
+			queryBuilder.setTables(SensorLogTable.TABLE_SENSOR_LOG);
 			break;
-		case MOV_LOG_ID:
+		case SENS_LOG_ID:
 			// check if the caller has requested a column which does not exists
-			//checkColumnsMed(projection);
+			// checkColumnsMed(projection);
 			// Set the table
-			queryBuilder.setTables(MovementLogTable.TABLE_MOVEMENT_LOG);
-			
+			queryBuilder.setTables(SensorLogTable.TABLE_SENSOR_LOG);
+
 			// adding the ID to the original query
-			queryBuilder.appendWhere(MovementLogTable.COLUMN_ID + "="
+			queryBuilder.appendWhere(SensorLogTable.COLUMN_ID + "="
 					+ uri.getLastPathSegment());
 			break;
-			
+
 		default:
 			throw new IllegalArgumentException("Unknown URI: " + uri);
 		}
@@ -327,46 +331,48 @@ public class MyContentProvider extends ContentProvider {
 		long id = 0;
 
 		switch (uriType) {
-		
+
 		case USER:
 			id = sqlDB.insert(UserTable.TABLE_USER, null, values);
 			getContext().getContentResolver().notifyChange(uri, null);
 			return Uri.parse(BASE_PATH_USER + "/" + id);
-			
+
 		case MED:
 			id = sqlDB.insert(MedicationSpecTable.TABLE_MED, null, values);
 			getContext().getContentResolver().notifyChange(uri, null);
 			return Uri.parse(BASE_PATH_MED + "/" + id);
-			
+
 		case MED_CAT:
 			id = sqlDB.insert(MedCategorySpecTable.TABLE_MED_CAT, null, values);
 			getContext().getContentResolver().notifyChange(uri, null);
 			return Uri.parse(BASE_PATH_MED_CAT + "/" + id);
-			
+
 		case MED_LOG:
 			id = sqlDB.insert(MedLogTable.TABLE_MED_LOG, null, values);
 			getContext().getContentResolver().notifyChange(uri, null);
 			return Uri.parse(BASE_PATH_MED_LOG + "/" + id);
-			
+
 		case MED_LIST_LOG:
 			id = sqlDB.insert(MedListLogTable.TABLE_MED_LIST_LOG, null, values);
 			getContext().getContentResolver().notifyChange(uri, null);
 			return Uri.parse(BASE_PATH_MED_LIST_LOG + "/" + id);
-			
-		case MOV_SPEC:
-			id = sqlDB.insert(MovementSpecTable.TABLE_MOVEMENT_SPEC, null, values);
+
+		case SENS_SPEC:
+			id = sqlDB
+					.insert(SensorSpecTable.TABLE_SENSOR_SPEC, null, values);
 			getContext().getContentResolver().notifyChange(uri, null);
-			return Uri.parse(BASE_PATH_MOV_SPEC + "/" + id);
-			
-		case MOV_RISK_SPEC:
-			id = sqlDB.insert(MovementRiskSpecTable.TABLE_MOVEMENT_RISK_SPEC, null, values);
+			return Uri.parse(BASE_PATH_SENS_SPEC + "/" + id);
+
+		case SENS_RISK_SPEC:
+			id = sqlDB.insert(SensorRiskSpecTable.TABLE_SENSOR_RISK_SPEC,
+					null, values);
 			getContext().getContentResolver().notifyChange(uri, null);
-			return Uri.parse(BASE_PATH_MOV_RISK_SPEC + "/" + id);
-			
-		case MOV_LOG:
-			id = sqlDB.insert(MovementLogTable.TABLE_MOVEMENT_LOG, null, values);
+			return Uri.parse(BASE_PATH_SENS_RISK_SPEC + "/" + id);
+
+		case SENS_LOG:
+			id = sqlDB.insert(SensorLogTable.TABLE_SENSOR_LOG, null, values);
 			getContext().getContentResolver().notifyChange(uri, null);
-			return Uri.parse(BASE_PATH_MOV_LOG + "/" + id);
+			return Uri.parse(BASE_PATH_SENS_LOG + "/" + id);
 		default:
 			throw new IllegalArgumentException("Unknown URI: " + uri);
 		}
@@ -394,11 +400,11 @@ public class MyContentProvider extends ContentProvider {
 						UserTable.COLUMN_ID + "=" + id + " and " + selection,
 						selectionArgs);
 			}
-			break;	
-			
+			break;
+
 		case MED:
-			rowsDeleted = sqlDB.delete(MedicationSpecTable.TABLE_MED, selection,
-					selectionArgs);
+			rowsDeleted = sqlDB.delete(MedicationSpecTable.TABLE_MED,
+					selection, selectionArgs);
 			break;
 		case MED_ID:
 			id = uri.getLastPathSegment();
@@ -407,14 +413,14 @@ public class MyContentProvider extends ContentProvider {
 						MedicationSpecTable.COLUMN_ID + "=" + id, null);
 			} else {
 				rowsDeleted = sqlDB.delete(MedicationSpecTable.TABLE_MED,
-						MedicationSpecTable.COLUMN_ID + "=" + id + " and " + selection,
-						selectionArgs);
+						MedicationSpecTable.COLUMN_ID + "=" + id + " and "
+								+ selection, selectionArgs);
 			}
 			break;
-			
+
 		case MED_CAT:
-			rowsDeleted = sqlDB.delete(MedCategorySpecTable.TABLE_MED_CAT, selection,
-					selectionArgs);
+			rowsDeleted = sqlDB.delete(MedCategorySpecTable.TABLE_MED_CAT,
+					selection, selectionArgs);
 			break;
 		case MED_CAT_ID:
 			id = uri.getLastPathSegment();
@@ -423,11 +429,11 @@ public class MyContentProvider extends ContentProvider {
 						MedCategorySpecTable.COLUMN_ID + "=" + id, null);
 			} else {
 				rowsDeleted = sqlDB.delete(MedCategorySpecTable.TABLE_MED_CAT,
-						MedCategorySpecTable.COLUMN_ID + "=" + id + " and " + selection,
-						selectionArgs);
+						MedCategorySpecTable.COLUMN_ID + "=" + id + " and "
+								+ selection, selectionArgs);
 			}
 			break;
-			
+
 		case MED_LOG:
 			rowsDeleted = sqlDB.delete(MedLogTable.TABLE_MED_LOG, selection,
 					selectionArgs);
@@ -443,10 +449,10 @@ public class MyContentProvider extends ContentProvider {
 						selectionArgs);
 			}
 			break;
-			
+
 		case MED_LIST_LOG:
-			rowsDeleted = sqlDB.delete(MedListLogTable.TABLE_MED_LIST_LOG, selection,
-					selectionArgs);
+			rowsDeleted = sqlDB.delete(MedListLogTable.TABLE_MED_LIST_LOG,
+					selection, selectionArgs);
 			break;
 		case MED_LIST_LOG_ID:
 			id = uri.getLastPathSegment();
@@ -455,56 +461,58 @@ public class MyContentProvider extends ContentProvider {
 						MedListLogTable.COLUMN_ID + "=" + id, null);
 			} else {
 				rowsDeleted = sqlDB.delete(MedListLogTable.TABLE_MED_LIST_LOG,
-						MedListLogTable.COLUMN_ID + "=" + id + " and " + selection,
-						selectionArgs);
+						MedListLogTable.COLUMN_ID + "=" + id + " and "
+								+ selection, selectionArgs);
 			}
 			break;
-			
-		case MOV_SPEC:
-			rowsDeleted = sqlDB.delete(MovementSpecTable.TABLE_MOVEMENT_SPEC, selection,
-					selectionArgs);
+
+		case SENS_SPEC:
+			rowsDeleted = sqlDB.delete(SensorSpecTable.TABLE_SENSOR_SPEC,
+					selection, selectionArgs);
 			break;
-		case MOV_SPEC_ID:
+		case SENS_SPEC_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsDeleted = sqlDB.delete(MovementSpecTable.TABLE_MOVEMENT_SPEC,
-						MovementSpecTable.COLUMN_ID + "=" + id, null);
+				rowsDeleted = sqlDB.delete(SensorSpecTable.TABLE_SENSOR_SPEC,
+						SensorSpecTable.COLUMN_ID + "=" + id, null);
 			} else {
-				rowsDeleted = sqlDB.delete(MovementSpecTable.TABLE_MOVEMENT_SPEC,
-						MovementSpecTable.COLUMN_ID + "=" + id + " and " + selection,
-						selectionArgs);
+				rowsDeleted = sqlDB.delete(SensorSpecTable.TABLE_SENSOR_SPEC,
+						SensorSpecTable.COLUMN_ID + "=" + id + " and "
+								+ selection, selectionArgs);
 			}
 			break;
-			
-		case MOV_RISK_SPEC:
-			rowsDeleted = sqlDB.delete(MovementRiskSpecTable.TABLE_MOVEMENT_RISK_SPEC, selection,
+
+		case SENS_RISK_SPEC:
+			rowsDeleted = sqlDB.delete(
+					SensorRiskSpecTable.TABLE_SENSOR_RISK_SPEC, selection,
 					selectionArgs);
 			break;
-		case MOV_RISK_SPEC_ID:
+		case SENS_RISK_SPEC_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsDeleted = sqlDB.delete(MovementRiskSpecTable.TABLE_MOVEMENT_RISK_SPEC,
-						MovementRiskSpecTable.COLUMN_ID + "=" + id, null);
+				rowsDeleted = sqlDB.delete(
+						SensorRiskSpecTable.TABLE_SENSOR_RISK_SPEC,
+						SensorRiskSpecTable.COLUMN_ID + "=" + id, null);
 			} else {
-				rowsDeleted = sqlDB.delete(MovementSpecTable.TABLE_MOVEMENT_SPEC,
-						MovementRiskSpecTable.COLUMN_ID + "=" + id + " and " + selection,
-						selectionArgs);
+				rowsDeleted = sqlDB.delete(SensorSpecTable.TABLE_SENSOR_SPEC,
+						SensorRiskSpecTable.COLUMN_ID + "=" + id + " and "
+								+ selection, selectionArgs);
 			}
 			break;
-			
-		case MOV_LOG:
-			rowsDeleted = sqlDB.delete(MovementLogTable.TABLE_MOVEMENT_LOG, selection,
-					selectionArgs);
+
+		case SENS_LOG:
+			rowsDeleted = sqlDB.delete(SensorLogTable.TABLE_SENSOR_LOG,
+					selection, selectionArgs);
 			break;
-		case MOV_LOG_ID:
+		case SENS_LOG_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsDeleted = sqlDB.delete(MovementLogTable.TABLE_MOVEMENT_LOG,
-						MovementLogTable.COLUMN_ID + "=" + id, null);
+				rowsDeleted = sqlDB.delete(SensorLogTable.TABLE_SENSOR_LOG,
+						SensorLogTable.COLUMN_ID + "=" + id, null);
 			} else {
-				rowsDeleted = sqlDB.delete(MovementSpecTable.TABLE_MOVEMENT_SPEC,
-						MovementLogTable.COLUMN_ID + "=" + id + " and " + selection,
-						selectionArgs);
+				rowsDeleted = sqlDB.delete(SensorSpecTable.TABLE_SENSOR_SPEC,
+						SensorLogTable.COLUMN_ID + "=" + id + " and "
+								+ selection, selectionArgs);
 			}
 			break;
 		default:
@@ -539,42 +547,43 @@ public class MyContentProvider extends ContentProvider {
 						selectionArgs);
 			}
 			break;
-			
+
 		case MED:
-			rowsUpdated = sqlDB.update(MedicationSpecTable.TABLE_MED, values, selection,
-					selectionArgs);
+			rowsUpdated = sqlDB.update(MedicationSpecTable.TABLE_MED, values,
+					selection, selectionArgs);
 			break;
 		case MED_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsUpdated = sqlDB.update(MedicationSpecTable.TABLE_MED, values,
-						MedicationSpecTable.COLUMN_ID + "=" + id, null);
+				rowsUpdated = sqlDB.update(MedicationSpecTable.TABLE_MED,
+						values, MedicationSpecTable.COLUMN_ID + "=" + id, null);
 			} else {
-				rowsUpdated = sqlDB.update(MedicationSpecTable.TABLE_MED, values,
-						MedicationSpecTable.COLUMN_ID + "=" + id + " and " + selection,
-						selectionArgs);
+				rowsUpdated = sqlDB.update(MedicationSpecTable.TABLE_MED,
+						values, MedicationSpecTable.COLUMN_ID + "=" + id
+								+ " and " + selection, selectionArgs);
 			}
 			break;
-			
+
 		case MED_CAT:
-			rowsUpdated = sqlDB.update(MedCategorySpecTable.TABLE_MED_CAT, values, selection,
-					selectionArgs);
+			rowsUpdated = sqlDB.update(MedCategorySpecTable.TABLE_MED_CAT,
+					values, selection, selectionArgs);
 			break;
 		case MED_CAT_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsUpdated = sqlDB.update(MedCategorySpecTable.TABLE_MED_CAT, values,
-						MedCategorySpecTable.COLUMN_ID + "=" + id, null);
+				rowsUpdated = sqlDB
+						.update(MedCategorySpecTable.TABLE_MED_CAT, values,
+								MedCategorySpecTable.COLUMN_ID + "=" + id, null);
 			} else {
-				rowsUpdated = sqlDB.update(MedCategorySpecTable.TABLE_MED_CAT, values,
-						MedCategorySpecTable.COLUMN_ID + "=" + id + " and " + selection,
-						selectionArgs);
+				rowsUpdated = sqlDB.update(MedCategorySpecTable.TABLE_MED_CAT,
+						values, MedCategorySpecTable.COLUMN_ID + "=" + id
+								+ " and " + selection, selectionArgs);
 			}
 			break;
-			
+
 		case MED_LOG:
-			rowsUpdated = sqlDB.update(MedLogTable.TABLE_MED_LOG, values, selection,
-					selectionArgs);
+			rowsUpdated = sqlDB.update(MedLogTable.TABLE_MED_LOG, values,
+					selection, selectionArgs);
 			break;
 		case MED_LOG_ID:
 			id = uri.getLastPathSegment();
@@ -587,68 +596,70 @@ public class MyContentProvider extends ContentProvider {
 						selectionArgs);
 			}
 			break;
-			
+
 		case MED_LIST_LOG:
-			rowsUpdated = sqlDB.update(MedListLogTable.TABLE_MED_LIST_LOG, values, selection,
-					selectionArgs);
+			rowsUpdated = sqlDB.update(MedListLogTable.TABLE_MED_LIST_LOG,
+					values, selection, selectionArgs);
 			break;
 		case MED_LIST_LOG_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsUpdated = sqlDB.update(MedListLogTable.TABLE_MED_LIST_LOG, values,
-						MedListLogTable.COLUMN_ID + "=" + id, null);
+				rowsUpdated = sqlDB.update(MedListLogTable.TABLE_MED_LIST_LOG,
+						values, MedListLogTable.COLUMN_ID + "=" + id, null);
 			} else {
-				rowsUpdated = sqlDB.update(MedListLogTable.TABLE_MED_LIST_LOG, values,
-						MedListLogTable.COLUMN_ID + "=" + id + " and " + selection,
-						selectionArgs);
+				rowsUpdated = sqlDB.update(MedListLogTable.TABLE_MED_LIST_LOG,
+						values, MedListLogTable.COLUMN_ID + "=" + id + " and "
+								+ selection, selectionArgs);
 			}
 			break;
-			
-		case MOV_SPEC:
-			rowsUpdated = sqlDB.update(MovementSpecTable.TABLE_MOVEMENT_SPEC, values, selection,
-					selectionArgs);
+
+		case SENS_SPEC:
+			rowsUpdated = sqlDB.update(SensorSpecTable.TABLE_SENSOR_SPEC,
+					values, selection, selectionArgs);
 			break;
-		case MOV_SPEC_ID:
+		case SENS_SPEC_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsUpdated = sqlDB.update(MovementSpecTable.TABLE_MOVEMENT_SPEC, values,
-						MovementSpecTable.COLUMN_ID + "=" + id, null);
+				rowsUpdated = sqlDB.update(SensorSpecTable.TABLE_SENSOR_SPEC,
+						values, SensorSpecTable.COLUMN_ID + "=" + id, null);
 			} else {
-				rowsUpdated = sqlDB.update(MedListLogTable.TABLE_MED_LIST_LOG, values,
-						MovementSpecTable.COLUMN_ID + "=" + id + " and " + selection,
-						selectionArgs);
+				rowsUpdated = sqlDB.update(MedListLogTable.TABLE_MED_LIST_LOG,
+						values, SensorSpecTable.COLUMN_ID + "=" + id + " and "
+								+ selection, selectionArgs);
 			}
 			break;
-			
-		case MOV_RISK_SPEC:
-			rowsUpdated = sqlDB.update(MovementRiskSpecTable.TABLE_MOVEMENT_RISK_SPEC, values, selection,
-					selectionArgs);
+
+		case SENS_RISK_SPEC:
+			rowsUpdated = sqlDB.update(
+					SensorRiskSpecTable.TABLE_SENSOR_RISK_SPEC, values,
+					selection, selectionArgs);
 			break;
-		case MOV_RISK_SPEC_ID:
+		case SENS_RISK_SPEC_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsUpdated = sqlDB.update(MovementRiskSpecTable.TABLE_MOVEMENT_RISK_SPEC, values,
-						MovementRiskSpecTable.COLUMN_ID + "=" + id, null);
+				rowsUpdated = sqlDB.update(
+						SensorRiskSpecTable.TABLE_SENSOR_RISK_SPEC, values,
+						SensorRiskSpecTable.COLUMN_ID + "=" + id, null);
 			} else {
-				rowsUpdated = sqlDB.update(MedListLogTable.TABLE_MED_LIST_LOG, values,
-						MovementRiskSpecTable.COLUMN_ID + "=" + id + " and " + selection,
-						selectionArgs);
+				rowsUpdated = sqlDB.update(MedListLogTable.TABLE_MED_LIST_LOG,
+						values, SensorRiskSpecTable.COLUMN_ID + "=" + id
+								+ " and " + selection, selectionArgs);
 			}
 			break;
-			
-		case MOV_LOG:
-			rowsUpdated = sqlDB.update(MovementLogTable.TABLE_MOVEMENT_LOG, values, selection,
-					selectionArgs);
+
+		case SENS_LOG:
+			rowsUpdated = sqlDB.update(SensorLogTable.TABLE_SENSOR_LOG,
+					values, selection, selectionArgs);
 			break;
-		case MOV_LOG_ID:
+		case SENS_LOG_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsUpdated = sqlDB.update(MovementLogTable.TABLE_MOVEMENT_LOG, values,
-						MovementLogTable.COLUMN_ID + "=" + id, null);
+				rowsUpdated = sqlDB.update(SensorLogTable.TABLE_SENSOR_LOG,
+						values, SensorLogTable.COLUMN_ID + "=" + id, null);
 			} else {
-				rowsUpdated = sqlDB.update(MedListLogTable.TABLE_MED_LIST_LOG, values,
-						MovementLogTable.COLUMN_ID + "=" + id + " and " + selection,
-						selectionArgs);
+				rowsUpdated = sqlDB.update(MedListLogTable.TABLE_MED_LIST_LOG,
+						values, SensorLogTable.COLUMN_ID + "=" + id + " and "
+								+ selection, selectionArgs);
 			}
 			break;
 		default:
@@ -674,10 +685,11 @@ public class MyContentProvider extends ContentProvider {
 			}
 		}
 	}
-	
+
 	private void checkColumnsMed(String[] projection) {
-		String[] available = { MedicationSpecTable.COLUMN_NAME, MedicationSpecTable.COLUMN_FK_CATEGORY, MedicationSpecTable.COLUMN_FK_ID,
-				MedicationSpecTable.COLUMN_ID };
+		String[] available = { MedicationSpecTable.COLUMN_NAME,
+				MedicationSpecTable.COLUMN_FK_CATEGORY,
+				MedicationSpecTable.COLUMN_FK_ID, MedicationSpecTable.COLUMN_ID };
 
 		if (projection != null) {
 			HashSet<String> requestedColumns = new HashSet<String>(

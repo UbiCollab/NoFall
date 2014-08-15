@@ -8,6 +8,7 @@ public class SurveySpecTable {
 	public static final String TABLE_SURVEY_SPEC = "tblSurveySpec";
 	public static final String COLUMN_ID = "_id";
 	public static final String COLUMN_NAME = "name";
+	public static final String COLUMN_OWNER_ID = "ownerId";
 	
 
 	// Database creation SQL statement
@@ -15,6 +16,7 @@ public class SurveySpecTable {
 		      + TABLE_SURVEY_SPEC
 		      + "(" 
 		      + COLUMN_ID   + " integer primary key autoincrement, " 
+		      + COLUMN_OWNER_ID + " text not null, "
 		      + COLUMN_NAME + " text not null "  + ");";
 
 	public static void onCreate(SQLiteDatabase database) {

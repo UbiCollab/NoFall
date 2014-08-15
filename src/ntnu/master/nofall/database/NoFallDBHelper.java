@@ -8,9 +8,9 @@ import ntnu.master.nofall.database.medication.MedCategorySpecTable;
 import ntnu.master.nofall.database.medication.MedListLogTable;
 import ntnu.master.nofall.database.medication.MedLogTable;
 import ntnu.master.nofall.database.medication.MedicationSpecTable;
-import ntnu.master.nofall.database.sensor.MovementLogTable;
-import ntnu.master.nofall.database.sensor.MovementRiskSpecTable;
-import ntnu.master.nofall.database.sensor.MovementSpecTable;
+import ntnu.master.nofall.database.sensor.SensorLogTable;
+import ntnu.master.nofall.database.sensor.SensorRiskSpecTable;
+import ntnu.master.nofall.database.sensor.SensorSpecTable;
 import ntnu.master.nofall.object.Category;
 import ntnu.master.nofall.object.SubCategory;
 import android.annotation.SuppressLint;
@@ -62,9 +62,9 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		MedLogTable.onCreate(database);
 		MedListLogTable.onCreate(database);
 		//Tables for movement section
-		MovementLogTable.onCreate(database);
-		MovementRiskSpecTable.onCreate(database);
-		MovementSpecTable.onCreate(database);
+		SensorLogTable.onCreate(database);
+		SensorRiskSpecTable.onCreate(database);
+		SensorSpecTable.onCreate(database);
 		
 		getMedicationDataFromXML();
 		Log.i("XML", "Got data from XML -> Going to insert to DB");
@@ -86,9 +86,9 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		MedLogTable.onUpgrade(database, oldVersion, newVersion);
 		MedListLogTable.onUpgrade(database, oldVersion, newVersion);
 		//Tables for movement section
-		MovementLogTable.onUpgrade(database, oldVersion, newVersion);
-		MovementRiskSpecTable.onUpgrade(database, oldVersion, newVersion);
-		MovementSpecTable.onUpgrade(database, oldVersion, newVersion);
+		SensorLogTable.onUpgrade(database, oldVersion, newVersion);
+		SensorRiskSpecTable.onUpgrade(database, oldVersion, newVersion);
+		SensorSpecTable.onUpgrade(database, oldVersion, newVersion);
 		
 		getMedicationDataFromXML();
 		Log.i("XML", "Got data from XML -> Going to insert to DB");
