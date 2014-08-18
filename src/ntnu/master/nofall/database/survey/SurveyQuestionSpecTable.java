@@ -5,7 +5,7 @@ import android.util.Log;
 
 public class SurveyQuestionSpecTable {
 	// Database table
-	public static final String TABLE_SURVEY__QUESTION_SPEC = "tblSurveyQuestionSpec";
+	public static final String TABLE_SURVEY_QUESTION_SPEC = "tblSurveyQuestionSpec";
 	public static final String COLUMN_ID = "_id";
 	public static final String COLUMN_QUESTION = "question";
 	
@@ -17,7 +17,7 @@ public class SurveyQuestionSpecTable {
 
 	// Database creation SQL statement
 	  private static final String DATABASE_CREATE = "create table " 
-		      + TABLE_SURVEY__QUESTION_SPEC
+		      + TABLE_SURVEY_QUESTION_SPEC
 		      + "(" 
 		      + COLUMN_ID   + " integer primary key autoincrement, " 
 		      + COLUMN_QUESTION + " text not null "  
@@ -40,7 +40,7 @@ public class SurveyQuestionSpecTable {
 		Log.w("Throwing DB", "Upgrading database from version "
 				+ oldVersion + " to " + newVersion
 				+ ", which will destroy all old data");
-		database.execSQL("DROP TABLE IF EXISTS " + TABLE_SURVEY__QUESTION_SPEC);
+		database.execSQL("DROP TABLE IF EXISTS " + TABLE_SURVEY_QUESTION_SPEC);
 		onCreate(database);
 	}
 }
