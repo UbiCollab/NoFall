@@ -2,7 +2,7 @@ package ntnu.master.nofall.activity;
 
 import ntnu.master.nofall.R;
 import ntnu.master.nofall.contentprovider.MyContentProvider;
-import ntnu.master.nofall.database.UserTable;
+import ntnu.master.nofall.database.user.UserTable;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -64,13 +64,13 @@ public class UserDetailActivity extends Activity {
 	}
 
 	private void fillData(Uri uri) {
-		String[] projection = { UserTable.COLUMN_NAME, UserTable.COLUMN_AGE };
+		String[] projection = { UserTable.COLUMN_GENDER, UserTable.COLUMN_AGE };
 		Cursor cursor = getContentResolver().query(uri, projection, null, null,
 				null);
 		if (cursor != null) {
 			cursor.moveToFirst();
 			String category = cursor.getString(cursor
-					.getColumnIndexOrThrow(UserTable.COLUMN_NAME));
+					.getColumnIndexOrThrow(UserTable.COLUMN_GENDER));
 
 			for (int i = 0; i < mCategory.getCount(); i++) {
 
@@ -81,7 +81,7 @@ public class UserDetailActivity extends Activity {
 			}
 
 			mTitleText.setText(cursor.getString(cursor
-					.getColumnIndexOrThrow(UserTable.COLUMN_NAME)));
+					.getColumnIndexOrThrow(UserTable.COLUMN_GENDER)));
 			mBodyText.setText(cursor.getString(cursor
 					.getColumnIndexOrThrow(UserTable.COLUMN_AGE)));
 
@@ -114,7 +114,7 @@ public class UserDetailActivity extends Activity {
 		}
 
 		ContentValues values = new ContentValues();
-		values.put(UserTable.COLUMN_NAME, name);
+		values.put(UserTable.COLUMN_GENDER, name);
 		values.put(UserTable.COLUMN_AGE, age);
 
 		if (userUri == null) {

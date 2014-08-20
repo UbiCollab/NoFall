@@ -1,25 +1,21 @@
 package ntnu.master.nofall.database.standards;
 
+import ntnu.master.nofall.contentprovider.provider.Standard.Standards;
+import ntnu.master.nofall.contentprovider.provider.Users.User;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class StandardsTable {
-	// Database table
-	public static final String TABLE_STANDARDS = "tblStandards";
-	public static final String COLUMN_ID = "_id";
-	public static final String COLUMN_MEASURE_TYPE = "measureType";
-	public static final String COLUMN_DATA_TYPE = "dataType";
-	public static final String COLUMN_DATA_UNIT = "dataUnit";
-	
-
 	// Database creation SQL statement
 	  private static final String DATABASE_CREATE = "create table " 
-		      + TABLE_STANDARDS
+		      + Standards.TABLE_NAME
 		      + "(" 
-		      + COLUMN_ID   + " integer primary key autoincrement, " 
-		      + COLUMN_MEASURE_TYPE + " text not null, "
-		      + COLUMN_DATA_TYPE + " text not null, "
-		      + COLUMN_DATA_UNIT + " text not null "  + ");";
+		      + Standards._ID   + " integer primary key autoincrement, " 
+		      + Standards.MEASURE_TYPE + " text not null, "
+		      + Standards.DATA_TYPE + " text not null, "
+		      + Standards.DATA_UNIT + " text not null, "
+		      + Standards.CREATED_DATE + " integer," 
+		      + Standards.MODIFIED_DATE + " integer"+ ");";
 
 	public static void onCreate(SQLiteDatabase database) {
 		try
@@ -37,7 +33,7 @@ public class StandardsTable {
 		Log.w("Throwing DB", "Upgrading database from version "
 				+ oldVersion + " to " + newVersion
 				+ ", which will destroy all old data");
-		database.execSQL("DROP TABLE IF EXISTS " + TABLE_STANDARDS);
+		database.execSQL("DROP TABLE IF EXISTS " + Standards.TABLE_NAME);
 		onCreate(database);
 	}
 }

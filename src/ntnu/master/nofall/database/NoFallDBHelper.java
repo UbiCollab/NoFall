@@ -11,6 +11,25 @@ import ntnu.master.nofall.database.medication.MedicationSpecTable;
 import ntnu.master.nofall.database.sensor.SensorLogTable;
 import ntnu.master.nofall.database.sensor.SensorRiskSpecTable;
 import ntnu.master.nofall.database.sensor.SensorSpecTable;
+import ntnu.master.nofall.database.standards.StandardForeignTable;
+import ntnu.master.nofall.database.standards.StandardNoFallRiskTable;
+import ntnu.master.nofall.database.standards.StandardRiskMapTable;
+import ntnu.master.nofall.database.standards.StandardsTable;
+import ntnu.master.nofall.database.survey.SurveyAnswerLogTable;
+import ntnu.master.nofall.database.survey.SurveyLogTable;
+import ntnu.master.nofall.database.survey.SurveyQRiskSpecTable;
+import ntnu.master.nofall.database.survey.SurveyQuestionSpecTable;
+import ntnu.master.nofall.database.survey.SurveySpecTable;
+import ntnu.master.nofall.database.test.TestAnswerLogTable;
+import ntnu.master.nofall.database.test.TestLogTable;
+import ntnu.master.nofall.database.test.TestMeasureLogTable;
+import ntnu.master.nofall.database.test.TestMeasureRiskSpecTable;
+import ntnu.master.nofall.database.test.TestMeasureSpecTable;
+import ntnu.master.nofall.database.test.TestQuestionSpecTable;
+import ntnu.master.nofall.database.test.TestQuestionRiskSpecTable;
+import ntnu.master.nofall.database.test.TestSpecTable;
+import ntnu.master.nofall.database.user.UserTotalRiskLogTable;
+import ntnu.master.nofall.database.user.UserTable;
 import ntnu.master.nofall.object.Category;
 import ntnu.master.nofall.object.SubCategory;
 import android.annotation.SuppressLint;
@@ -55,17 +74,45 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase database) {
 		database.execSQL("PRAGMA foreign_keys=ON");
 		
+		// Use tables
 		UserTable.onCreate(database);
-		//Tables for medication section
+		UserTotalRiskLogTable.onCreate(database);
+		
+		// Medication tables
 		MedicationSpecTable.onCreate(database);
 		MedCategorySpecTable.onCreate(database);
 		MedLogTable.onCreate(database);
 		MedListLogTable.onCreate(database);
-		//Tables for movement section
+		
+		// Sensor tables
 		SensorLogTable.onCreate(database);
 		SensorRiskSpecTable.onCreate(database);
 		SensorSpecTable.onCreate(database);
 		
+		// Standards tables
+		StandardForeignTable.onCreate(database);
+		StandardNoFallRiskTable.onCreate(database);
+		StandardRiskMapTable.onCreate(database);
+		StandardsTable.onCreate(database);
+		
+		// Survey tables
+		SurveyAnswerLogTable.onCreate(database);
+		SurveyLogTable.onCreate(database);
+		SurveyQRiskSpecTable.onCreate(database);
+		SurveyQuestionSpecTable.onCreate(database);
+		SurveySpecTable.onCreate(database);
+		
+		// Test tables
+		TestAnswerLogTable.onCreate(database);
+		TestLogTable.onCreate(database);
+		TestMeasureLogTable.onCreate(database);
+		TestMeasureRiskSpecTable.onCreate(database);
+		TestMeasureSpecTable.onCreate(database);
+		TestQuestionSpecTable.onCreate(database);
+		TestQuestionRiskSpecTable.onCreate(database);
+		TestSpecTable.onCreate(database);
+		
+		// Test data generation
 		getMedicationDataFromXML();
 		Log.i("XML", "Got data from XML -> Going to insert to DB");
 		fillCatAndMedTable(database);
@@ -79,16 +126,43 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 			int newVersion) {
 		database.execSQL("PRAGMA foreign_keys=ON");
 		
+		// User tables
 		UserTable.onUpgrade(database, oldVersion, newVersion);
-		//Tables for medication section
+		UserTotalRiskLogTable.onUpgrade(database, oldVersion, newVersion);
+		
+		// Medication tables
 		MedicationSpecTable.onUpgrade(database, oldVersion, newVersion);
 		MedCategorySpecTable.onUpgrade(database, oldVersion, newVersion);
 		MedLogTable.onUpgrade(database, oldVersion, newVersion);
 		MedListLogTable.onUpgrade(database, oldVersion, newVersion);
-		//Tables for movement section
+		
+		// Sensor tables
 		SensorLogTable.onUpgrade(database, oldVersion, newVersion);
 		SensorRiskSpecTable.onUpgrade(database, oldVersion, newVersion);
 		SensorSpecTable.onUpgrade(database, oldVersion, newVersion);
+		
+		// Standards tables
+		StandardForeignTable.onUpgrade(database, oldVersion, newVersion);
+		StandardNoFallRiskTable.onUpgrade(database, oldVersion, newVersion);
+		StandardRiskMapTable.onUpgrade(database, oldVersion, newVersion);
+		StandardsTable.onUpgrade(database, oldVersion, newVersion);
+		
+		// Survey tables
+		SurveyAnswerLogTable.onUpgrade(database, oldVersion, newVersion);
+		SurveyLogTable.onUpgrade(database, oldVersion, newVersion);
+		SurveyQRiskSpecTable.onUpgrade(database, oldVersion, newVersion);
+		SurveyQuestionSpecTable.onUpgrade(database, oldVersion, newVersion);
+		SurveySpecTable.onUpgrade(database, oldVersion, newVersion);
+		
+		// Test tables
+		TestAnswerLogTable.onUpgrade(database, oldVersion, newVersion);
+		TestLogTable.onUpgrade(database, oldVersion, newVersion);
+		TestMeasureLogTable.onUpgrade(database, oldVersion, newVersion);
+		TestMeasureRiskSpecTable.onUpgrade(database, oldVersion, newVersion);
+		TestMeasureSpecTable.onUpgrade(database, oldVersion, newVersion);
+		TestQuestionSpecTable.onUpgrade(database, oldVersion, newVersion);
+		TestQuestionRiskSpecTable.onUpgrade(database, oldVersion, newVersion);
+		TestSpecTable.onUpgrade(database, oldVersion, newVersion);
 		
 		getMedicationDataFromXML();
 		Log.i("XML", "Got data from XML -> Going to insert to DB");

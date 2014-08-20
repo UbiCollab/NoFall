@@ -1,32 +1,24 @@
 package ntnu.master.nofall.database.medication;
 
+import ntnu.master.nofall.contentprovider.provider.Medication.MedicationListLog;
+import ntnu.master.nofall.contentprovider.provider.Medication.MedicationLog;
+import ntnu.master.nofall.contentprovider.provider.Medication.MedicationSpec;
+import ntnu.master.nofall.contentprovider.provider.Users.User;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class MedListLogTable {
-	// Database table
-	public static final String TABLE_MED_LIST_LOG = "tblMedListLog";
-	public static final String COLUMN_ID = "_id";
-	public static final String COLUMN_FK_MED = "fkMed";
-	public static final String COLUMN_FK_MED_REG = "fkMedReg";
-	
-	//foreign key: medication
-	public static final String COLUMN_FK_TBL_MED = "tblMed";
-	public static final String COLUMN_FK_ID_MED = "_id";
-	
-	//foreign key: medreg
-	public static final String COLUMN_FK_TBL_MED_REG = "tblMedReg";
-	public static final String COLUMN_FK_ID_MED_REG = "_id";
-
 	// Database creation SQL statement
 	  private static final String DATABASE_CREATE = "create table " 
-		      + TABLE_MED_LIST_LOG
+		      + MedicationListLog.TABLE_NAME
 		      + "(" 
-		      + COLUMN_ID   + " integer primary key autoincrement, " 
-		      + COLUMN_FK_MED + " integer, "
-		      + COLUMN_FK_MED_REG + " integer, "
-		      + " FOREIGN KEY ("+COLUMN_FK_MED+") REFERENCES "+COLUMN_FK_TBL_MED+" ("+COLUMN_FK_ID_MED+") ON DELETE CASCADE"
-		      + " FOREIGN KEY ("+COLUMN_FK_MED_REG+") REFERENCES "+COLUMN_FK_TBL_MED_REG+" ("+COLUMN_FK_ID_MED_REG+") ON DELETE CASCADE );";
+		      + MedicationListLog._ID   + " integer primary key autoincrement, " 
+		      + MedicationListLog.CREATED_DATE + " integer," 
+		      + MedicationListLog.MODIFIED_DATE + " integer,"
+		      + MedicationListLog.FK_MED_SPEC + " integer, "
+		      + MedicationListLog.FK_MED_LOG + " integer, "
+		      + " FOREIGN KEY ("+MedicationListLog.FK_MED_SPEC+") REFERENCES "+MedicationSpec.TABLE_NAME+" ("+MedicationSpec._ID+") ON DELETE CASCADE"
+		      + " FOREIGN KEY ("+MedicationListLog.FK_MED_LOG+") REFERENCES "+MedicationLog.TABLE_NAME+" ("+MedicationLog._ID+") ON DELETE CASCADE );";
 
 	public static void onCreate(SQLiteDatabase database) {
 		try
@@ -44,7 +36,7 @@ public class MedListLogTable {
 		Log.w("Throwing DB", "Upgrading database from version "
 				+ oldVersion + " to " + newVersion
 				+ ", which will destroy all old data");
-		database.execSQL("DROP TABLE IF EXISTS " + TABLE_MED_LIST_LOG);
+		database.execSQL("DROP TABLE IF EXISTS " + MedicationListLog.TABLE_NAME);
 		onCreate(database);
 	}
 }

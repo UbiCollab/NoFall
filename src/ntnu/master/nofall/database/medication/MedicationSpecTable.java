@@ -1,34 +1,25 @@
 package ntnu.master.nofall.database.medication;
 
+import ntnu.master.nofall.contentprovider.provider.Medication.MedicationCategorySpec;
+import ntnu.master.nofall.contentprovider.provider.Medication.MedicationSpec;
+import ntnu.master.nofall.contentprovider.provider.Standard.StandardsRiskMap;
+import ntnu.master.nofall.contentprovider.provider.Users.User;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class MedicationSpecTable {
-	// Database table
-	public static final String TABLE_MED = "tblMed";
-	public static final String COLUMN_ID = "_id";
-	public static final String COLUMN_NAME = "name";	
-		
-	//foreign key: Foreign Risk Standard
-	public static final String COLUMN_FK_RISK_STAND_MAP = "fkRiskStandMap";
-	public static final String COLUMN_FK_TBL_RISK_STAND_MAP = "tblRiskStandMap";
-	public static final String COLUMN_FK_ID_RISK_STAND_MAP= "_id";
-	// Foreign key: Category
-	public static final String COLUMN_FK_CATEGORY = "fkCategory";
-	public static final String TABLE_MED_CAT = "tblMedCat";
-	public static final String COLUMN_FK_ID = "_id";
-	
-
 	// Database creation SQL statement
 	  private static final String DATABASE_CREATE = "create table " 
-		      + TABLE_MED
+		      + MedicationSpec.TABLE_NAME
 		      + "(" 
-		      + COLUMN_ID   + " integer primary key autoincrement, " 
-		      + COLUMN_NAME + " text not null, " 
-		      + COLUMN_FK_RISK_STAND_MAP + " integer, "
-		      + COLUMN_FK_CATEGORY + " integer, "
-		      + " FOREIGN KEY ("+COLUMN_FK_RISK_STAND_MAP+") REFERENCES "+COLUMN_FK_TBL_RISK_STAND_MAP+" ("+COLUMN_FK_ID_RISK_STAND_MAP+") ON DELETE CASCADE"
-		      + " FOREIGN KEY ("+COLUMN_FK_CATEGORY+") REFERENCES "+TABLE_MED_CAT+" ("+COLUMN_FK_ID+") ON DELETE CASCADE );";
+		      + MedicationSpec._ID   + " integer primary key autoincrement, " 
+		      + MedicationSpec.NAME + " text not null, " 
+		      + MedicationSpec.FK_RISK_STAND_MAP + " integer, "
+		      + MedicationSpec.FK_MEDICATION_CATEGORY + " integer, "
+		      + MedicationSpec.CREATED_DATE + " integer," 
+		      + MedicationSpec.MODIFIED_DATE + " integer,"
+		      + " FOREIGN KEY ("+MedicationSpec.FK_RISK_STAND_MAP+") REFERENCES "+StandardsRiskMap.TABLE_NAME+" ("+StandardsRiskMap._ID+") ON DELETE CASCADE"
+		      + " FOREIGN KEY ("+MedicationSpec.FK_MEDICATION_CATEGORY+") REFERENCES "+MedicationCategorySpec.TABLE_NAME+" ("+MedicationCategorySpec._ID+") ON DELETE CASCADE );";
 
 	public static void onCreate(SQLiteDatabase database) {
 		try
@@ -46,7 +37,7 @@ public class MedicationSpecTable {
 		Log.w("Throwing DB", "Upgrading database from version "
 				+ oldVersion + " to " + newVersion
 				+ ", which will destroy all old data");
-		database.execSQL("DROP TABLE IF EXISTS " + TABLE_MED);
+		database.execSQL("DROP TABLE IF EXISTS " + MedicationSpec.TABLE_NAME);
 		onCreate(database);
 	}
 }

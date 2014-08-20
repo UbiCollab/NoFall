@@ -1,28 +1,21 @@
 package ntnu.master.nofall.database.test;
 
+import ntnu.master.nofall.contentprovider.provider.Test.TestLog;
+import ntnu.master.nofall.contentprovider.provider.Test.TestSpec;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class TestLogTable {
-	// Database table
-	public static final String TABLE_TEST_LOG = "tblTestLog";
-	public static final String COLUMN_ID = "_id";
-	public static final String COLUMN_DATE = "date";
-	public static final String COLUMN_TOTAL_RISK = "totalRisk";
-	
-	// foreign keys: Test Spec
-	public static final String COLUMN_FK_TEST = "fkTest";
-	public static final String TABLE_FK_TEST = "tblTestSpec";
-	public static final String COLUMN_FK_TEST_ID = "_id";
-
 	// Database creation SQL statement
 	  private static final String DATABASE_CREATE = "create table " 
-		      + TABLE_TEST_LOG
+		      + TestLog.TABLE_NAME
 		      + "(" 
-		      + COLUMN_ID   + " integer primary key autoincrement, " 
-		      + COLUMN_DATE + " date, "  
-		      + COLUMN_FK_TEST + " integer, "
-		      + " FOREIGN KEY ("+COLUMN_FK_TEST+") REFERENCES "+TABLE_FK_TEST+" ("+COLUMN_FK_TEST_ID+") ON DELETE CASCADE );";
+		      + TestLog._ID   + " integer primary key autoincrement, " 
+		      + TestLog.DATE + " date, "
+		      + TestLog.CREATED_DATE + " integer," 
+		      + TestLog.MODIFIED_DATE + " integer,"
+		      + TestLog.FK_TEST + " integer, "
+		      + " FOREIGN KEY ("+TestLog.FK_TEST+") REFERENCES "+TestSpec.TABLE_NAME+" ("+TestSpec._ID+") ON DELETE CASCADE );";
 
 	public static void onCreate(SQLiteDatabase database) {
 		try
@@ -40,7 +33,7 @@ public class TestLogTable {
 		Log.w("Throwing DB", "Upgrading database from version "
 				+ oldVersion + " to " + newVersion
 				+ ", which will destroy all old data");
-		database.execSQL("DROP TABLE IF EXISTS " + TABLE_TEST_LOG);
+		database.execSQL("DROP TABLE IF EXISTS " + TestLog.TABLE_NAME);
 		onCreate(database);
 	}
 }

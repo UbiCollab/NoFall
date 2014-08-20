@@ -1,32 +1,23 @@
 package ntnu.master.nofall.database.test;
 
+import ntnu.master.nofall.contentprovider.provider.Test.TestAnswerLog;
+import ntnu.master.nofall.contentprovider.provider.Test.TestLog;
+import ntnu.master.nofall.contentprovider.provider.Test.TestQuestionRiskSpec;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class TestAnswerLogTable {
-	// Database table
-	public static final String TABLE_ANSWER_LOG = "tblAnswerLog";
-	public static final String COLUMN_ID = "_id";
-	
-	//foreign key: testlog
-	public static final String COLUMN_FK_TEST_LOG = "fkTestLog";
-	public static final String TABLE_FK_TEST_LOG = "tblTestLog";
-	public static final String COLUMN_FK_TEST_LOG_ID = "_id";
-	
-	//foreign key: questionrisk
-	public static final String COLUMN_FK_TEST_Q_RISK = "fkTestQRisk";
-	public static final String TABLE_FK_TEST_Q_RISK = "tblTestQRisk";
-	public static final String COLUMN_FK_TEST_Q_RISK_ID = "_id";
-
 	// Database creation SQL statement
 	  private static final String DATABASE_CREATE = "create table " 
-		      + TABLE_ANSWER_LOG
+		      + TestAnswerLog.TABLE_NAME
 		      + "(" 
-		      + COLUMN_ID   + " integer primary key autoincrement, " 
-		      + COLUMN_FK_TEST_LOG + " integer, "
-		      + COLUMN_FK_TEST_Q_RISK + " integer, "
-		      + " FOREIGN KEY ("+COLUMN_FK_TEST_LOG+") REFERENCES "+TABLE_FK_TEST_LOG+" ("+COLUMN_FK_TEST_LOG_ID+") ON DELETE CASCADE"
-		      + " FOREIGN KEY ("+COLUMN_FK_TEST_Q_RISK+") REFERENCES "+TABLE_FK_TEST_Q_RISK+" ("+COLUMN_FK_TEST_Q_RISK_ID+") ON DELETE CASCADE );";
+		      + TestAnswerLog._ID   + " integer primary key autoincrement, "
+		      + TestAnswerLog.CREATED_DATE + " integer," 
+		      + TestAnswerLog.MODIFIED_DATE + " integer,"
+		      + TestAnswerLog.FK_TEST_LOG + " integer, "
+		      + TestAnswerLog.FK_TEST_Q_RISK + " integer, "
+		      + " FOREIGN KEY ("+TestAnswerLog.FK_TEST_LOG+") REFERENCES "+TestLog.TABLE_NAME+" ("+TestLog._ID+") ON DELETE CASCADE"
+		      + " FOREIGN KEY ("+TestAnswerLog.FK_TEST_Q_RISK+") REFERENCES "+TestQuestionRiskSpec.TABLE_NAME+" ("+TestQuestionRiskSpec._ID+") ON DELETE CASCADE );";
 
 	public static void onCreate(SQLiteDatabase database) {
 		try
@@ -44,7 +35,7 @@ public class TestAnswerLogTable {
 		Log.w("Throwing DB", "Upgrading database from version "
 				+ oldVersion + " to " + newVersion
 				+ ", which will destroy all old data");
-		database.execSQL("DROP TABLE IF EXISTS " + TABLE_ANSWER_LOG);
+		database.execSQL("DROP TABLE IF EXISTS " + TestLog.TABLE_NAME);
 		onCreate(database);
 	}
 }

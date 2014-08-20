@@ -1,20 +1,18 @@
 package ntnu.master.nofall.database.test;
 
+import ntnu.master.nofall.contentprovider.provider.Test.TestSpec;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class TestSpecTable {
-	// Database table
-	public static final String TABLE_TEST_SPEC = "tblTestSpec";
-	public static final String COLUMN_ID = "_id";
-	public static final String COLUMN_NAME = "name";
-	public static final String COLUMN_OWNER_ID = "ownerId";
-
 	// Database creation SQL statement
 	private static final String DATABASE_CREATE = "create table "
-			+ TABLE_TEST_SPEC + "(" + COLUMN_ID
-			+ " integer primary key autoincrement, " + COLUMN_OWNER_ID
-			+ " text not null, " + COLUMN_NAME + " text not null " + ");";
+			+ TestSpec.TABLE_NAME + "(" 
+			+ TestSpec._ID + " integer primary key autoincrement, " 
+			+ TestSpec.OWNER_ID + " text not null, " 
+			+ TestSpec.NAME + " text not null, " 
+			+ TestSpec.CREATED_DATE + " integer," 
+		    + TestSpec.MODIFIED_DATE + " integer" + ");";
 
 	public static void onCreate(SQLiteDatabase database) {
 		try {
@@ -28,7 +26,7 @@ public class TestSpecTable {
 			int newVersion) {
 		Log.w("Throwing DB", "Upgrading database from version " + oldVersion
 				+ " to " + newVersion + ", which will destroy all old data");
-		database.execSQL("DROP TABLE IF EXISTS " + TABLE_TEST_SPEC);
+		database.execSQL("DROP TABLE IF EXISTS " + TestSpec.TABLE_NAME);
 		onCreate(database);
 	}
 }

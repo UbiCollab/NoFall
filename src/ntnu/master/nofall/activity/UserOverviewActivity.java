@@ -2,7 +2,7 @@ package ntnu.master.nofall.activity;
 
 import ntnu.master.nofall.R;
 import ntnu.master.nofall.contentprovider.MyContentProvider;
-import ntnu.master.nofall.database.UserTable;
+import ntnu.master.nofall.database.user.UserTable;
 import android.app.ListActivity;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
@@ -107,7 +107,7 @@ public class UserOverviewActivity extends ListActivity implements
 
 		// Fields from the database (projection)
 		// Must include the _id column for the adapter to work
-		String[] from = new String[] { UserTable.COLUMN_NAME };
+		String[] from = new String[] { UserTable.COLUMN_GENDER };
 		// Fields on the UI to which we map
 		int[] to = new int[] { R.id.label };
 
@@ -128,7 +128,7 @@ public class UserOverviewActivity extends ListActivity implements
 	// creates a new loader after the initLoader () call
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		String[] projection = { UserTable.COLUMN_ID, UserTable.COLUMN_NAME };
+		String[] projection = { UserTable.COLUMN_ID, UserTable.COLUMN_GENDER };
 		CursorLoader cursorLoader = new CursorLoader(this,
 				MyContentProvider.CONTENT_URI_USER, projection, null, null, null);
 		return cursorLoader;

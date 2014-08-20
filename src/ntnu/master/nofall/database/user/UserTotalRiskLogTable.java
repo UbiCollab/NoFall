@@ -1,21 +1,25 @@
 package ntnu.master.nofall.database.user;
 
-import ntnu.master.nofall.contentprovider.provider.Users.User;
+import ntnu.master.nofall.contentprovider.provider.Users.UserTotalRisk;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-public class UserTable {
+
+public class UserTotalRiskLogTable {
 
 	// Database creation SQL statement
 	  private static final String DATABASE_CREATE = "create table " 
-		      + User.TABLE_NAME
+		      + UserTotalRisk.TABLE_NAME
 		      + "(" 
-		      + User._ID   + " integer primary key autoincrement, " 
-		      + User.GENDER + " text not null, " 
-		      + User.AGE  + " integer, "
-		      + User.CREATED_DATE + " integer," 
-		      + User.MODIFIED_DATE + " integer" +");";
-	  
+		      + UserTotalRisk._ID   + " integer primary key autoincrement, " 
+		      + UserTotalRisk.MEDICATION_RISK + " integer, " 
+		      + UserTotalRisk.TEST_RISK + " integer, "
+		      + UserTotalRisk.SURVEY_RISK + " integer, "
+		      + UserTotalRisk.DATE + " date, "
+		      + UserTotalRisk.SENSOR_RISK  + " integer, " 
+		      + UserTotalRisk.MODIFIED_DATE + " integer,"
+		      + UserTotalRisk.CREATED_DATE + " integer" +  ");";
+
 	public static void onCreate(SQLiteDatabase database) {
 		try
 		{
@@ -32,7 +36,7 @@ public class UserTable {
 		Log.w("Throwing DB", "Upgrading database from version "
 				+ oldVersion + " to " + newVersion
 				+ ", which will destroy all old data");
-		database.execSQL("DROP TABLE IF EXISTS " + User.TABLE_NAME);
+		database.execSQL("DROP TABLE IF EXISTS " + UserTotalRisk.TABLE_NAME);
 		onCreate(database);
 	}
 }

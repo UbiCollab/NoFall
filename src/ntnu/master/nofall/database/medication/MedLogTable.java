@@ -1,30 +1,22 @@
 package ntnu.master.nofall.database.medication;
 
+import ntnu.master.nofall.contentprovider.provider.Medication.MedicationLog;
+import ntnu.master.nofall.contentprovider.provider.Standard.StandardsRiskMap;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class MedLogTable {
-	// Database table
-	public static final String TABLE_MED_LOG = "tblMedLog";
-	public static final String COLUMN_ID = "_id";
-	public static final String COLUMN_NUMBER_OF = "numberOf";
-	public static final String COLUMN_DATE = "date";
-	
-	//foreign key: Foreign Risk Standard
-	public static final String COLUMN_FK_RISK_STAND_MAP = "fkRiskStandMap";
-	public static final String COLUMN_FK_TBL_RISK_STAND_MAP = "tblRiskStandMap";
-	public static final String COLUMN_FK_ID_RISK_STAND_MAP= "_id";
-	
-
 	// Database creation SQL statement
 	  private static final String DATABASE_CREATE = "create table " 
-		      + TABLE_MED_LOG
+		      + MedicationLog.TABLE_NAME
 		      + "(" 
-		      + COLUMN_ID   + " integer primary key autoincrement, " 
-		      + COLUMN_DATE + " date, " 
-		      + COLUMN_NUMBER_OF + " integer, "
-		      + COLUMN_FK_RISK_STAND_MAP + " integer, "
-		      + " FOREIGN KEY ("+COLUMN_FK_RISK_STAND_MAP+") REFERENCES "+COLUMN_FK_TBL_RISK_STAND_MAP+" ("+COLUMN_FK_ID_RISK_STAND_MAP+") ON DELETE CASCADE );";
+		      + MedicationLog._ID   + " integer primary key autoincrement, " 
+		      + MedicationLog.DATE + " date, " 
+		      + MedicationLog.NUMBER_OF + " integer, "
+		      + MedicationLog.CREATED_DATE + " integer," 
+		      + MedicationLog.MODIFIED_DATE + " integer,"
+		      + MedicationLog.FK_RISK_STAND_MAP + " integer, "
+		      + " FOREIGN KEY ("+MedicationLog.FK_RISK_STAND_MAP+") REFERENCES "+StandardsRiskMap.TABLE_NAME+" ("+StandardsRiskMap._ID+") ON DELETE CASCADE );";
 
 	public static void onCreate(SQLiteDatabase database) {
 		try
@@ -42,7 +34,7 @@ public class MedLogTable {
 		Log.w("Throwing DB", "Upgrading database from version "
 				+ oldVersion + " to " + newVersion
 				+ ", which will destroy all old data");
-		database.execSQL("DROP TABLE IF EXISTS " + TABLE_MED_LOG);
+		database.execSQL("DROP TABLE IF EXISTS " + MedicationLog.TABLE_NAME);
 		onCreate(database);
 	}
 }
