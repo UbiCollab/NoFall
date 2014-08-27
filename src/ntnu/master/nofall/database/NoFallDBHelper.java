@@ -3,7 +3,10 @@ package ntnu.master.nofall.database;
 import java.util.ArrayList;
 
 import ntnu.master.nofall.R;
-import ntnu.master.nofall.contentprovider.MyContentProvider;
+import ntnu.master.nofall.contentprovider.provider.Medication.MedicationCategorySpec;
+import ntnu.master.nofall.contentprovider.provider.Medication.MedicationListLog;
+import ntnu.master.nofall.contentprovider.provider.Medication.MedicationLog;
+import ntnu.master.nofall.contentprovider.provider.Medication.MedicationSpec;
 import ntnu.master.nofall.database.medication.MedCategorySpecTable;
 import ntnu.master.nofall.database.medication.MedListLogTable;
 import ntnu.master.nofall.database.medication.MedLogTable;
@@ -25,11 +28,11 @@ import ntnu.master.nofall.database.test.TestLogTable;
 import ntnu.master.nofall.database.test.TestMeasureLogTable;
 import ntnu.master.nofall.database.test.TestMeasureRiskSpecTable;
 import ntnu.master.nofall.database.test.TestMeasureSpecTable;
-import ntnu.master.nofall.database.test.TestQuestionSpecTable;
 import ntnu.master.nofall.database.test.TestQuestionRiskSpecTable;
+import ntnu.master.nofall.database.test.TestQuestionSpecTable;
 import ntnu.master.nofall.database.test.TestSpecTable;
-import ntnu.master.nofall.database.user.UserTotalRiskLogTable;
 import ntnu.master.nofall.database.user.UserTable;
+import ntnu.master.nofall.database.user.UserTotalRiskLogTable;
 import ntnu.master.nofall.object.Category;
 import ntnu.master.nofall.object.SubCategory;
 import android.annotation.SuppressLint;
@@ -47,7 +50,7 @@ import android.util.Log;
 public class NoFallDBHelper extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "nofall.db";
-	private static final int DATABASE_VERSION = 7;
+	private static final int DATABASE_VERSION = 9;
 
 	private ContentResolver myCR;
 	
@@ -126,6 +129,12 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 			int newVersion) {
 		database.execSQL("PRAGMA foreign_keys=ON");
 		
+		// Standards tables
+		StandardsTable.onUpgrade(database, oldVersion, newVersion);
+		StandardRiskMapTable.onUpgrade(database, oldVersion, newVersion);
+		StandardForeignTable.onUpgrade(database, oldVersion, newVersion);
+		StandardNoFallRiskTable.onUpgrade(database, oldVersion, newVersion);
+		
 		// User tables
 		UserTable.onUpgrade(database, oldVersion, newVersion);
 		UserTotalRiskLogTable.onUpgrade(database, oldVersion, newVersion);
@@ -139,13 +148,7 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		// Sensor tables
 		SensorLogTable.onUpgrade(database, oldVersion, newVersion);
 		SensorRiskSpecTable.onUpgrade(database, oldVersion, newVersion);
-		SensorSpecTable.onUpgrade(database, oldVersion, newVersion);
-		
-		// Standards tables
-		StandardForeignTable.onUpgrade(database, oldVersion, newVersion);
-		StandardNoFallRiskTable.onUpgrade(database, oldVersion, newVersion);
-		StandardRiskMapTable.onUpgrade(database, oldVersion, newVersion);
-		StandardsTable.onUpgrade(database, oldVersion, newVersion);
+		SensorSpecTable.onUpgrade(database, oldVersion, newVersion);						
 		
 		// Survey tables
 		SurveyAnswerLogTable.onUpgrade(database, oldVersion, newVersion);
@@ -241,15 +244,16 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		try{
 		for (Category cat : category_array) {
 			//Add the name of the category to the cat table
-			values.put(MedCategorySpecTable.COLUMN_NAME, cat.category_name);
-			int catID = (int)db.insert(MedCategorySpecTable.TABLE_MED_CAT, null, values);
+			values.put(MedicationCategorySpec.NAME, cat.category_name);
+			values.put(MedicationCategorySpec.OWNER_ID, "NoFall");
+			int catID = (int)db.insert(MedicationCategorySpec.TABLE_NAME, null, values);
 			
 			//Add all medications in category to medication table
 			for (int i = 0; i < cat.subcategory_array.size(); i++) {
 				ContentValues values2 = new ContentValues();
-				values2.put(MedicationSpecTable.COLUMN_NAME, cat.subcategory_array.get(i).subcategory_name);
-				values2.put(MedicationSpecTable.COLUMN_FK_CATEGORY, catID);
-				db.insert(MedicationSpecTable.TABLE_MED, null, values2);
+				values2.put(MedicationSpec.NAME, cat.subcategory_array.get(i).subcategory_name);
+				values2.put(MedicationSpec.FK_MEDICATION_CATEGORY, catID);
+				db.insert(MedicationSpec.TABLE_NAME, null, values2);
 			}
 		}
 		}catch(Exception e){
@@ -263,10 +267,10 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	 * @return Cursor: 0 = COLUMN_ID, 1 = COLUMN_NAME
 	 */
 	public Cursor getMedicationByCategory(int foreignKey){		
-		String selection = "fkCategory = \"" + foreignKey + "\"";
-		String[] projection = {MedicationSpecTable.COLUMN_ID, MedicationSpecTable.COLUMN_NAME};
+		String selection = MedicationSpec.FK_MEDICATION_CATEGORY + " = \"" + foreignKey + "\"";
+		String[] projection = {MedicationSpec._ID, MedicationSpec.NAME};
 		    	
-		Cursor cursor = myCR.query(MyContentProvider.CONTENT_URI_MED, 
+		Cursor cursor = myCR.query(MedicationSpec.CONTENT_URI, 
 		              projection, selection, null,
 		    	        null);
 		return cursor;
@@ -277,11 +281,10 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	 * @return Cursor: 0 = COLUMN_ID, 1 = COLUMN_NAME
 	 */
 	public Cursor getMedCategories(){
-		String[] projection = {MedCategorySpecTable.COLUMN_ID, MedCategorySpecTable.COLUMN_NAME};
+		String[] projection = {MedicationCategorySpec._ID, MedicationCategorySpec.NAME};
     	
-		Cursor cursor = myCR.query(MyContentProvider.CONTENT_URI_MED_CAT, 
-		              projection, null, null,
-		    	        null);
+		Cursor cursor = myCR.query(MedicationCategorySpec.CONTENT_URI, 
+		              projection, null, null, null);
 		return cursor;
 	}
 	
@@ -291,9 +294,9 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	 */
 	public Uri insertNumberOfMedication(int value){
 		ContentValues values = new ContentValues();
-		values.put(MedLogTable.COLUMN_NUMBER_OF, value);
+		values.put(MedicationLog.NUMBER_OF, value);
 		 
-		Uri temp = myCR.insert(MyContentProvider.CONTENT_URI_MED_LOG, values);
+		Uri temp = myCR.insert(MedicationLog.CONTENT_URI, values);
 		
 		return temp;
 	}
@@ -305,10 +308,10 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	 */
 	public void insertRegistreredMedication(int medID, int listID){
 		ContentValues values = new ContentValues();
-		values.put(MedListLogTable.COLUMN_FK_MED, medID);
-		values.put(MedListLogTable.COLUMN_FK_MED_REG, listID);
+		values.put(MedicationListLog.FK_MED_SPEC, medID);
+		values.put(MedicationListLog.FK_MED_LOG, listID);
 		
-		myCR.insert(MyContentProvider.CONTENT_URI_MED_LIST_LOG, values);
+		myCR.insert(MedicationListLog.CONTENT_URI, values);
 	}
 	
 	/**
@@ -319,10 +322,10 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	 */
 	public void updateNumberOfMed(int listID, int number){
 		ContentValues values = new ContentValues();
-		String selection = "_id = \"" + listID + "\"";
-		values.put(MedLogTable.COLUMN_NUMBER_OF, number);
+		String selection = MedicationLog._ID + " = \"" + listID + "\"";
+		values.put(MedicationLog.NUMBER_OF, number);
 		 
-		myCR.update(MyContentProvider.CONTENT_URI_MED_LOG, values, selection, null);
+		myCR.update(MedicationLog.CONTENT_URI, values, selection, null);
 		
 	}
 }

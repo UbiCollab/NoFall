@@ -1,8 +1,7 @@
 package ntnu.master.nofall.activity;
 
 import ntnu.master.nofall.R;
-import ntnu.master.nofall.contentprovider.MyContentProvider;
-import ntnu.master.nofall.database.user.UserTable;
+import ntnu.master.nofall.contentprovider.provider.Users.User;
 import android.app.ListActivity;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
@@ -74,7 +73,7 @@ public class UserOverviewActivity extends ListActivity implements
 			AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
 					.getMenuInfo();
 			Uri uri = Uri
-					.parse(MyContentProvider.CONTENT_URI_USER + "/" + info.id);
+					.parse(User.CONTENT_URI + "/" + info.id);
 			getContentResolver().delete(uri, null, null);
 			fillData();
 			return true;
@@ -97,8 +96,8 @@ public class UserOverviewActivity extends ListActivity implements
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		Intent i = new Intent(this, UserDetailActivity.class);
-		Uri todoUri = Uri.parse(MyContentProvider.CONTENT_URI_USER + "/" + id);
-		i.putExtra(MyContentProvider.CONTENT_ITEM_TYPE_USER, todoUri);
+		Uri todoUri = Uri.parse(User.CONTENT_URI + "/" + id);
+		i.putExtra(User.CONTENT_ITEM_TYPE, todoUri);
 
 		startActivity(i);
 	}
@@ -107,7 +106,7 @@ public class UserOverviewActivity extends ListActivity implements
 
 		// Fields from the database (projection)
 		// Must include the _id column for the adapter to work
-		String[] from = new String[] { UserTable.COLUMN_GENDER };
+		String[] from = new String[] { User.GENDER };
 		// Fields on the UI to which we map
 		int[] to = new int[] { R.id.label };
 
@@ -128,9 +127,9 @@ public class UserOverviewActivity extends ListActivity implements
 	// creates a new loader after the initLoader () call
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		String[] projection = { UserTable.COLUMN_ID, UserTable.COLUMN_GENDER };
+		String[] projection = { User._ID, User.GENDER };
 		CursorLoader cursorLoader = new CursorLoader(this,
-				MyContentProvider.CONTENT_URI_USER, projection, null, null, null);
+				User.CONTENT_URI, projection, null, null, null);
 		return cursorLoader;
 	}
 

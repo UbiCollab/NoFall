@@ -1,8 +1,7 @@
 package ntnu.master.nofall.activity;
 
 import ntnu.master.nofall.R;
-import ntnu.master.nofall.contentprovider.MyContentProvider;
-import ntnu.master.nofall.database.user.UserTable;
+import ntnu.master.nofall.contentprovider.provider.Users.User;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -40,12 +39,12 @@ public class UserDetailActivity extends Activity {
 
 		// check from the saved Instance
 		userUri = (bundle == null) ? null : (Uri) bundle
-				.getParcelable(MyContentProvider.CONTENT_ITEM_TYPE_USER);
+				.getParcelable(User.CONTENT_ITEM_TYPE);
 
 		// Or passed from the other activity
 		if (extras != null) {
 			userUri = extras
-					.getParcelable(MyContentProvider.CONTENT_ITEM_TYPE_USER);
+					.getParcelable(User.CONTENT_ITEM_TYPE);
 
 			fillData(userUri);
 		}
@@ -64,13 +63,13 @@ public class UserDetailActivity extends Activity {
 	}
 
 	private void fillData(Uri uri) {
-		String[] projection = { UserTable.COLUMN_GENDER, UserTable.COLUMN_AGE };
+		String[] projection = { User.GENDER, User.AGE };
 		Cursor cursor = getContentResolver().query(uri, projection, null, null,
 				null);
 		if (cursor != null) {
 			cursor.moveToFirst();
 			String category = cursor.getString(cursor
-					.getColumnIndexOrThrow(UserTable.COLUMN_GENDER));
+					.getColumnIndexOrThrow(User.GENDER));
 
 			for (int i = 0; i < mCategory.getCount(); i++) {
 
@@ -81,9 +80,9 @@ public class UserDetailActivity extends Activity {
 			}
 
 			mTitleText.setText(cursor.getString(cursor
-					.getColumnIndexOrThrow(UserTable.COLUMN_GENDER)));
+					.getColumnIndexOrThrow(User.GENDER)));
 			mBodyText.setText(cursor.getString(cursor
-					.getColumnIndexOrThrow(UserTable.COLUMN_AGE)));
+					.getColumnIndexOrThrow(User.AGE)));
 
 			// always close the cursor
 			cursor.close();
@@ -93,7 +92,7 @@ public class UserDetailActivity extends Activity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		saveState();
-		outState.putParcelable(MyContentProvider.CONTENT_ITEM_TYPE_USER, userUri);
+		outState.putParcelable(User.CONTENT_ITEM_TYPE, userUri);
 	}
 
 	@Override
@@ -114,13 +113,13 @@ public class UserDetailActivity extends Activity {
 		}
 
 		ContentValues values = new ContentValues();
-		values.put(UserTable.COLUMN_GENDER, name);
-		values.put(UserTable.COLUMN_AGE, age);
+		values.put(User.GENDER, name);
+		values.put(User.AGE, age);
 
 		if (userUri == null) {
 			// New todo
 			userUri = getContentResolver().insert(
-					MyContentProvider.CONTENT_URI_USER, values);
+					User.CONTENT_URI, values);
 		} else {
 			// Update todo
 			getContentResolver().update(userUri, values, null, null);
