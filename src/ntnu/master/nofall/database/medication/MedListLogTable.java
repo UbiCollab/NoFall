@@ -3,7 +3,6 @@ package ntnu.master.nofall.database.medication;
 import ntnu.master.nofall.provider.MedicationContract.MedicationListLog;
 import ntnu.master.nofall.provider.MedicationContract.MedicationLog;
 import ntnu.master.nofall.provider.MedicationContract.MedicationSpec;
-import ntnu.master.nofall.provider.UsersContract.User;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
