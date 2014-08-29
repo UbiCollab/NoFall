@@ -26,7 +26,7 @@ public final class Medication {
         
         public static final String TABLE_NAME = "tblMed";
     	
-        public static final Uri CONTENT_URI = Uri.parse("content://" + ContentContract.AUTHORITY + "/" + TABLE_NAME);
+        public static final Uri CONTENT_URI = Uri.parse("content://" + Authority.AUTHORITY + "/" + TABLE_NAME);
         
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
     			+ "/" + TABLE_NAME;
@@ -73,7 +73,7 @@ public final class Medication {
     	   	
         public static final String TABLE_NAME = "tblMedCat";
         
-        public static final Uri CONTENT_URI = Uri.parse("content://" + ContentContract.AUTHORITY + "/" + TABLE_NAME);
+        public static final Uri CONTENT_URI = Uri.parse("content://" + Authority.AUTHORITY + "/" + TABLE_NAME);
         
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
     			+ "/" + TABLE_NAME;
@@ -117,7 +117,7 @@ public final class Medication {
         
         public static final String TABLE_NAME = "tblMedLog";
         
-        public static final Uri CONTENT_URI = Uri.parse("content://" + ContentContract.AUTHORITY + "/" + TABLE_NAME);
+        public static final Uri CONTENT_URI = Uri.parse("content://" + Authority.AUTHORITY + "/" + TABLE_NAME);
         
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
     			+ "/" + TABLE_NAME;
@@ -163,7 +163,7 @@ public final class Medication {
         
         public static final String TABLE_NAME = "tblMedListLog";
         
-        public static final Uri CONTENT_URI = Uri.parse("content://" + ContentContract.AUTHORITY + "/" + TABLE_NAME);
+        public static final Uri CONTENT_URI = Uri.parse("content://" + Authority.AUTHORITY + "/" + TABLE_NAME);
         
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
     			+ "/" + TABLE_NAME;

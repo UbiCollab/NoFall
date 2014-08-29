@@ -32,7 +32,7 @@
         </activity>
 
         <provider
-            android:name="ntnu.master.nofall.contentprovider.MyContentProvider"
+            android:name="ntnu.master.nofall.contentprovider.NoFallProvider"
             android:authorities="ntnu.master.nofall.contentprovider" >
         </provider>
 
