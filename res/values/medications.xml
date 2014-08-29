@@ -6,7 +6,7 @@
         <!-- First item is the type of drug -->
         <item name="Antidepressant">Antidepressant</item>
         <!-- Different kinds -->
-        <item name="Amitriptyine">Amitriptyine</item>
+        <item name="Amitriptyline">Amitriptyine</item>
         <item name="Bupropion">Bupropion</item>
         <item name="Citalopram">Citalopram</item>
         <item name="Clomipramine">Clomipramine</item>
