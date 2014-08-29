@@ -1,12 +1,12 @@
-package ntnu.master.nofall.contentprovider.provider;
+package ntnu.master.nofall.provider;
 
 import android.content.ContentResolver;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-public final class Test {
+public final class TestContract {
     // This class cannot be instantiated
-    private Test() {}
+    private TestContract() {}
     
     /**
      * TestSpec table
@@ -22,7 +22,7 @@ public final class Test {
         /**
          * The content:// style URL for this table
          */
-        public static final Uri CONTENT_URI = Uri.parse("content://" + Authority.AUTHORITY + "/" + TABLE_NAME);
+        public static final Uri CONTENT_URI = Uri.parse("content://" + AuthorityContract.AUTHORITY + "/" + TABLE_NAME);
 
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
     			+ "/" + TABLE_NAME;
@@ -70,7 +70,7 @@ public final class Test {
     	 /**
          * The content:// style URL for this table
          */
-        public static final Uri CONTENT_URI = Uri.parse("content://" + Authority.AUTHORITY + "/" + TABLE_NAME);
+        public static final Uri CONTENT_URI = Uri.parse("content://" + AuthorityContract.AUTHORITY + "/" + TABLE_NAME);
 
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
     			+ "/" + TABLE_NAME;
@@ -120,7 +120,7 @@ public final class Test {
     	 /**
          * The content:// style URL for this table
          */
-        public static final Uri CONTENT_URI = Uri.parse("content://" + Authority.AUTHORITY + "/" + TABLE_NAME);
+        public static final Uri CONTENT_URI = Uri.parse("content://" + AuthorityContract.AUTHORITY + "/" + TABLE_NAME);
 
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
     			+ "/" + TABLE_NAME;
@@ -168,7 +168,7 @@ public final class Test {
     	 /**
          * The content:// style URL for this table
          */
-        public static final Uri CONTENT_URI = Uri.parse("content://" + Authority.AUTHORITY + "/" + TABLE_NAME);
+        public static final Uri CONTENT_URI = Uri.parse("content://" + AuthorityContract.AUTHORITY + "/" + TABLE_NAME);
 
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
     			+ "/" + TABLE_NAME;
@@ -216,7 +216,7 @@ public final class Test {
     	 /**
          * The content:// style URL for this table
          */
-        public static final Uri CONTENT_URI = Uri.parse("content://" + Authority.AUTHORITY + "/" + TABLE_NAME);
+        public static final Uri CONTENT_URI = Uri.parse("content://" + AuthorityContract.AUTHORITY + "/" + TABLE_NAME);
 
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
     			+ "/" + TABLE_NAME;
@@ -266,7 +266,7 @@ public final class Test {
     	 /**
          * The content:// style URL for this table
          */
-        public static final Uri CONTENT_URI = Uri.parse("content://" + Authority.AUTHORITY + "/" + TABLE_NAME);
+        public static final Uri CONTENT_URI = Uri.parse("content://" + AuthorityContract.AUTHORITY + "/" + TABLE_NAME);
 
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
     			+ "/" + TABLE_NAME;
@@ -315,7 +315,7 @@ public final class Test {
     	 /**
          * The content:// style URL for this table
          */
-        public static final Uri CONTENT_URI = Uri.parse("content://" + Authority.AUTHORITY + "/" + TABLE_NAME);
+        public static final Uri CONTENT_URI = Uri.parse("content://" + AuthorityContract.AUTHORITY + "/" + TABLE_NAME);
 
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
     			+ "/" + TABLE_NAME;
@@ -366,7 +366,7 @@ public final class Test {
     	 /**
          * The content:// style URL for this table
          */
-        public static final Uri CONTENT_URI = Uri.parse("content://" + Authority.AUTHORITY + "/" + TABLE_NAME);
+        public static final Uri CONTENT_URI = Uri.parse("content://" + AuthorityContract.AUTHORITY + "/" + TABLE_NAME);
 
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
     			+ "/" + TABLE_NAME;

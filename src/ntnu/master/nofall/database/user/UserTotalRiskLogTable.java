@@ -1,6 +1,6 @@
 package ntnu.master.nofall.database.user;
 
-import ntnu.master.nofall.contentprovider.provider.Users.UserTotalRisk;
+import ntnu.master.nofall.provider.UsersContract.UserTotalRisk;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 

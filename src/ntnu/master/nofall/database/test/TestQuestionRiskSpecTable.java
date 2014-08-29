@@ -1,8 +1,8 @@
 package ntnu.master.nofall.database.test;
 
-import ntnu.master.nofall.contentprovider.provider.Standard.StandardsRiskMap;
-import ntnu.master.nofall.contentprovider.provider.Test.TestQuestionRiskSpec;
-import ntnu.master.nofall.contentprovider.provider.Test.TestQuestionSpec;
+import ntnu.master.nofall.provider.StandardContract.StandardsRiskMap;
+import ntnu.master.nofall.provider.TestContract.TestQuestionRiskSpec;
+import ntnu.master.nofall.provider.TestContract.TestQuestionSpec;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 

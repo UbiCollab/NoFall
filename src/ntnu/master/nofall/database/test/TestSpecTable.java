@@ -1,6 +1,6 @@
 package ntnu.master.nofall.database.test;
 
-import ntnu.master.nofall.contentprovider.provider.Test.TestSpec;
+import ntnu.master.nofall.provider.TestContract.TestSpec;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 

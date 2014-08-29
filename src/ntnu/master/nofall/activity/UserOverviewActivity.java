@@ -1,7 +1,7 @@
 package ntnu.master.nofall.activity;
 
 import ntnu.master.nofall.R;
-import ntnu.master.nofall.contentprovider.provider.Users.User;
+import ntnu.master.nofall.provider.UsersContract.User;
 import android.app.ListActivity;
 import android.app.LoaderManager;
 import android.content.CursorLoader;

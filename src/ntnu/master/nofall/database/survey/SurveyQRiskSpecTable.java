@@ -1,8 +1,8 @@
 package ntnu.master.nofall.database.survey;
 
-import ntnu.master.nofall.contentprovider.provider.Standard.StandardsRiskMap;
-import ntnu.master.nofall.contentprovider.provider.Survey.SurveyQuestionRiskSpec;
-import ntnu.master.nofall.contentprovider.provider.Survey.SurveyQuestionSpec;
+import ntnu.master.nofall.provider.StandardContract.StandardsRiskMap;
+import ntnu.master.nofall.provider.SurveyContract.SurveyQuestionRiskSpec;
+import ntnu.master.nofall.provider.SurveyContract.SurveyQuestionSpec;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 

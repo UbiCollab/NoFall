@@ -1,8 +1,8 @@
 package ntnu.master.nofall.database.sensor;
 
-import ntnu.master.nofall.contentprovider.provider.Sensor.SensorRiskSpec;
-import ntnu.master.nofall.contentprovider.provider.Sensor.SensorSpec;
-import ntnu.master.nofall.contentprovider.provider.Standard.StandardsRiskMap;
+import ntnu.master.nofall.provider.SensorContract.SensorRiskSpec;
+import ntnu.master.nofall.provider.SensorContract.SensorSpec;
+import ntnu.master.nofall.provider.StandardContract.StandardsRiskMap;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 

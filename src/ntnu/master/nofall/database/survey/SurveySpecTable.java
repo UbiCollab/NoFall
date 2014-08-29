@@ -1,7 +1,7 @@
 package ntnu.master.nofall.database.survey;
 
-import ntnu.master.nofall.contentprovider.provider.Survey.SurveySpec;
-import ntnu.master.nofall.contentprovider.provider.Users.User;
+import ntnu.master.nofall.provider.SurveyContract.SurveySpec;
+import ntnu.master.nofall.provider.UsersContract.User;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
