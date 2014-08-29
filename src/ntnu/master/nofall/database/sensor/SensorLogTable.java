@@ -1,7 +1,7 @@
 package ntnu.master.nofall.database.sensor;
 
-import ntnu.master.nofall.contentprovider.provider.Sensor.SensorLog;
-import ntnu.master.nofall.contentprovider.provider.Sensor.SensorSpec;
+import ntnu.master.nofall.provider.SensorContract.SensorLog;
+import ntnu.master.nofall.provider.SensorContract.SensorSpec;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 

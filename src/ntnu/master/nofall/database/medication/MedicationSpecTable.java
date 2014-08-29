@@ -1,9 +1,9 @@
 package ntnu.master.nofall.database.medication;
 
-import ntnu.master.nofall.contentprovider.provider.Medication.MedicationCategorySpec;
-import ntnu.master.nofall.contentprovider.provider.Medication.MedicationSpec;
-import ntnu.master.nofall.contentprovider.provider.Standard.StandardsRiskMap;
-import ntnu.master.nofall.contentprovider.provider.Users.User;
+import ntnu.master.nofall.provider.MedicationContract.MedicationCategorySpec;
+import ntnu.master.nofall.provider.MedicationContract.MedicationSpec;
+import ntnu.master.nofall.provider.StandardContract.StandardsRiskMap;
+import ntnu.master.nofall.provider.UsersContract.User;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 

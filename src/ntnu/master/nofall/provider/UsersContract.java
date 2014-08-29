@@ -1,4 +1,4 @@
-package ntnu.master.nofall.contentprovider.provider;
+package ntnu.master.nofall.provider;
 
 import android.content.ContentResolver;
 import android.net.Uri;
@@ -9,9 +9,9 @@ import android.provider.BaseColumns;
  * @author Finn
  *
  */
-public final class Users {
+public final class UsersContract {
     // This class cannot be instantiated
-    private Users() {}
+    private UsersContract() {}
     
     /**
      * Users table
@@ -27,7 +27,7 @@ public final class Users {
         /**
          * The content:// style URL for this table
          */
-        public static final Uri CONTENT_URI = Uri.parse("content://" + Authority.AUTHORITY + "/" + TABLE_NAME);
+        public static final Uri CONTENT_URI = Uri.parse("content://" + AuthorityContract.AUTHORITY + "/" + TABLE_NAME);
 
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
     			+ "/" + TABLE_NAME;
@@ -74,7 +74,7 @@ public final class Users {
     	 /**
          * The content:// style URL for this table
          */
-        public static final Uri CONTENT_URI = Uri.parse("content://" + Authority.AUTHORITY + "/" + TABLE_NAME);
+        public static final Uri CONTENT_URI = Uri.parse("content://" + AuthorityContract.AUTHORITY + "/" + TABLE_NAME);
 
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
     			+ "/" + TABLE_NAME;

@@ -1,33 +1,33 @@
 package ntnu.master.nofall.contentprovider;
 
-import ntnu.master.nofall.contentprovider.provider.Authority;
-import ntnu.master.nofall.contentprovider.provider.Medication.MedicationCategorySpec;
-import ntnu.master.nofall.contentprovider.provider.Medication.MedicationListLog;
-import ntnu.master.nofall.contentprovider.provider.Medication.MedicationLog;
-import ntnu.master.nofall.contentprovider.provider.Medication.MedicationSpec;
-import ntnu.master.nofall.contentprovider.provider.Sensor.SensorLog;
-import ntnu.master.nofall.contentprovider.provider.Sensor.SensorRiskSpec;
-import ntnu.master.nofall.contentprovider.provider.Sensor.SensorSpec;
-import ntnu.master.nofall.contentprovider.provider.Standard.Standards;
-import ntnu.master.nofall.contentprovider.provider.Standard.StandardsForeign;
-import ntnu.master.nofall.contentprovider.provider.Standard.StandardsNoFall;
-import ntnu.master.nofall.contentprovider.provider.Standard.StandardsRiskMap;
-import ntnu.master.nofall.contentprovider.provider.Survey.SurveyAnswerLog;
-import ntnu.master.nofall.contentprovider.provider.Survey.SurveyLog;
-import ntnu.master.nofall.contentprovider.provider.Survey.SurveyQuestionRiskSpec;
-import ntnu.master.nofall.contentprovider.provider.Survey.SurveyQuestionSpec;
-import ntnu.master.nofall.contentprovider.provider.Survey.SurveySpec;
-import ntnu.master.nofall.contentprovider.provider.Test.TestAnswerLog;
-import ntnu.master.nofall.contentprovider.provider.Test.TestLog;
-import ntnu.master.nofall.contentprovider.provider.Test.TestMeasureLog;
-import ntnu.master.nofall.contentprovider.provider.Test.TestMeasureRiskSpec;
-import ntnu.master.nofall.contentprovider.provider.Test.TestMeasureSpec;
-import ntnu.master.nofall.contentprovider.provider.Test.TestQuestionRiskSpec;
-import ntnu.master.nofall.contentprovider.provider.Test.TestQuestionSpec;
-import ntnu.master.nofall.contentprovider.provider.Test.TestSpec;
-import ntnu.master.nofall.contentprovider.provider.Users.User;
-import ntnu.master.nofall.contentprovider.provider.Users.UserTotalRisk;
 import ntnu.master.nofall.database.NoFallDBHelper;
+import ntnu.master.nofall.provider.AuthorityContract;
+import ntnu.master.nofall.provider.MedicationContract.MedicationCategorySpec;
+import ntnu.master.nofall.provider.MedicationContract.MedicationListLog;
+import ntnu.master.nofall.provider.MedicationContract.MedicationLog;
+import ntnu.master.nofall.provider.MedicationContract.MedicationSpec;
+import ntnu.master.nofall.provider.SensorContract.SensorLog;
+import ntnu.master.nofall.provider.SensorContract.SensorRiskSpec;
+import ntnu.master.nofall.provider.SensorContract.SensorSpec;
+import ntnu.master.nofall.provider.StandardContract.Standards;
+import ntnu.master.nofall.provider.StandardContract.StandardsForeign;
+import ntnu.master.nofall.provider.StandardContract.StandardsNoFall;
+import ntnu.master.nofall.provider.StandardContract.StandardsRiskMap;
+import ntnu.master.nofall.provider.SurveyContract.SurveyAnswerLog;
+import ntnu.master.nofall.provider.SurveyContract.SurveyLog;
+import ntnu.master.nofall.provider.SurveyContract.SurveyQuestionRiskSpec;
+import ntnu.master.nofall.provider.SurveyContract.SurveyQuestionSpec;
+import ntnu.master.nofall.provider.SurveyContract.SurveySpec;
+import ntnu.master.nofall.provider.TestContract.TestAnswerLog;
+import ntnu.master.nofall.provider.TestContract.TestLog;
+import ntnu.master.nofall.provider.TestContract.TestMeasureLog;
+import ntnu.master.nofall.provider.TestContract.TestMeasureRiskSpec;
+import ntnu.master.nofall.provider.TestContract.TestMeasureSpec;
+import ntnu.master.nofall.provider.TestContract.TestQuestionRiskSpec;
+import ntnu.master.nofall.provider.TestContract.TestQuestionSpec;
+import ntnu.master.nofall.provider.TestContract.TestSpec;
+import ntnu.master.nofall.provider.UsersContract.User;
+import ntnu.master.nofall.provider.UsersContract.UserTotalRisk;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
@@ -44,68 +44,68 @@ public class NoFallProvider extends ContentProvider {
 			UriMatcher.NO_MATCH);
 	static {
 		// User
-		sURIMatcher.addURI(Authority.AUTHORITY, User.TABLE_NAME, User.USER);
-		sURIMatcher.addURI(Authority.AUTHORITY, User.TABLE_NAME + "/#", User.USER_ID);
-		sURIMatcher.addURI(Authority.AUTHORITY, UserTotalRisk.TABLE_NAME, UserTotalRisk.USER_TOTAL_RISK);
-		sURIMatcher.addURI(Authority.AUTHORITY, UserTotalRisk.TABLE_NAME + "/#", UserTotalRisk.USER_TOTAL_RISK_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, User.TABLE_NAME, User.USER);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, User.TABLE_NAME + "/#", User.USER_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, UserTotalRisk.TABLE_NAME, UserTotalRisk.USER_TOTAL_RISK);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, UserTotalRisk.TABLE_NAME + "/#", UserTotalRisk.USER_TOTAL_RISK_ID);
 
 		// Medication
-		sURIMatcher.addURI(Authority.AUTHORITY, MedicationSpec.TABLE_NAME, MedicationSpec.MED);
-		sURIMatcher.addURI(Authority.AUTHORITY, MedicationSpec.TABLE_NAME + "/#", MedicationSpec.MED_ID);
-		sURIMatcher.addURI(Authority.AUTHORITY, MedicationCategorySpec.TABLE_NAME, MedicationCategorySpec.MED_CAT);
-		sURIMatcher.addURI(Authority.AUTHORITY, MedicationCategorySpec.TABLE_NAME + "/#", MedicationCategorySpec.MED_CAT_ID);
-		sURIMatcher.addURI(Authority.AUTHORITY, MedicationLog.TABLE_NAME, MedicationLog.MED_LOG);
-		sURIMatcher.addURI(Authority.AUTHORITY, MedicationLog.TABLE_NAME + "/#", MedicationLog.MED_LOG_ID);
-		sURIMatcher.addURI(Authority.AUTHORITY, MedicationListLog.TABLE_NAME, MedicationListLog.MED_LIST_LOG);
-		sURIMatcher.addURI(Authority.AUTHORITY, MedicationListLog.TABLE_NAME + "/#", MedicationListLog.MED_LIST_LOG_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, MedicationSpec.TABLE_NAME, MedicationSpec.MED);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, MedicationSpec.TABLE_NAME + "/#", MedicationSpec.MED_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, MedicationCategorySpec.TABLE_NAME, MedicationCategorySpec.MED_CAT);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, MedicationCategorySpec.TABLE_NAME + "/#", MedicationCategorySpec.MED_CAT_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, MedicationLog.TABLE_NAME, MedicationLog.MED_LOG);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, MedicationLog.TABLE_NAME + "/#", MedicationLog.MED_LOG_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, MedicationListLog.TABLE_NAME, MedicationListLog.MED_LIST_LOG);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, MedicationListLog.TABLE_NAME + "/#", MedicationListLog.MED_LIST_LOG_ID);
 
 		// Sensor
-		sURIMatcher.addURI(Authority.AUTHORITY, SensorSpec.TABLE_NAME, SensorSpec.SENS_SPEC);
-		sURIMatcher.addURI(Authority.AUTHORITY, SensorSpec.TABLE_NAME + "/#", SensorSpec.SENS_SPEC_ID);
-		sURIMatcher.addURI(Authority.AUTHORITY, SensorRiskSpec.TABLE_NAME, SensorRiskSpec.SENS_RISK_SPEC);
-		sURIMatcher.addURI(Authority.AUTHORITY, SensorRiskSpec.TABLE_NAME + "/#", SensorRiskSpec.SENS_RISK_SPEC_ID);
-		sURIMatcher.addURI(Authority.AUTHORITY, SensorLog.TABLE_NAME, SensorLog.SENS_LOG);
-		sURIMatcher.addURI(Authority.AUTHORITY, SensorLog.TABLE_NAME + "/#", SensorLog.SENS_LOG_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, SensorSpec.TABLE_NAME, SensorSpec.SENS_SPEC);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, SensorSpec.TABLE_NAME + "/#", SensorSpec.SENS_SPEC_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, SensorRiskSpec.TABLE_NAME, SensorRiskSpec.SENS_RISK_SPEC);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, SensorRiskSpec.TABLE_NAME + "/#", SensorRiskSpec.SENS_RISK_SPEC_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, SensorLog.TABLE_NAME, SensorLog.SENS_LOG);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, SensorLog.TABLE_NAME + "/#", SensorLog.SENS_LOG_ID);
 		
 		// Standards,
-		sURIMatcher.addURI(Authority.AUTHORITY, Standards.TABLE_NAME, Standards.RISK_STANDARDS);
-		sURIMatcher.addURI(Authority.AUTHORITY, Standards.TABLE_NAME + "/#", Standards.RISK_STANDARDS_ID);
-		sURIMatcher.addURI(Authority.AUTHORITY, StandardsRiskMap.TABLE_NAME, StandardsRiskMap.RISK_STANDARDS_MAP);
-		sURIMatcher.addURI(Authority.AUTHORITY, StandardsRiskMap.TABLE_NAME + "/#", StandardsRiskMap.RISK_STANDARDS_MAP_ID);
-		sURIMatcher.addURI(Authority.AUTHORITY, StandardsNoFall.TABLE_NAME, StandardsNoFall.RISK_STANDARDS_NOFALL);
-		sURIMatcher.addURI(Authority.AUTHORITY, StandardsNoFall.TABLE_NAME + "/#", StandardsNoFall.RISK_STANDARDS_NOFALL_ID);
-		sURIMatcher.addURI(Authority.AUTHORITY, StandardsForeign.TABLE_NAME, StandardsForeign.RISK_STANDARDS_FOREIGN);
-		sURIMatcher.addURI(Authority.AUTHORITY, StandardsForeign.TABLE_NAME + "/#", StandardsForeign.RISK_STANDARDS_FOREIGN_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, Standards.TABLE_NAME, Standards.RISK_STANDARDS);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, Standards.TABLE_NAME + "/#", Standards.RISK_STANDARDS_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, StandardsRiskMap.TABLE_NAME, StandardsRiskMap.RISK_STANDARDS_MAP);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, StandardsRiskMap.TABLE_NAME + "/#", StandardsRiskMap.RISK_STANDARDS_MAP_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, StandardsNoFall.TABLE_NAME, StandardsNoFall.RISK_STANDARDS_NOFALL);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, StandardsNoFall.TABLE_NAME + "/#", StandardsNoFall.RISK_STANDARDS_NOFALL_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, StandardsForeign.TABLE_NAME, StandardsForeign.RISK_STANDARDS_FOREIGN);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, StandardsForeign.TABLE_NAME + "/#", StandardsForeign.RISK_STANDARDS_FOREIGN_ID);
 		
 		// Survey
-		sURIMatcher.addURI(Authority.AUTHORITY, SurveySpec.TABLE_NAME, SurveySpec.SURVEY);
-		sURIMatcher.addURI(Authority.AUTHORITY, SurveySpec.TABLE_NAME + "/#", SurveySpec.SURVEY_ID);
-		sURIMatcher.addURI(Authority.AUTHORITY, SurveyLog.TABLE_NAME, SurveyLog.SURVEY_LOG);
-		sURIMatcher.addURI(Authority.AUTHORITY, SurveyLog.TABLE_NAME + "/#", SurveyLog.SURVEY_LOG_ID);
-		sURIMatcher.addURI(Authority.AUTHORITY, SurveyAnswerLog.TABLE_NAME, SurveyAnswerLog.SURVEY_ANSWER_LOG);
-		sURIMatcher.addURI(Authority.AUTHORITY, SurveyAnswerLog.TABLE_NAME + "/#", SurveyAnswerLog.SURVEY_ANSWER_LOG_ID);
-		sURIMatcher.addURI(Authority.AUTHORITY, SurveyQuestionSpec.TABLE_NAME, SurveyQuestionSpec.SURVEY_QUESTION);
-		sURIMatcher.addURI(Authority.AUTHORITY, SurveyQuestionSpec.TABLE_NAME + "/#", SurveyQuestionSpec.SURVEY_QUESTION_ID);		
-		sURIMatcher.addURI(Authority.AUTHORITY, SurveyQuestionRiskSpec.TABLE_NAME, SurveyQuestionRiskSpec.SURVEY_QUESTION_RISK);
-		sURIMatcher.addURI(Authority.AUTHORITY, SurveyQuestionRiskSpec.TABLE_NAME + "/#", SurveyQuestionRiskSpec.SURVEY_QUESTION_RISK_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, SurveySpec.TABLE_NAME, SurveySpec.SURVEY);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, SurveySpec.TABLE_NAME + "/#", SurveySpec.SURVEY_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, SurveyLog.TABLE_NAME, SurveyLog.SURVEY_LOG);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, SurveyLog.TABLE_NAME + "/#", SurveyLog.SURVEY_LOG_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, SurveyAnswerLog.TABLE_NAME, SurveyAnswerLog.SURVEY_ANSWER_LOG);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, SurveyAnswerLog.TABLE_NAME + "/#", SurveyAnswerLog.SURVEY_ANSWER_LOG_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, SurveyQuestionSpec.TABLE_NAME, SurveyQuestionSpec.SURVEY_QUESTION);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, SurveyQuestionSpec.TABLE_NAME + "/#", SurveyQuestionSpec.SURVEY_QUESTION_ID);		
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, SurveyQuestionRiskSpec.TABLE_NAME, SurveyQuestionRiskSpec.SURVEY_QUESTION_RISK);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, SurveyQuestionRiskSpec.TABLE_NAME + "/#", SurveyQuestionRiskSpec.SURVEY_QUESTION_RISK_ID);
 		
 		// Test
-		sURIMatcher.addURI(Authority.AUTHORITY, TestSpec.TABLE_NAME, TestSpec.TEST);
-		sURIMatcher.addURI(Authority.AUTHORITY, TestSpec.TABLE_NAME + "/#", TestSpec.TEST_ID);
-		sURIMatcher.addURI(Authority.AUTHORITY, TestLog.TABLE_NAME, TestLog.TEST_LOG);
-		sURIMatcher.addURI(Authority.AUTHORITY, TestLog.TABLE_NAME + "/#", TestLog.TEST_LOG_ID);
-		sURIMatcher.addURI(Authority.AUTHORITY, TestAnswerLog.TABLE_NAME, TestAnswerLog.TEST_ANSWER_LOG);
-		sURIMatcher.addURI(Authority.AUTHORITY, TestAnswerLog.TABLE_NAME + "/#", TestAnswerLog.TEST_ANSWER_LOG_ID);
-		sURIMatcher.addURI(Authority.AUTHORITY, TestQuestionSpec.TABLE_NAME, TestQuestionSpec.TEST_QUESTION);
-		sURIMatcher.addURI(Authority.AUTHORITY, TestQuestionSpec.TABLE_NAME + "/#", TestQuestionSpec.TEST_QUESTION_ID);		
-		sURIMatcher.addURI(Authority.AUTHORITY, TestQuestionRiskSpec.TABLE_NAME, TestQuestionRiskSpec.TEST_QUESTION_RISK);
-		sURIMatcher.addURI(Authority.AUTHORITY, TestQuestionRiskSpec.TABLE_NAME + "/#", TestQuestionRiskSpec.TEST_QUESTION_RISK_ID);		
-		sURIMatcher.addURI(Authority.AUTHORITY, TestMeasureSpec.TABLE_NAME, TestMeasureSpec.TEST_MEASURE);
-		sURIMatcher.addURI(Authority.AUTHORITY, TestMeasureSpec.TABLE_NAME + "/#", TestMeasureSpec.TEST_MEASURE_ID);
-		sURIMatcher.addURI(Authority.AUTHORITY, TestMeasureLog.TABLE_NAME, TestMeasureLog.TEST_MEASURE_LOG);
-		sURIMatcher.addURI(Authority.AUTHORITY, TestMeasureLog.TABLE_NAME + "/#", TestMeasureLog.TEST_MEASURE_LOG_ID);		
-		sURIMatcher.addURI(Authority.AUTHORITY, TestMeasureRiskSpec.TABLE_NAME, TestMeasureRiskSpec.TEST_MEASURE_RISK);
-		sURIMatcher.addURI(Authority.AUTHORITY, TestMeasureRiskSpec.TABLE_NAME + "/#", TestMeasureRiskSpec.TEST_MEASURE_RISK_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, TestSpec.TABLE_NAME, TestSpec.TEST);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, TestSpec.TABLE_NAME + "/#", TestSpec.TEST_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, TestLog.TABLE_NAME, TestLog.TEST_LOG);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, TestLog.TABLE_NAME + "/#", TestLog.TEST_LOG_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, TestAnswerLog.TABLE_NAME, TestAnswerLog.TEST_ANSWER_LOG);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, TestAnswerLog.TABLE_NAME + "/#", TestAnswerLog.TEST_ANSWER_LOG_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, TestQuestionSpec.TABLE_NAME, TestQuestionSpec.TEST_QUESTION);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, TestQuestionSpec.TABLE_NAME + "/#", TestQuestionSpec.TEST_QUESTION_ID);		
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, TestQuestionRiskSpec.TABLE_NAME, TestQuestionRiskSpec.TEST_QUESTION_RISK);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, TestQuestionRiskSpec.TABLE_NAME + "/#", TestQuestionRiskSpec.TEST_QUESTION_RISK_ID);		
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, TestMeasureSpec.TABLE_NAME, TestMeasureSpec.TEST_MEASURE);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, TestMeasureSpec.TABLE_NAME + "/#", TestMeasureSpec.TEST_MEASURE_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, TestMeasureLog.TABLE_NAME, TestMeasureLog.TEST_MEASURE_LOG);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, TestMeasureLog.TABLE_NAME + "/#", TestMeasureLog.TEST_MEASURE_LOG_ID);		
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, TestMeasureRiskSpec.TABLE_NAME, TestMeasureRiskSpec.TEST_MEASURE_RISK);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, TestMeasureRiskSpec.TABLE_NAME + "/#", TestMeasureRiskSpec.TEST_MEASURE_RISK_ID);
 	}
 
 	@Override
