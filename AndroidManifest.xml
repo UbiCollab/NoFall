@@ -33,7 +33,8 @@
 
         <provider
             android:name="ntnu.master.nofall.contentprovider.NoFallProvider"
-            android:authorities="ntnu.master.nofall.contentprovider" >
+            android:authorities="ntnu.master.nofall.contentprovider;ntnu.master.nofall.provider"
+            android:exported="true" >
         </provider>
 
         <receiver android:name="ntnu.master.nofall.widget.MyWidgetProvider" >

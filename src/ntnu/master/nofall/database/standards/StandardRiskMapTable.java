@@ -1,6 +1,5 @@
 package ntnu.master.nofall.database.standards;
 
-import ntnu.master.nofall.provider.StandardContract.Standards;
 import ntnu.master.nofall.provider.StandardContract.StandardsForeign;
 import ntnu.master.nofall.provider.StandardContract.StandardsNoFall;
 import ntnu.master.nofall.provider.StandardContract.StandardsRiskMap;

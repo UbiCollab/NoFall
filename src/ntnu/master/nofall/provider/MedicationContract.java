@@ -17,14 +17,14 @@ public final class MedicationContract {
 	 * @author Finn
 	 *
 	 */
-	public static final class MedicationSpec implements BaseColumns {
+	public static final class MedicationType implements BaseColumns {
         // This class cannot be instantiated
-        private MedicationSpec() {}
+        private MedicationType() {}
         
         public static final int MED = 12;
         public static final int MED_ID = 22;
         
-        public static final String TABLE_NAME = "tblMed";
+        public static final String TABLE_NAME = "tblMedType";
     	
         public static final Uri CONTENT_URI = Uri.parse("content://" + AuthorityContract.AUTHORITY + "/" + TABLE_NAME);
         
@@ -171,7 +171,7 @@ public final class MedicationContract {
         public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
     			+ "/" + TABLE_NAME;
         
-    	public static final String FK_MED_SPEC = "fkMedSpec";
+    	public static final String FK_MED_TYPE_SPEC = "fkMedTypeSpec";
     	
     	public static final String FK_MED_LOG = "fkMedLog";
         

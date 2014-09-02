@@ -1,7 +1,6 @@
 package ntnu.master.nofall.database.standards;
 
 import ntnu.master.nofall.provider.StandardContract.StandardsForeign;
-import ntnu.master.nofall.provider.StandardContract.StandardsNoFall;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
