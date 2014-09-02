@@ -4,7 +4,7 @@ import ntnu.master.nofall.provider.MedicationContract.MedicationCategorySpec;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-public class MedCategorySpecTable {	
+public class MedicationCategorySpecTable {	
 
 	// Database creation SQL statement
 	  private static final String DATABASE_CREATE = "create table " 

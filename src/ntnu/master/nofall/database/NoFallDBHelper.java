@@ -3,10 +3,10 @@ package ntnu.master.nofall.database;
 import java.util.ArrayList;
 
 import ntnu.master.nofall.R;
-import ntnu.master.nofall.database.medication.MedCategorySpecTable;
+import ntnu.master.nofall.database.medication.MedicationCategorySpecTable;
 import ntnu.master.nofall.database.medication.MedListLogTable;
 import ntnu.master.nofall.database.medication.MedLogTable;
-import ntnu.master.nofall.database.medication.MedicationSpecTable;
+import ntnu.master.nofall.database.medication.MedicationTypeTable;
 import ntnu.master.nofall.database.sensor.SensorLogTable;
 import ntnu.master.nofall.database.sensor.SensorRiskSpecTable;
 import ntnu.master.nofall.database.sensor.SensorSpecTable;
@@ -34,7 +34,7 @@ import ntnu.master.nofall.object.SubCategory;
 import ntnu.master.nofall.provider.MedicationContract.MedicationCategorySpec;
 import ntnu.master.nofall.provider.MedicationContract.MedicationListLog;
 import ntnu.master.nofall.provider.MedicationContract.MedicationLog;
-import ntnu.master.nofall.provider.MedicationContract.MedicationSpec;
+import ntnu.master.nofall.provider.MedicationContract.MedicationType;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -82,8 +82,8 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		UserTotalRiskLogTable.onCreate(database);
 		
 		// Medication tables
-		MedicationSpecTable.onCreate(database);
-		MedCategorySpecTable.onCreate(database);
+		MedicationTypeTable.onCreate(database);
+		MedicationCategorySpecTable.onCreate(database);
 		MedLogTable.onCreate(database);
 		MedListLogTable.onCreate(database);
 		
@@ -140,8 +140,8 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		UserTotalRiskLogTable.onUpgrade(database, oldVersion, newVersion);
 		
 		// Medication tables
-		MedicationSpecTable.onUpgrade(database, oldVersion, newVersion);
-		MedCategorySpecTable.onUpgrade(database, oldVersion, newVersion);
+		MedicationTypeTable.onUpgrade(database, oldVersion, newVersion);
+		MedicationCategorySpecTable.onUpgrade(database, oldVersion, newVersion);
 		MedLogTable.onUpgrade(database, oldVersion, newVersion);
 		MedListLogTable.onUpgrade(database, oldVersion, newVersion);
 		
@@ -251,9 +251,9 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 			//Add all medications in category to medication table
 			for (int i = 0; i < cat.subcategory_array.size(); i++) {
 				ContentValues values2 = new ContentValues();
-				values2.put(MedicationSpec.NAME, cat.subcategory_array.get(i).subcategory_name);
-				values2.put(MedicationSpec.FK_MEDICATION_CATEGORY, catID);
-				db.insert(MedicationSpec.TABLE_NAME, null, values2);
+				values2.put(MedicationType.NAME, cat.subcategory_array.get(i).subcategory_name);
+				values2.put(MedicationType.FK_MEDICATION_CATEGORY, catID);
+				db.insert(MedicationType.TABLE_NAME, null, values2);
 			}
 		}
 		}catch(Exception e){
@@ -267,10 +267,10 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	 * @return Cursor: 0 = COLUMN_ID, 1 = COLUMN_NAME
 	 */
 	public Cursor getMedicationByCategory(int foreignKey){		
-		String selection = MedicationSpec.FK_MEDICATION_CATEGORY + " = \"" + foreignKey + "\"";
-		String[] projection = {MedicationSpec._ID, MedicationSpec.NAME};
+		String selection = MedicationType.FK_MEDICATION_CATEGORY + " = \"" + foreignKey + "\"";
+		String[] projection = {MedicationType._ID, MedicationType.NAME};
 		    	
-		Cursor cursor = myCR.query(MedicationSpec.CONTENT_URI, 
+		Cursor cursor = myCR.query(MedicationType.CONTENT_URI, 
 		              projection, selection, null,
 		    	        null);
 		return cursor;
@@ -308,7 +308,7 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	 */
 	public void insertRegistreredMedication(int medID, int listID){
 		ContentValues values = new ContentValues();
-		values.put(MedicationListLog.FK_MED_SPEC, medID);
+		values.put(MedicationListLog.FK_MED_TYPE_SPEC, medID);
 		values.put(MedicationListLog.FK_MED_LOG, listID);
 		
 		myCR.insert(MedicationListLog.CONTENT_URI, values);

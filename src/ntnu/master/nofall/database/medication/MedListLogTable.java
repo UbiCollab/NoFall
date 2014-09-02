@@ -2,7 +2,7 @@ package ntnu.master.nofall.database.medication;
 
 import ntnu.master.nofall.provider.MedicationContract.MedicationListLog;
 import ntnu.master.nofall.provider.MedicationContract.MedicationLog;
-import ntnu.master.nofall.provider.MedicationContract.MedicationSpec;
+import ntnu.master.nofall.provider.MedicationContract.MedicationType;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -14,9 +14,9 @@ public class MedListLogTable {
 		      + MedicationListLog._ID   + " integer primary key autoincrement, " 
 		      + MedicationListLog.CREATED_DATE + " integer," 
 		      + MedicationListLog.MODIFIED_DATE + " integer,"
-		      + MedicationListLog.FK_MED_SPEC + " integer, "
+		      + MedicationListLog.FK_MED_TYPE_SPEC + " integer, "
 		      + MedicationListLog.FK_MED_LOG + " integer, "
-		      + " FOREIGN KEY ("+MedicationListLog.FK_MED_SPEC+") REFERENCES "+MedicationSpec.TABLE_NAME+" ("+MedicationSpec._ID+") ON DELETE CASCADE"
+		      + " FOREIGN KEY ("+MedicationListLog.FK_MED_TYPE_SPEC+") REFERENCES "+MedicationType.TABLE_NAME+" ("+MedicationType._ID+") ON DELETE CASCADE"
 		      + " FOREIGN KEY ("+MedicationListLog.FK_MED_LOG+") REFERENCES "+MedicationLog.TABLE_NAME+" ("+MedicationLog._ID+") ON DELETE CASCADE );";
 
 	public static void onCreate(SQLiteDatabase database) {

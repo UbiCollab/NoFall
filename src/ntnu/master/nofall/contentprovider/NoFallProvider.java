@@ -5,7 +5,7 @@ import ntnu.master.nofall.provider.AuthorityContract;
 import ntnu.master.nofall.provider.MedicationContract.MedicationCategorySpec;
 import ntnu.master.nofall.provider.MedicationContract.MedicationListLog;
 import ntnu.master.nofall.provider.MedicationContract.MedicationLog;
-import ntnu.master.nofall.provider.MedicationContract.MedicationSpec;
+import ntnu.master.nofall.provider.MedicationContract.MedicationType;
 import ntnu.master.nofall.provider.SensorContract.SensorLog;
 import ntnu.master.nofall.provider.SensorContract.SensorRiskSpec;
 import ntnu.master.nofall.provider.SensorContract.SensorSpec;
@@ -50,8 +50,8 @@ public class NoFallProvider extends ContentProvider {
 		sURIMatcher.addURI(AuthorityContract.AUTHORITY, UserTotalRisk.TABLE_NAME + "/#", UserTotalRisk.USER_TOTAL_RISK_ID);
 
 		// Medication
-		sURIMatcher.addURI(AuthorityContract.AUTHORITY, MedicationSpec.TABLE_NAME, MedicationSpec.MED);
-		sURIMatcher.addURI(AuthorityContract.AUTHORITY, MedicationSpec.TABLE_NAME + "/#", MedicationSpec.MED_ID);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, MedicationType.TABLE_NAME, MedicationType.MED);
+		sURIMatcher.addURI(AuthorityContract.AUTHORITY, MedicationType.TABLE_NAME + "/#", MedicationType.MED_ID);
 		sURIMatcher.addURI(AuthorityContract.AUTHORITY, MedicationCategorySpec.TABLE_NAME, MedicationCategorySpec.MED_CAT);
 		sURIMatcher.addURI(AuthorityContract.AUTHORITY, MedicationCategorySpec.TABLE_NAME + "/#", MedicationCategorySpec.MED_CAT_ID);
 		sURIMatcher.addURI(AuthorityContract.AUTHORITY, MedicationLog.TABLE_NAME, MedicationLog.MED_LOG);
@@ -161,19 +161,19 @@ public class NoFallProvider extends ContentProvider {
 					+ uri.getLastPathSegment());
 			break;
 
-		case MedicationSpec.MED:
+		case MedicationType.MED:
 			//checkColumnsMed(projection);
 			// Set the table
-			queryBuilder.setTables(MedicationSpec.TABLE_NAME);
+			queryBuilder.setTables(MedicationType.TABLE_NAME);
 			break;
-		case MedicationSpec.MED_ID:
+		case MedicationType.MED_ID:
 			// check if the caller has requested a column which does not exists
 			//checkColumnsMed(projection);
 			// Set the table
-			queryBuilder.setTables(MedicationSpec.TABLE_NAME);
+			queryBuilder.setTables(MedicationType.TABLE_NAME);
 
 			// adding the ID to the original query
-			queryBuilder.appendWhere(MedicationSpec._ID + "="
+			queryBuilder.appendWhere(MedicationType._ID + "="
 					+ uri.getLastPathSegment());
 			break;
 
@@ -583,10 +583,10 @@ public class NoFallProvider extends ContentProvider {
 			getContext().getContentResolver().notifyChange(uri, null);
 			return Uri.parse(UserTotalRisk.TABLE_NAME + "/" + id);
 						
-		case MedicationSpec.MED:
-			id = sqlDB.insert(MedicationSpec.TABLE_NAME, null, values);
+		case MedicationType.MED:
+			id = sqlDB.insert(MedicationType.TABLE_NAME, null, values);
 			getContext().getContentResolver().notifyChange(uri, null);
-			return Uri.parse(MedicationSpec.TABLE_NAME + "/" + id);
+			return Uri.parse(MedicationType.TABLE_NAME + "/" + id);
 
 		case MedicationCategorySpec.MED_CAT:
 			id = sqlDB.insert(MedicationCategorySpec.TABLE_NAME, null, values);
@@ -749,18 +749,18 @@ public class NoFallProvider extends ContentProvider {
 			}
 			break;
 			
-		case MedicationSpec.MED:
-			rowsDeleted = sqlDB.delete(MedicationSpec.TABLE_NAME,
+		case MedicationType.MED:
+			rowsDeleted = sqlDB.delete(MedicationType.TABLE_NAME,
 					selection, selectionArgs);
 			break;
-		case MedicationSpec.MED_ID:
+		case MedicationType.MED_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsDeleted = sqlDB.delete(MedicationSpec.TABLE_NAME,
-						MedicationSpec._ID + "=" + id, null);
+				rowsDeleted = sqlDB.delete(MedicationType.TABLE_NAME,
+						MedicationType._ID + "=" + id, null);
 			} else {
-				rowsDeleted = sqlDB.delete(MedicationSpec.TABLE_NAME,
-						MedicationSpec._ID + "=" + id + " and "
+				rowsDeleted = sqlDB.delete(MedicationType.TABLE_NAME,
+						MedicationType._ID + "=" + id + " and "
 								+ selection, selectionArgs);
 			}
 			break;
@@ -1183,18 +1183,18 @@ public class NoFallProvider extends ContentProvider {
 			}
 			break;
 
-		case MedicationSpec.MED:
-			rowsUpdated = sqlDB.update(MedicationSpec.TABLE_NAME, values,
+		case MedicationType.MED:
+			rowsUpdated = sqlDB.update(MedicationType.TABLE_NAME, values,
 					selection, selectionArgs);
 			break;
-		case MedicationSpec.MED_ID:
+		case MedicationType.MED_ID:
 			id = uri.getLastPathSegment();
 			if (TextUtils.isEmpty(selection)) {
-				rowsUpdated = sqlDB.update(MedicationSpec.TABLE_NAME,
-						values, MedicationSpec._ID + "=" + id, null);
+				rowsUpdated = sqlDB.update(MedicationType.TABLE_NAME,
+						values, MedicationType._ID + "=" + id, null);
 			} else {
-				rowsUpdated = sqlDB.update(MedicationSpec.TABLE_NAME,
-						values, MedicationSpec._ID + "=" + id
+				rowsUpdated = sqlDB.update(MedicationType.TABLE_NAME,
+						values, MedicationType._ID + "=" + id
 								+ " and " + selection, selectionArgs);
 			}
 			break;
