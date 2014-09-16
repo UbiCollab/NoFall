@@ -100,7 +100,7 @@ public class MedicationSelectActivity extends Activity {
 		while(cur.moveToNext()){
 			category = new Category();
 			category.category_name = cur.getString(1);
-			Cursor cur2 = db.getMedicationByCategory(Integer.parseInt(cur.getString(0)));
+			Cursor cur2 = db.getMedicationByType(Integer.parseInt(cur.getString(0)));
 			//For each category add the medications
 			while(cur2.moveToNext()){
 				SubCategory subcategory = new SubCategory();

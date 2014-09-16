@@ -2,8 +2,12 @@ package ntnu.master.nofall.pedometer;
 
 
 import ntnu.master.nofall.R;
+import ntnu.master.nofall.database.NoFallDBHelper;
+import ntnu.master.nofall.provider.SensorContract.SensorSpec;
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -26,7 +30,7 @@ public class Pedometer extends Activity {
     private SharedPreferences mSettings;
     private PedometerSettings mPedometerSettings;
     private Utils mUtils;
-    
+    private NoFallDBHelper db;
     private TextView mStepValueView;
     private TextView mPaceValueView;
     private TextView mDistanceValueView;
@@ -60,6 +64,8 @@ public class Pedometer extends Activity {
         mPaceValue = 0;
         
         setContentView(R.layout.activity_pedometer);
+        
+        db = new NoFallDBHelper(this);
         
         mUtils = Utils.getInstance();
     }
@@ -423,5 +429,6 @@ public class Pedometer extends Activity {
         
     };
     
+
 
 }

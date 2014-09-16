@@ -1,6 +1,7 @@
 package ntnu.master.nofall.pedometer;
 
 import ntnu.master.nofall.R;
+import ntnu.master.nofall.database.NoFallDBHelper;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Notification;
@@ -61,6 +62,8 @@ public class StepService extends Service {
     private float mSpeed;
     private float mCalories;
     
+    private NoFallDBHelper db;
+    
     /**
      * Class for clients to access.  Because we know this service always
      * runs in the same process as its clients, we don't need to deal with
@@ -76,7 +79,7 @@ public class StepService extends Service {
     public void onCreate() {
         Log.i(TAG, "[SERVICE] onCreate");
         super.onCreate();
-        
+        db = new NoFallDBHelper(this);
         mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         //showNotification();
         
@@ -99,7 +102,7 @@ public class StepService extends Service {
         // Register our receiver for the ACTION_SCREEN_OFF action. This will make our receiver
         // code be called whenever the phone enters standby mode.
         IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
-        registerReceiver(mReceiver, filter);
+        //registerReceiver(mReceiver, filter);
 
         mStepDisplayer = new StepDisplayer(mPedometerSettings, mUtils);
         mStepDisplayer.setSteps(mSteps = mState.getInt("steps", 0));
@@ -145,6 +148,7 @@ public class StepService extends Service {
     @Override
     public void onStart(Intent intent, int startId) {
         Log.i(TAG, "[SERVICE] onStart");
+        //db.onetimeinsertsensor();
         super.onStart(intent, startId);
     }
     
@@ -155,7 +159,7 @@ public class StepService extends Service {
         mUtils.shutdownTTS();
 
         // Unregister our receiver.
-        unregisterReceiver(mReceiver);
+        //unregisterReceiver(mReceiver);
         unregisterDetector();
         
         mStateEditor = mState.edit();
@@ -168,12 +172,15 @@ public class StepService extends Service {
         
         mNM.cancel(R.string.app_name);
 
-        wakeLock.release();
+        //wakeLock.release();
         
         super.onDestroy();
         
         // Stop detecting
         mSensorManager.unregisterListener(mStepDetector);
+        
+        db.insertMovementSpeedToDB((int)mSpeed, mSteps);
+        Log.i("INSERTED MOVSPEED", "speed is " + mPace + " num of steps is " + mSteps);
 
         // Tell the user we stopped.
         Toast.makeText(this, getText(R.string.stopped), Toast.LENGTH_SHORT).show();
@@ -371,38 +378,38 @@ public class StepService extends Service {
     }
 
 
-    // BroadcastReceiver for handling ACTION_SCREEN_OFF.
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Check action just to be on the safe side.
-            if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
-                // Unregisters the listener and registers it again.
-                StepService.this.unregisterDetector();
-                StepService.this.registerDetector();
-                if (mPedometerSettings.wakeAggressively()) {
-                    wakeLock.release();
-                    acquireWakeLock();
-                }
-            }
-        }
-    };
+//    // BroadcastReceiver for handling ACTION_SCREEN_OFF.
+//    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            // Check action just to be on the safe side.
+//            if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+//                // Unregisters the listener and registers it again.
+//                StepService.this.unregisterDetector();
+//                StepService.this.registerDetector();
+//                if (mPedometerSettings.wakeAggressively()) {
+//                    wakeLock.release();
+//                    acquireWakeLock();
+//                }
+//            }
+//        }
+//    };
 
-    @SuppressWarnings("deprecation")
-	private void acquireWakeLock() {
-        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        int wakeFlags;
-        if (mPedometerSettings.wakeAggressively()) {
-            wakeFlags = PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP;
-        }
-        else if (mPedometerSettings.keepScreenOn()) {
-            wakeFlags = PowerManager.SCREEN_DIM_WAKE_LOCK;
-        }
-        else {
-            wakeFlags = PowerManager.PARTIAL_WAKE_LOCK;
-        }
-        wakeLock = pm.newWakeLock(wakeFlags, TAG);
-        wakeLock.acquire();
-    }
+//    @SuppressWarnings("deprecation")
+//	private void acquireWakeLock() {
+//        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+//        int wakeFlags;
+//        if (mPedometerSettings.wakeAggressively()) {
+//            wakeFlags = PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP;
+//        }
+//        else if (mPedometerSettings.keepScreenOn()) {
+//            wakeFlags = PowerManager.SCREEN_DIM_WAKE_LOCK;
+//        }
+//        else {
+//            wakeFlags = PowerManager.PARTIAL_WAKE_LOCK;
+//        }
+//        wakeLock = pm.newWakeLock(wakeFlags, TAG);
+//        wakeLock.acquire();
+//    }
 
 }

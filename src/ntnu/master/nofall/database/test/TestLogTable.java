@@ -12,6 +12,7 @@ public class TestLogTable {
 		      + "(" 
 		      + TestLog._ID   + " integer primary key autoincrement, " 
 		      + TestLog.DATE + " date, "
+		      + TestLog.TOTAL_RISK + " integer," 
 		      + TestLog.CREATED_DATE + " integer," 
 		      + TestLog.MODIFIED_DATE + " integer,"
 		      + TestLog.FK_TEST + " integer, "

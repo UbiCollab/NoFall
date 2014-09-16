@@ -31,10 +31,13 @@ import ntnu.master.nofall.database.user.UserTable;
 import ntnu.master.nofall.database.user.UserTotalRiskLogTable;
 import ntnu.master.nofall.object.Category;
 import ntnu.master.nofall.object.SubCategory;
+import ntnu.master.nofall.pedometer.Utils;
 import ntnu.master.nofall.provider.MedicationContract.MedicationCategorySpec;
 import ntnu.master.nofall.provider.MedicationContract.MedicationListLog;
 import ntnu.master.nofall.provider.MedicationContract.MedicationLog;
 import ntnu.master.nofall.provider.MedicationContract.MedicationType;
+import ntnu.master.nofall.provider.SensorContract.SensorLog;
+import ntnu.master.nofall.provider.SensorContract.SensorSpec;
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -42,6 +45,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Build;
@@ -50,7 +54,7 @@ import android.util.Log;
 public class NoFallDBHelper extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "nofall.db";
-	private static final int DATABASE_VERSION = 9;
+	private static final int DATABASE_VERSION = 11;
 
 	private ContentResolver myCR;
 	
@@ -70,8 +74,8 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		fContext = context;
 		myCR = context.getContentResolver();
-	}
-
+	}		
+	
 	// Method is called during creation of the database
 	@Override
 	public void onCreate(SQLiteDatabase database) {
@@ -242,19 +246,19 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	private void fillCatAndMedTable(SQLiteDatabase db){
 		ContentValues values = new ContentValues();
 		try{
-		for (Category cat : category_array) {
-			//Add the name of the category to the cat table
-			values.put(MedicationCategorySpec.NAME, cat.category_name);
-			values.put(MedicationCategorySpec.OWNER_ID, "NoFall");
-			int catID = (int)db.insert(MedicationCategorySpec.TABLE_NAME, null, values);
-			
-			//Add all medications in category to medication table
-			for (int i = 0; i < cat.subcategory_array.size(); i++) {
-				ContentValues values2 = new ContentValues();
-				values2.put(MedicationType.NAME, cat.subcategory_array.get(i).subcategory_name);
-				values2.put(MedicationType.FK_MEDICATION_CATEGORY, catID);
-				db.insert(MedicationType.TABLE_NAME, null, values2);
-			}
+			for (Category cat : category_array) {
+				//Add the name of the category to the cat table
+				values.put(MedicationCategorySpec.NAME, cat.category_name);
+				values.put(MedicationCategorySpec.OWNER_ID, "NoFall");
+				int catID = (int)db.insert(MedicationCategorySpec.TABLE_NAME, null, values);
+				
+				//Add all medications in category to medication table
+				for (int i = 0; i < cat.subcategory_array.size(); i++) {
+					ContentValues values2 = new ContentValues();
+					values2.put(MedicationType.NAME, cat.subcategory_array.get(i).subcategory_name);
+					values2.put(MedicationType.FK_MEDICATION_CATEGORY, catID);
+					db.insert(MedicationType.TABLE_NAME, null, values2);
+				}
 		}
 		}catch(Exception e){
 			Log.i("ERROR", "Failed to insert into Category and Medication Table");
@@ -262,18 +266,27 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	}
 	
 	/**
-	 * Returns Medication to a given category
+	 * Returns Medication to a given type
 	 * @param foreignKey
 	 * @return Cursor: 0 = COLUMN_ID, 1 = COLUMN_NAME
 	 */
-	public Cursor getMedicationByCategory(int foreignKey){		
-		String selection = MedicationType.FK_MEDICATION_CATEGORY + " = \"" + foreignKey + "\"";
-		String[] projection = {MedicationType._ID, MedicationType.NAME};
-		    	
-		Cursor cursor = myCR.query(MedicationType.CONTENT_URI, 
-		              projection, selection, null,
-		    	        null);
-		return cursor;
+	public Cursor getMedicationByType(int foreignKey){	
+		Cursor cursor = null;
+		try{
+			String selection = MedicationType.FK_MEDICATION_CATEGORY + " = \"" + foreignKey + "\"";
+			String[] projection = {MedicationType._ID, MedicationType.NAME};
+			    	
+			cursor = myCR.query(MedicationType.CONTENT_URI, 
+			              projection, selection, null,
+			    	        null);
+			return cursor;
+		}catch(SQLiteException e){
+			Log.i("SQLiteException when inserting movement speed", "error: " + e);
+			return null;
+		}finally{
+			if(cursor != null)
+				cursor.close();
+		}
 	}
 	
 	/**
@@ -281,11 +294,20 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	 * @return Cursor: 0 = COLUMN_ID, 1 = COLUMN_NAME
 	 */
 	public Cursor getMedCategories(){
+		Cursor cursor = null;
+		try{
 		String[] projection = {MedicationCategorySpec._ID, MedicationCategorySpec.NAME};
     	
-		Cursor cursor = myCR.query(MedicationCategorySpec.CONTENT_URI, 
+		cursor = myCR.query(MedicationCategorySpec.CONTENT_URI, 
 		              projection, null, null, null);
 		return cursor;
+		}catch(SQLiteException e){
+			Log.i("SQLiteException when inserting movement speed", "error: " + e);
+			return null;
+		}finally{
+			if(cursor != null)
+				cursor.close();
+		}
 	}
 	
 	/**
@@ -328,4 +350,81 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		myCR.update(MedicationLog.CONTENT_URI, values, selection, null);
 		
 	}
+	
+    public void insertMovementSpeedToDB(int speed, int numOfReg){
+    	Cursor cursor1 = null;
+    	try{
+    	String selection = SensorSpec.NAME + " = \"" + "pedometer" + "\"";
+		String[] projection = {SensorSpec._ID};
+		    	
+		cursor1 = myCR.query(SensorSpec.CONTENT_URI, 
+		              projection, selection, null,
+		    	        null);
+		boolean temp = cursor1.moveToFirst();
+    	if(temp == true){
+        	ContentValues values = new ContentValues();
+        	values.put(SensorLog.VALUE, speed);
+        	values.put(SensorLog.NUM_OF_REG, numOfReg);
+        	values.put(SensorLog.FK_SENSOR, cursor1.getString(0));
+        	values.put(SensorLog.CREATED_DATE, Utils.currentTimeInMillis()/1000);
+        	myCR.insert(SensorLog.CONTENT_URI, values);
+    	}else{
+    		Log.i("Did not find sensor", "pedometer");
+    	}
+    	}catch(SQLiteException e){
+    		Log.i("SQLiteException when inserting movement speed", "error: " + e);
+    	}finally{
+    		if(cursor1 != null){
+    			cursor1.close();
+    		}
+    	}
+    }
+    
+    /**
+     * Gets the values related to the sensor pedometer
+     * @return Cursor 0 = Value, Cursor 1 = Created date.
+     */
+    public Cursor getMovementSpeed(){
+    	Cursor cursor1 = null;
+    	Cursor cursor = null;
+    	try{
+	        String selection = SensorSpec.NAME + " = \"" + "pedometer" + "\"";
+	    	String[] projection = {SensorSpec._ID};
+	    		    	
+	    	cursor1 = myCR.query(SensorSpec.CONTENT_URI, 
+	    		             projection, selection, null,
+	    		    	       null);
+	    	boolean tmep = cursor1.moveToFirst();
+	    	Log.i("Getting ID for pedometer", cursor1.getString(0));
+	    		
+	    	String selection2 = SensorLog.FK_SENSOR + " = \"" + cursor1.getString(0) + "\"";
+	    	String[] projection2 = {SensorLog.VALUE};
+	    		
+	    	cursor = myCR.query(SensorLog.CONTENT_URI, 
+	    	             projection2, selection2, null,
+	    	    	       null);
+	    	tmep = cursor.moveToFirst();
+	    	Log.i("Getting value for movementspeed", "movetofirst" + tmep);
+	    		
+	    	return cursor;
+    	}catch(SQLiteException e){
+    		Log.i("SQLiteException when inserting movement speed", "error: " + e);
+    		return null;
+    	}finally{
+    		if(cursor != null)
+    			cursor.close();
+    		if(cursor1 != null)
+    			cursor1.close();
+    	}
+    }
+    
+    public void onetimeinsertsensor(){
+    	ContentValues values = new ContentValues();
+    	values.put(SensorSpec.NAME, "pedometer");
+    	values.put(SensorSpec.ACCURACY, "50");
+    	values.put(SensorSpec.OWNER_ID, "Mobile");
+    	values.put(SensorSpec.SENSOR_ATTACHMENT, "mobile");
+    	values.put(SensorSpec.SENSOR_PLACEMENT, "pocket");
+    	myCR.insert(SensorSpec.CONTENT_URI, values);
+    }
 }
