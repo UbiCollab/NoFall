@@ -74,6 +74,7 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		fContext = context;
 		myCR = context.getContentResolver();
+		Log.i("Inserted sensor", "Pedo");
 	}		
 	
 	// Method is called during creation of the database
@@ -284,8 +285,10 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 			Log.i("SQLiteException when inserting movement speed", "error: " + e);
 			return null;
 		}finally{
-			if(cursor != null)
+			if(cursor != null){
 				cursor.close();
+				cursor = null;
+			}
 		}
 	}
 	
@@ -305,8 +308,10 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 			Log.i("SQLiteException when inserting movement speed", "error: " + e);
 			return null;
 		}finally{
-			if(cursor != null)
+			if(cursor != null){
 				cursor.close();
+				cursor = null;
+			}
 		}
 	}
 	
@@ -354,30 +359,77 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	}
 	
     public void insertMovementSpeedToDB(int speed, int numOfReg){
-    	Cursor cursor1 = null;
+    	Cursor cursor = null;
     	try{
-    	String selection = SensorSpec.NAME + " = \"" + "pedometer" + "\"";
-		String[] projection = {SensorSpec._ID};
-		    	
-		cursor1 = myCR.query(SensorSpec.CONTENT_URI, 
-		              projection, selection, null,
-		    	        null);
-		boolean temp = cursor1.moveToFirst();
-    	if(temp == true){
-        	ContentValues values = new ContentValues();
-        	values.put(SensorLog.VALUE, speed);
-        	values.put(SensorLog.NUM_OF_REG, numOfReg);
-        	values.put(SensorLog.FK_SENSOR, cursor1.getString(0));
-        	values.put(SensorLog.CREATED_DATE, Utils.currentTimeInMillis()/1000);
-        	myCR.insert(SensorLog.CONTENT_URI, values);
+	    	String selection = SensorSpec.NAME + " = \"" + "pedometer" + "\"";
+			String[] projection = {SensorSpec._ID};
+			    	
+			cursor = myCR.query(SensorSpec.CONTENT_URI, 
+			              projection, selection, null,
+			    	        null);
+			boolean temp = cursor.moveToFirst();
+	    	if(temp == true){
+	        	ContentValues values = new ContentValues();
+	        	values.put(SensorLog.VALUE, speed);
+	        	values.put(SensorLog.NUM_OF_REG, numOfReg);
+	        	Log.w("Inserting steps", "Number of: "+numOfReg);
+	        	values.put(SensorLog.FK_SENSOR, cursor.getString(0));
+	        	values.put(SensorLog.CREATED_DATE, Utils.currentTimeInMillis()/1000);
+	        	myCR.insert(SensorLog.CONTENT_URI, values);
     	}else{
     		Log.i("Did not find sensor", "pedometer");
     	}
     	}catch(SQLiteException e){
     		Log.i("SQLiteException when inserting movement speed", "error: " + e);
     	}finally{
+    		if(cursor != null){
+    			cursor.close();
+    			cursor = null;
+    		}
+    	}
+    }
+    
+	/**
+	 * Gets the number of steps registered by the pedometer
+	 * @return Curs 0 = value
+	 */
+    public Cursor getNumberOfSteps(){
+    	Cursor cursor1 = null;
+    	Cursor cursor = null;
+    	try{
+	        String selection = SensorSpec.NAME + " = \"" + "pedometer" + "\"";
+	    	String[] projection = {SensorSpec._ID};
+	    		    	
+	    	cursor1 = myCR.query(SensorSpec.CONTENT_URI, 
+	    		             projection, selection, null,
+	    		    	       null);
+	    	boolean temp;
+	    	if(cursor1.moveToLast() != false){
+	    		temp = cursor1.moveToLast();
+		    	
+		    	Log.i("Getting ID for pedometer", cursor1.getString(0));
+		    		
+		    	String selection2 = SensorLog.FK_SENSOR + " = \"" + cursor1.getString(0) + "\"";
+		    	String[] projection2 = {SensorLog.NUM_OF_REG};
+		    	cursor = myCR.query(SensorLog.CONTENT_URI, 
+	    	             projection2, selection2, null,
+	    	    	       null);
+		    	temp = cursor.moveToFirst();
+		    	Log.i("Getting value for movementspeed", "movetofirst" + temp);
+	    	}	    		    			    	
+	    		
+	    	return cursor;
+    	}catch(SQLiteException e){
+    		Log.i("SQLiteException when inserting movement speed", "error: " + e);
+    		return null;
+    	}finally{
+    		if(cursor != null){
+    			cursor.close();
+    			cursor = null;
+    		}
     		if(cursor1 != null){
     			cursor1.close();
+    			cursor1 = null;
     		}
     	}
     }
@@ -416,10 +468,14 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
     		Log.i("SQLiteException when inserting movement speed", "error: " + e);
     		return null;
     	}finally{
-    		if(cursor != null)
+    		if(cursor != null){
     			cursor.close();
-    		if(cursor1 != null)
+    			cursor = null;
+    		}
+    		if(cursor1 != null){
     			cursor1.close();
+    			cursor1 = null;
+    		}
     	}
     }
     
