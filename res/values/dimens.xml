@@ -28,4 +28,5 @@
     <dimen name="margin">10px</dimen>
     <dimen name="padding">5px</dimen>
     <dimen name="row_spacing">10px</dimen>
+    
 </resources>

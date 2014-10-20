@@ -29,6 +29,8 @@
     <string name="title_activity_survey">SurveyActivity</string>
     <string name="title_activity_start_page">StartPageActivity</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_xyplot">Simlpe XYPlot Graph</string>
+    <string name="title_activity_piechart">Simple PieChart</string>
     
     <!-- Buttons -->
     <string name="btnOk">OK</string>

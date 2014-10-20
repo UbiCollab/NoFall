@@ -1,4 +1,4 @@
-package ntnu.master.nofall.testapps.activity;
+package ntnu.master.nofall.testapps.graphicalplots;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -79,10 +79,10 @@ public class XYPlotActivity extends Activity {
 
 		// same as above
 		//XYSeries series2 = new SimpleXYSeries(Arrays.asList(createdDate), Arrays.asList(movementSpeed), "Series2");
-		XYSeries series2 = new SimpleXYSeries( Arrays.asList(movementSpeed), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Series2");
+		XYSeries series2 = new SimpleXYSeries( Arrays.asList(movementSpeed), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Movement Speed");
 		// Create a formatter to use for drawing a series using
 		// LineAndPointRenderer
-		LineAndPointFormatter series1Format = new LineAndPointFormatter(Color.RED, Color.GREEN, Color.BLUE, null);
+		//LineAndPointFormatter series1Format = new LineAndPointFormatter(Color.RED, Color.GREEN, Color.BLUE, null);
 
 
 		// add a new series' to the xyplot:

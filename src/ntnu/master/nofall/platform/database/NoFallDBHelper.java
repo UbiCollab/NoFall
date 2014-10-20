@@ -35,6 +35,7 @@ import ntnu.master.nofall.platform.provider.MedicationContract.MedicationLog;
 import ntnu.master.nofall.platform.provider.MedicationContract.MedicationType;
 import ntnu.master.nofall.platform.provider.SensorContract.SensorLog;
 import ntnu.master.nofall.platform.provider.SensorContract.SensorSpec;
+import ntnu.master.nofall.platform.provider.UsersContract.UserTotalRisk;
 import ntnu.master.nofall.testapps.object.Category;
 import ntnu.master.nofall.testapps.object.SubCategory;
 import ntnu.master.nofall.testapps.pedometer.Utils;
@@ -188,6 +189,10 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	    }
 	}
 	
+	/**
+	 * Fills the DB tables for medication based on data from a XML file. 
+	 * The data in the XML file comes from research based on medicaitons identified as related to fall risk.
+	 */
 	private void getMedicationDataFromXML() {
 		//Get xml resource file
         Resources res = fContext.getResources();
@@ -307,11 +312,6 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		}catch(SQLiteException e){
 			Log.i("SQLiteException when inserting movement speed", "error: " + e);
 			return null;
-		}finally{
-			if(cursor != null){
-				cursor.close();
-				cursor = null;
-			}
 		}
 	}
 	
@@ -467,16 +467,100 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
     	}catch(SQLiteException e){
     		Log.i("SQLiteException when inserting movement speed", "error: " + e);
     		return null;
-    	}finally{
-    		if(cursor != null){
-    			cursor.close();
-    			cursor = null;
-    		}
-    		if(cursor1 != null){
-    			cursor1.close();
-    			cursor1 = null;
-    		}
+//    	}finally{
+//    		if(cursor != null){
+//    			cursor.close();
+//    			cursor = null;
+//    		}
+//    		if(cursor1 != null){
+//    			cursor1.close();
+//    			cursor1 = null;
+//    		}
     	}
+    }
+    
+    /**
+     * Returns the total risk calcualted for the user related to sensor data gathered.
+     * @return
+     */
+    public Cursor getUserSensorRiskData(){
+		Cursor cursor = null;
+		try{
+			String[] projection = {UserTotalRisk.SENSOR_RISK};
+	    	
+			cursor = myCR.query(UserTotalRisk.CONTENT_URI, 
+			              projection, null, null, null);
+			return cursor;
+		}catch(SQLiteException e){
+			Log.i("SQLiteException when getting data for user sensor risk", "error: " + e);
+			return null;
+		}
+    }
+    
+    /**
+     * Returns the total risk calcualted for the user related to test data gathered.
+     * @return
+     */
+    public Cursor getUserTestRiskData(){
+		Cursor cursor = null;
+		try{
+			String[] projection = {UserTotalRisk.TEST_RISK};
+	    	
+			cursor = myCR.query(UserTotalRisk.CONTENT_URI, 
+			              projection, null, null, null);
+			return cursor;
+		}catch(SQLiteException e){
+			Log.i("SQLiteException when getting data for user test risk", "error: " + e);
+			return null;
+		}
+    }
+    
+    /**
+     * Returns the total risk calcualted for the user related to medication data gathered.
+     * @return
+     */
+    public Cursor getUserMedicationRiskData(){
+		Cursor cursor = null;
+		try{
+			String[] projection = {UserTotalRisk.MEDICATION_RISK};
+	    	
+			cursor = myCR.query(UserTotalRisk.CONTENT_URI, 
+			              projection, null, null, null);
+			return cursor;
+		}catch(SQLiteException e){
+			Log.i("SQLiteException when getting data for user medication risk", "error: " + e);
+			return null;
+		}
+    }
+    
+    /**
+     * Returns the total risk calcualted for the user related to survey data gathered.
+     * @return
+     */
+    public Cursor getUserSurveyRiskData(){
+		Cursor cursor = null;
+		try{
+			String[] projection = {UserTotalRisk.SURVEY_RISK};
+	    	
+			cursor = myCR.query(UserTotalRisk.CONTENT_URI, 
+			              projection, null, null, null);
+			return cursor;
+		}catch(SQLiteException e){
+			Log.i("SQLiteException when getting data for user survey risk", "error: " + e);
+			return null;
+		}
+    }
+    
+    public Uri insertUserRiskForTesting(){
+    	ContentValues values = new ContentValues();
+		values.put(UserTotalRisk.SENSOR_RISK, 1);
+		values.put(UserTotalRisk.MEDICATION_RISK, 1);
+		values.put(UserTotalRisk.SURVEY_RISK, 2);
+		values.put(UserTotalRisk.TEST_RISK, 3);
+		
+		Uri temp = myCR.insert(UserTotalRisk.CONTENT_URI, values);
+		
+		return temp;
     }
     
     public void onetimeinsertsensor(){

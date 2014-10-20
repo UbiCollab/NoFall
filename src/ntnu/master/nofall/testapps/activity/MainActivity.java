@@ -1,6 +1,8 @@
 package ntnu.master.nofall.testapps.activity;
 
 import ntnu.master.nofall.R;
+import ntnu.master.nofall.testapps.graphicalplots.SimplePieChartActivity;
+import ntnu.master.nofall.testapps.graphicalplots.XYPlotActivity;
 import ntnu.master.nofall.testapps.pedometer.Pedometer;
 import android.app.Activity;
 import android.app.Fragment;
@@ -70,6 +72,11 @@ public class MainActivity extends Activity {
 
 	public void OpenXYPlotActivity(View view) {
 		Intent intent = new Intent(MainActivity.this, XYPlotActivity.class);
+		startActivity(intent);
+	}
+	
+	public void OpenPieChartActivity(View view) {
+		Intent intent = new Intent(MainActivity.this, SimplePieChartActivity.class);
 		startActivity(intent);
 	}
 
