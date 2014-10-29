@@ -2,6 +2,7 @@ package ntnu.master.nofall.testapps.activity;
 
 import ntnu.master.nofall.R;
 import ntnu.master.nofall.platform.provider.UsersContract.User;
+import ntnu.master.nofall.testapps.medication.MedicationRegActivity;
 import android.app.ListActivity;
 import android.app.LoaderManager;
 import android.content.CursorLoader;

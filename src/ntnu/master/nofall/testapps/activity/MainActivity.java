@@ -4,6 +4,8 @@ import ntnu.master.nofall.R;
 import ntnu.master.nofall.testapps.graphicalplots.SimplePieChartActivity;
 import ntnu.master.nofall.testapps.graphicalplots.XYPlotActivity;
 import ntnu.master.nofall.testapps.pedometer.Pedometer;
+import ntnu.master.nofall.testapps.survey.SurveyActivity;
+import ntnu.master.nofall.testapps.test.TUGActivity;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;

@@ -55,6 +55,7 @@ public class SimplePieChartActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pie_chart);
         
+        //get an instance of the DB
         NoFallDBHelper db = new NoFallDBHelper(this);
         //db.insertUserRiskForTesting();
 
@@ -106,7 +107,7 @@ public class SimplePieChartActivity extends Activity
         int surveyData;
         int testData;
 
-        
+        //get the data from the DB
         cur = db.getUserSensorRiskData();
         cur.moveToFirst();
         sensorData = Integer.parseInt(cur.getString(0));

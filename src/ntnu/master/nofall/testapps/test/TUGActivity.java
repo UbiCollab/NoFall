@@ -1,7 +1,11 @@
-package ntnu.master.nofall.testapps.activity;
+package ntnu.master.nofall.testapps.test;
 
 import ntnu.master.nofall.R;
+import ntnu.master.nofall.platform.database.NoFallDBHelper;
+import ntnu.master.nofall.testapps.activity.HelpActivity;
+import ntnu.master.nofall.testapps.activity.MainActivity;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -10,9 +14,10 @@ import android.widget.TextView;
 
 public class TUGActivity extends Activity {
 
-	TextView timerTextView;
-	long startTime = 0;
-
+	private TextView timerTextView;
+	private long startTime = 0;
+	private int seconds;
+	private int minutes;
 	// runs without a timer by reposting this handler at the end of the runnable
 	Handler timerHandler = new Handler();
 	Runnable timerRunnable = new Runnable() {
@@ -20,8 +25,8 @@ public class TUGActivity extends Activity {
 		@Override
 		public void run() {
 			long millis = System.currentTimeMillis() - startTime;
-			int seconds = (int) (millis / 1000);
-			int minutes = seconds / 60;
+			seconds = (int) (millis / 1000);
+			minutes = seconds / 60;
 			seconds = seconds % 60;
 
 			timerTextView.setText(String.format("%d:%02d", minutes, seconds));
@@ -34,6 +39,9 @@ public class TUGActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tug);
+		NoFallDBHelper db = new NoFallDBHelper(this);
+		//db.insertTUGStandard();
+		//db.insertTUGTestData();
 
 		timerTextView = (TextView) findViewById(R.id.activity_TUG_TV_timer);
 
@@ -63,5 +71,15 @@ public class TUGActivity extends Activity {
 		Button b = (Button) findViewById(R.id.activity_TUG_btn_StartTUG);
 		b.setText("Start");
 	}
+	
+	public void SaveResults(View view) {
+		NoFallDBHelper db = new NoFallDBHelper(this);
+		db.insertTUGResults(seconds);
+		
+		Intent intent = new Intent(TUGActivity.this, MainActivity.class);
+		startActivity(intent);
+	}
+	
+	
 
 }

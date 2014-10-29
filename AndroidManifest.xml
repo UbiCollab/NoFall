@@ -60,19 +60,19 @@
 			android:label="@string/title_activity_help" >
         </activity>
         <activity
-        	android:name="ntnu.master.nofall.testapps.activity.MedicationRegActivity"
+        	android:name="ntnu.master.nofall.testapps.medication.MedicationRegActivity"
             android:label="@string/title_activity_medication_reg" >
         </activity>
         <activity
-            android:name="ntnu.master.nofall.testapps.activity.MedicationSelectActivity"
+            android:name="ntnu.master.nofall.testapps.medication.MedicationSelectActivityty"
             android:label="@string/title_activity_medication_select" >
         </activity>
         <activity
-			android:name="ntnu.master.nofall.testapps.activity.TUGActivity"
+			android:name="ntnu.master.nofall.testapps.test.TUGActivity"
             android:label="@string/title_activity_tug_test" >
         </activity>
         <activity
-            android:name="ntnu.master.nofall.testapps.activity.SurveyActivity"
+            android:name="ntnu.master.nofall.testapps.survey.SurveyActivity"
             android:label="@string/title_activity_survey" >
         </activity>
         <activity

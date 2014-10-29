@@ -41,6 +41,7 @@
     <string name="btnAddMedication">Select Medication</string>
     <string name="btnDone">Finished</string>
     <string name="btnStart">Start</string>
+    <string name="btnSave">Save</string>
     
     
     <!-- Pedometer -->

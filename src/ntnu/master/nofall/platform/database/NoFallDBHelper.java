@@ -35,6 +35,11 @@ import ntnu.master.nofall.platform.provider.MedicationContract.MedicationLog;
 import ntnu.master.nofall.platform.provider.MedicationContract.MedicationType;
 import ntnu.master.nofall.platform.provider.SensorContract.SensorLog;
 import ntnu.master.nofall.platform.provider.SensorContract.SensorSpec;
+import ntnu.master.nofall.platform.provider.StandardContract.Standards;
+import ntnu.master.nofall.platform.provider.TestContract.TestLog;
+import ntnu.master.nofall.platform.provider.TestContract.TestMeasureLog;
+import ntnu.master.nofall.platform.provider.TestContract.TestMeasureSpec;
+import ntnu.master.nofall.platform.provider.TestContract.TestSpec;
 import ntnu.master.nofall.platform.provider.UsersContract.UserTotalRisk;
 import ntnu.master.nofall.testapps.object.Category;
 import ntnu.master.nofall.testapps.object.SubCategory;
@@ -191,7 +196,7 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	
 	/**
 	 * Fills the DB tables for medication based on data from a XML file. 
-	 * The data in the XML file comes from research based on medicaitons identified as related to fall risk.
+	 * The data in the XML file comes from research based on medications identified as related to fall risk.
 	 */
 	private void getMedicationDataFromXML() {
 		//Get xml resource file
@@ -480,7 +485,7 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
     }
     
     /**
-     * Returns the total risk calcualted for the user related to sensor data gathered.
+     * Returns the total risk calcualted for the user related to sensor data.
      * @return
      */
     public Cursor getUserSensorRiskData(){
@@ -498,7 +503,7 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
     }
     
     /**
-     * Returns the total risk calcualted for the user related to test data gathered.
+     * Returns the total risk calcualted for the user related to test data.
      * @return
      */
     public Cursor getUserTestRiskData(){
@@ -516,7 +521,7 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
     }
     
     /**
-     * Returns the total risk calcualted for the user related to medication data gathered.
+     * Returns the total risk calcualted for the user related to medication data.
      * @return
      */
     public Cursor getUserMedicationRiskData(){
@@ -534,7 +539,7 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
     }
     
     /**
-     * Returns the total risk calcualted for the user related to survey data gathered.
+     * Returns the total risk calcualted for the user related to survey data.
      * @return
      */
     public Cursor getUserSurveyRiskData(){
@@ -552,6 +557,7 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
     }
     
     public Uri insertUserRiskForTesting(){
+    	//method to insert some values to present in other apps.
     	ContentValues values = new ContentValues();
 		values.put(UserTotalRisk.SENSOR_RISK, 1);
 		values.put(UserTotalRisk.MEDICATION_RISK, 1);
@@ -563,7 +569,7 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		return temp;
     }
     
-    public void onetimeinsertsensor(){
+    public void oneTimeInsertSensor(){
     	ContentValues values = new ContentValues();
     	values.put(SensorSpec.NAME, "pedometer");
     	values.put(SensorSpec.ACCURACY, "50");
@@ -571,5 +577,92 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
     	values.put(SensorSpec.SENSOR_ATTACHMENT, "mobile");
     	values.put(SensorSpec.SENSOR_PLACEMENT, "pocket");
     	myCR.insert(SensorSpec.CONTENT_URI, values);
+    }
+    
+    public Uri insertTUGStandard(){
+    	ContentValues values = new ContentValues();
+    	values.put(Standards.MEASURE_TYPE, "WalkingSpeed");
+    	values.put(Standards.DATA_TYPE, "int");
+    	values.put(Standards.DATA_UNIT, "meter/second");
+    	Uri temp = myCR.insert(Standards.CONTENT_URI, values);
+    	
+    	return temp;
+    }
+    
+    public void insertTUGTestData(){
+    	ContentValues values = new ContentValues();
+    	values.put(TestSpec.NAME, "TUGTest");
+    	values.put(TestSpec.OWNER_ID, "Mobile");
+    	Uri temp = myCR.insert(TestSpec.CONTENT_URI, values);
+		
+    	String path = temp.getPath();
+		String idStr = path.substring(path.lastIndexOf('/') + 1);
+		int id = Integer.parseInt(idStr);
+    	
+		Uri temp2 = insertTUGStandard();
+    	String path2 = temp2.getPath();
+		String idStr2 = path2.substring(path2.lastIndexOf('/') + 1);
+		int id2 = Integer.parseInt(idStr2);
+		
+    	values = new ContentValues();
+    	values.put(TestMeasureSpec.FK_TEST, id);
+    	values.put(TestMeasureSpec.FK_STANDARDS, id2);    	
+    }
+    
+    public Uri insertTUGResults(int time){
+    	Cursor cursor = null;
+    	Cursor cursor2 = null;
+    	Cursor cursor3 = null;
+    	try{
+	        String selection = Standards.MEASURE_TYPE + " = \"" + "WalkingSpeed" + "\"";
+	    	String[] projection = {Standards._ID};
+	    		    	
+	    	cursor2 = myCR.query(Standards.CONTENT_URI, 
+	    		             projection, selection, null,
+	    		    	       null);
+	    	boolean temp;
+	    	if(cursor2.moveToFirst() != false){
+	    		temp = cursor2.moveToFirst();
+	    		
+		    	String selection2 = TestMeasureSpec.FK_STANDARDS + " = \"" + cursor2.getString(0) + "\"";
+		    	String[] projection2 = {TestMeasureSpec._ID};
+		    	cursor = myCR.query(TestMeasureSpec.CONTENT_URI, 
+	    	             projection2, selection2, null,
+	    	    	       null);
+	    	}
+	    	
+	    	String selection3 = TestSpec.NAME + " = \"" + "TUGTest" + "\"";
+	    	String[] projection3 = {TestSpec._ID};
+	    	cursor3 = myCR.query(TestSpec.CONTENT_URI, 
+   	             projection3, selection3, null,
+   	    	       null);
+	    	int id = -1;
+	    	if(temp = cursor3.moveToFirst()){
+	    		ContentValues values = new ContentValues();
+	    		values.put(TestLog.FK_TEST, Integer.parseInt(cursor3.getString(0)));
+	    		values.put(TestLog.TOTAL_RISK, "0");
+	    		Uri testLogUri = myCR.insert(TestLog.CONTENT_URI, values);
+	    		
+	        	String path = testLogUri.getPath();
+	    		String idStr = path.substring(path.lastIndexOf('/') + 1);
+	    		id = Integer.parseInt(idStr);
+	    	}
+	    	
+	    	
+	    	
+	    	ContentValues values = new ContentValues();
+	    	values.put(TestMeasureLog.VALUE, time);
+	    	if(temp = cursor.moveToFirst()){
+	    		values.put(TestMeasureLog.FK_MEASURE_SPEC, Integer.parseInt(cursor.getString(0)));
+	    	}
+	    	if(id != -1)
+	    		values.put(TestMeasureLog.FK_TEST_LOG, id);
+	    	
+	    	return myCR.insert(TestMeasureLog.CONTENT_URI, values);
+	    	
+    	}catch(SQLiteException e){
+    		Log.i("SQLiteException when getting Standards and Test IDs", "error: " + e);
+    		return null;
+    	}
     }
 }

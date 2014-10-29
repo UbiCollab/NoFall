@@ -1,4 +1,4 @@
-package ntnu.master.nofall.testapps.activity;
+package ntnu.master.nofall.testapps.medication;
 
 import java.util.ArrayList;
 
