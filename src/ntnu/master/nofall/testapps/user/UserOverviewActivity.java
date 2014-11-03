@@ -1,4 +1,4 @@
-package ntnu.master.nofall.testapps.activity;
+package ntnu.master.nofall.testapps.user;
 
 import ntnu.master.nofall.R;
 import ntnu.master.nofall.platform.provider.UsersContract.User;
@@ -82,8 +82,8 @@ public class UserOverviewActivity extends ListActivity implements
 		return super.onContextItemSelected(item);
 	}
 
-	public void OpenMedRegActivity(View view){
-		Intent intent = new Intent(UserOverviewActivity.this, MedicationRegActivity.class);
+	public void OpenUserRegActivity(View view){
+		Intent intent = new Intent(UserOverviewActivity.this, UserDetailActivity.class);
 		startActivity(intent);
 	}
 	

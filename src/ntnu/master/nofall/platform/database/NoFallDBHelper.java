@@ -606,7 +606,8 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		
     	values = new ContentValues();
     	values.put(TestMeasureSpec.FK_TEST, id);
-    	values.put(TestMeasureSpec.FK_STANDARDS, id2);    	
+    	values.put(TestMeasureSpec.FK_STANDARDS, id2);    
+    	temp = myCR.insert(TestMeasureSpec.CONTENT_URI, values);
     }
     
     public Uri insertTUGResults(int time){
@@ -622,15 +623,13 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	    		    	       null);
 	    	boolean temp;
 	    	if(cursor2.moveToFirst() != false){
-	    		temp = cursor2.moveToFirst();
-	    		
+	    		temp = cursor2.moveToLast();
 		    	String selection2 = TestMeasureSpec.FK_STANDARDS + " = \"" + cursor2.getString(0) + "\"";
 		    	String[] projection2 = {TestMeasureSpec._ID};
 		    	cursor = myCR.query(TestMeasureSpec.CONTENT_URI, 
 	    	             projection2, selection2, null,
 	    	    	       null);
 	    	}
-	    	
 	    	String selection3 = TestSpec.NAME + " = \"" + "TUGTest" + "\"";
 	    	String[] projection3 = {TestSpec._ID};
 	    	cursor3 = myCR.query(TestSpec.CONTENT_URI, 
@@ -640,6 +639,7 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	    	if(temp = cursor3.moveToFirst()){
 	    		ContentValues values = new ContentValues();
 	    		values.put(TestLog.FK_TEST, Integer.parseInt(cursor3.getString(0)));
+	    		// here the risk can be set based on calculations
 	    		values.put(TestLog.TOTAL_RISK, "0");
 	    		Uri testLogUri = myCR.insert(TestLog.CONTENT_URI, values);
 	    		
@@ -647,8 +647,6 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	    		String idStr = path.substring(path.lastIndexOf('/') + 1);
 	    		id = Integer.parseInt(idStr);
 	    	}
-	    	
-	    	
 	    	
 	    	ContentValues values = new ContentValues();
 	    	values.put(TestMeasureLog.VALUE, time);

@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/custom_button"
         android:onClick="OpenUserActivity"
-        android:text="@string/btnStartRegTxt" />
+        android:text="User" />
 
     <Button
         android:id="@+id/fragment_main_btn_Help"

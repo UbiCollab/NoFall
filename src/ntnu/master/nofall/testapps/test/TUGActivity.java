@@ -74,8 +74,7 @@ public class TUGActivity extends Activity {
 	
 	public void SaveResults(View view) {
 		NoFallDBHelper db = new NoFallDBHelper(this);
-		db.insertTUGResults(seconds);
-		
+		if(seconds > 0) db.insertTUGResults(seconds);
 		Intent intent = new Intent(TUGActivity.this, MainActivity.class);
 		startActivity(intent);
 	}
