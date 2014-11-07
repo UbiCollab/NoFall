@@ -12,7 +12,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
-            android:name="ntnu.master.nofall.testapps.activity.UserOverviewActivity"
+            android:name="ntnu.master.nofall.testapps.user.UserOverviewActivity"
             android:label="@string/app_name" >
 
             <!--
@@ -27,7 +27,7 @@
         <service android:name="ntnu.master.nofall.testapps.pedometer.StepService"/>
         
         <activity
-            android:name="ntnu.master.nofall.testapps.activity.UserDetailActivity"
+            android:name="ntnu.master.nofall.testapps.user.UserDetailActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" >
         </activity>
 
@@ -60,26 +60,29 @@
 			android:label="@string/title_activity_help" >
         </activity>
         <activity
-        	android:name="ntnu.master.nofall.testapps.activity.MedicationRegActivity"
+        	android:name="ntnu.master.nofall.testapps.medication.MedicationRegActivity"
             android:label="@string/title_activity_medication_reg" >
         </activity>
         <activity
-            android:name="ntnu.master.nofall.testapps.activity.MedicationSelectActivity"
+            android:name="ntnu.master.nofall.testapps.medication.MedicationSelectActivityty"
             android:label="@string/title_activity_medication_select" >
         </activity>
         <activity
-			android:name="ntnu.master.nofall.testapps.activity.TUGActivity"
+			android:name="ntnu.master.nofall.testapps.test.TUGActivity"
             android:label="@string/title_activity_tug_test" >
         </activity>
         <activity
-            android:name="ntnu.master.nofall.testapps.activity.SurveyActivity"
+            android:name="ntnu.master.nofall.testapps.survey.SurveyActivity"
             android:label="@string/title_activity_survey" >
         </activity>
         <activity
-            android:name="ntnu.master.nofall.testapps.activity.XYPlotActivity"
-            android:label="@string/title_activity_tug_test" >
+            android:name="ntnu.master.nofall.testapps.graphicalplots.XYPlotActivity"
+            android:label="@string/title_activity_xyplot" >
         </activity>
-        
+        <activity
+            android:name="ntnu.master.nofall.testapps.graphicalplots.SimplePieChartActivity"
+            android:label="@string/title_activity_piechart" >
+        </activity>
         <activity android:name="ntnu.master.nofall.testapps.pedometer.Pedometer"
                   android:label="@string/app_name"
                   android:configChanges="orientation">

@@ -1,4 +1,4 @@
-package ntnu.master.nofall.testapps.activity;
+package ntnu.master.nofall.testapps.survey;
 
 import ntnu.master.nofall.R;
 import android.app.Activity;

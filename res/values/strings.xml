@@ -29,6 +29,8 @@
     <string name="title_activity_survey">SurveyActivity</string>
     <string name="title_activity_start_page">StartPageActivity</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_xyplot">Simlpe XYPlot Graph</string>
+    <string name="title_activity_piechart">Simple PieChart</string>
     
     <!-- Buttons -->
     <string name="btnOk">OK</string>
@@ -39,6 +41,7 @@
     <string name="btnAddMedication">Select Medication</string>
     <string name="btnDone">Finished</string>
     <string name="btnStart">Start</string>
+    <string name="btnSave">Save</string>
     
     
     <!-- Pedometer -->

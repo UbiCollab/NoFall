@@ -1,7 +1,8 @@
-package ntnu.master.nofall.testapps.activity;
+package ntnu.master.nofall.testapps.medication;
 
 import ntnu.master.nofall.R;
 import ntnu.master.nofall.platform.database.NoFallDBHelper;
+import ntnu.master.nofall.testapps.activity.MainActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -27,7 +28,7 @@ public class MedicationRegActivity extends Activity {
 
 	
 	public void OpenNextActivity(View view){
-		Intent intent = new Intent(MedicationRegActivity.this, TUGActivity.class);
+		Intent intent = new Intent(MedicationRegActivity.this, MainActivity.class);
 	    startActivity(intent);
 	}
 	

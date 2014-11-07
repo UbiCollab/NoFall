@@ -35,6 +35,12 @@ import ntnu.master.nofall.platform.provider.MedicationContract.MedicationLog;
 import ntnu.master.nofall.platform.provider.MedicationContract.MedicationType;
 import ntnu.master.nofall.platform.provider.SensorContract.SensorLog;
 import ntnu.master.nofall.platform.provider.SensorContract.SensorSpec;
+import ntnu.master.nofall.platform.provider.StandardContract.Standards;
+import ntnu.master.nofall.platform.provider.TestContract.TestLog;
+import ntnu.master.nofall.platform.provider.TestContract.TestMeasureLog;
+import ntnu.master.nofall.platform.provider.TestContract.TestMeasureSpec;
+import ntnu.master.nofall.platform.provider.TestContract.TestSpec;
+import ntnu.master.nofall.platform.provider.UsersContract.UserTotalRisk;
 import ntnu.master.nofall.testapps.object.Category;
 import ntnu.master.nofall.testapps.object.SubCategory;
 import ntnu.master.nofall.testapps.pedometer.Utils;
@@ -74,6 +80,7 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		fContext = context;
 		myCR = context.getContentResolver();
+		Log.i("Inserted sensor", "Pedo");
 	}		
 	
 	// Method is called during creation of the database
@@ -187,6 +194,10 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	    }
 	}
 	
+	/**
+	 * Fills the DB tables for medication based on data from a XML file. 
+	 * The data in the XML file comes from research based on medications identified as related to fall risk.
+	 */
 	private void getMedicationDataFromXML() {
 		//Get xml resource file
         Resources res = fContext.getResources();
@@ -284,8 +295,10 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 			Log.i("SQLiteException when inserting movement speed", "error: " + e);
 			return null;
 		}finally{
-			if(cursor != null)
+			if(cursor != null){
 				cursor.close();
+				cursor = null;
+			}
 		}
 	}
 	
@@ -304,9 +317,6 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		}catch(SQLiteException e){
 			Log.i("SQLiteException when inserting movement speed", "error: " + e);
 			return null;
-		}finally{
-			if(cursor != null)
-				cursor.close();
 		}
 	}
 	
@@ -354,30 +364,77 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	}
 	
     public void insertMovementSpeedToDB(int speed, int numOfReg){
-    	Cursor cursor1 = null;
+    	Cursor cursor = null;
     	try{
-    	String selection = SensorSpec.NAME + " = \"" + "pedometer" + "\"";
-		String[] projection = {SensorSpec._ID};
-		    	
-		cursor1 = myCR.query(SensorSpec.CONTENT_URI, 
-		              projection, selection, null,
-		    	        null);
-		boolean temp = cursor1.moveToFirst();
-    	if(temp == true){
-        	ContentValues values = new ContentValues();
-        	values.put(SensorLog.VALUE, speed);
-        	values.put(SensorLog.NUM_OF_REG, numOfReg);
-        	values.put(SensorLog.FK_SENSOR, cursor1.getString(0));
-        	values.put(SensorLog.CREATED_DATE, Utils.currentTimeInMillis()/1000);
-        	myCR.insert(SensorLog.CONTENT_URI, values);
+	    	String selection = SensorSpec.NAME + " = \"" + "pedometer" + "\"";
+			String[] projection = {SensorSpec._ID};
+			    	
+			cursor = myCR.query(SensorSpec.CONTENT_URI, 
+			              projection, selection, null,
+			    	        null);
+			boolean temp = cursor.moveToFirst();
+	    	if(temp == true){
+	        	ContentValues values = new ContentValues();
+	        	values.put(SensorLog.VALUE, speed);
+	        	values.put(SensorLog.NUM_OF_REG, numOfReg);
+	        	Log.w("Inserting steps", "Number of: "+numOfReg);
+	        	values.put(SensorLog.FK_SENSOR, cursor.getString(0));
+	        	values.put(SensorLog.CREATED_DATE, Utils.currentTimeInMillis()/1000);
+	        	myCR.insert(SensorLog.CONTENT_URI, values);
     	}else{
     		Log.i("Did not find sensor", "pedometer");
     	}
     	}catch(SQLiteException e){
     		Log.i("SQLiteException when inserting movement speed", "error: " + e);
     	}finally{
+    		if(cursor != null){
+    			cursor.close();
+    			cursor = null;
+    		}
+    	}
+    }
+    
+	/**
+	 * Gets the number of steps registered by the pedometer
+	 * @return Curs 0 = value
+	 */
+    public Cursor getNumberOfSteps(){
+    	Cursor cursor1 = null;
+    	Cursor cursor = null;
+    	try{
+	        String selection = SensorSpec.NAME + " = \"" + "pedometer" + "\"";
+	    	String[] projection = {SensorSpec._ID};
+	    		    	
+	    	cursor1 = myCR.query(SensorSpec.CONTENT_URI, 
+	    		             projection, selection, null,
+	    		    	       null);
+	    	boolean temp;
+	    	if(cursor1.moveToLast() != false){
+	    		temp = cursor1.moveToLast();
+		    	
+		    	Log.i("Getting ID for pedometer", cursor1.getString(0));
+		    		
+		    	String selection2 = SensorLog.FK_SENSOR + " = \"" + cursor1.getString(0) + "\"";
+		    	String[] projection2 = {SensorLog.NUM_OF_REG};
+		    	cursor = myCR.query(SensorLog.CONTENT_URI, 
+	    	             projection2, selection2, null,
+	    	    	       null);
+		    	temp = cursor.moveToFirst();
+		    	Log.i("Getting value for movementspeed", "movetofirst" + temp);
+	    	}	    		    			    	
+	    		
+	    	return cursor;
+    	}catch(SQLiteException e){
+    		Log.i("SQLiteException when inserting movement speed", "error: " + e);
+    		return null;
+    	}finally{
+    		if(cursor != null){
+    			cursor.close();
+    			cursor = null;
+    		}
     		if(cursor1 != null){
     			cursor1.close();
+    			cursor1 = null;
     		}
     	}
     }
@@ -415,15 +472,104 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
     	}catch(SQLiteException e){
     		Log.i("SQLiteException when inserting movement speed", "error: " + e);
     		return null;
-    	}finally{
-    		if(cursor != null)
-    			cursor.close();
-    		if(cursor1 != null)
-    			cursor1.close();
+//    	}finally{
+//    		if(cursor != null){
+//    			cursor.close();
+//    			cursor = null;
+//    		}
+//    		if(cursor1 != null){
+//    			cursor1.close();
+//    			cursor1 = null;
+//    		}
     	}
     }
     
-    public void onetimeinsertsensor(){
+    /**
+     * Returns the total risk calcualted for the user related to sensor data.
+     * @return
+     */
+    public Cursor getUserSensorRiskData(){
+		Cursor cursor = null;
+		try{
+			String[] projection = {UserTotalRisk.SENSOR_RISK};
+	    	
+			cursor = myCR.query(UserTotalRisk.CONTENT_URI, 
+			              projection, null, null, null);
+			return cursor;
+		}catch(SQLiteException e){
+			Log.i("SQLiteException when getting data for user sensor risk", "error: " + e);
+			return null;
+		}
+    }
+    
+    /**
+     * Returns the total risk calcualted for the user related to test data.
+     * @return
+     */
+    public Cursor getUserTestRiskData(){
+		Cursor cursor = null;
+		try{
+			String[] projection = {UserTotalRisk.TEST_RISK};
+	    	
+			cursor = myCR.query(UserTotalRisk.CONTENT_URI, 
+			              projection, null, null, null);
+			return cursor;
+		}catch(SQLiteException e){
+			Log.i("SQLiteException when getting data for user test risk", "error: " + e);
+			return null;
+		}
+    }
+    
+    /**
+     * Returns the total risk calcualted for the user related to medication data.
+     * @return
+     */
+    public Cursor getUserMedicationRiskData(){
+		Cursor cursor = null;
+		try{
+			String[] projection = {UserTotalRisk.MEDICATION_RISK};
+	    	
+			cursor = myCR.query(UserTotalRisk.CONTENT_URI, 
+			              projection, null, null, null);
+			return cursor;
+		}catch(SQLiteException e){
+			Log.i("SQLiteException when getting data for user medication risk", "error: " + e);
+			return null;
+		}
+    }
+    
+    /**
+     * Returns the total risk calcualted for the user related to survey data.
+     * @return
+     */
+    public Cursor getUserSurveyRiskData(){
+		Cursor cursor = null;
+		try{
+			String[] projection = {UserTotalRisk.SURVEY_RISK};
+	    	
+			cursor = myCR.query(UserTotalRisk.CONTENT_URI, 
+			              projection, null, null, null);
+			return cursor;
+		}catch(SQLiteException e){
+			Log.i("SQLiteException when getting data for user survey risk", "error: " + e);
+			return null;
+		}
+    }
+    
+    public Uri insertUserRiskForTesting(){
+    	//method to insert some values to present in other apps.
+    	ContentValues values = new ContentValues();
+		values.put(UserTotalRisk.SENSOR_RISK, 1);
+		values.put(UserTotalRisk.MEDICATION_RISK, 1);
+		values.put(UserTotalRisk.SURVEY_RISK, 2);
+		values.put(UserTotalRisk.TEST_RISK, 3);
+		
+		Uri temp = myCR.insert(UserTotalRisk.CONTENT_URI, values);
+		
+		return temp;
+    }
+    
+    public void oneTimeInsertSensor(){
     	ContentValues values = new ContentValues();
     	values.put(SensorSpec.NAME, "pedometer");
     	values.put(SensorSpec.ACCURACY, "50");
@@ -431,5 +577,90 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
     	values.put(SensorSpec.SENSOR_ATTACHMENT, "mobile");
     	values.put(SensorSpec.SENSOR_PLACEMENT, "pocket");
     	myCR.insert(SensorSpec.CONTENT_URI, values);
+    }
+    
+    public Uri insertTUGStandard(){
+    	ContentValues values = new ContentValues();
+    	values.put(Standards.MEASURE_TYPE, "WalkingSpeed");
+    	values.put(Standards.DATA_TYPE, "int");
+    	values.put(Standards.DATA_UNIT, "meter/second");
+    	Uri temp = myCR.insert(Standards.CONTENT_URI, values);
+    	
+    	return temp;
+    }
+    
+    public void insertTUGTestData(){
+    	ContentValues values = new ContentValues();
+    	values.put(TestSpec.NAME, "TUGTest");
+    	values.put(TestSpec.OWNER_ID, "Mobile");
+    	Uri temp = myCR.insert(TestSpec.CONTENT_URI, values);
+		
+    	String path = temp.getPath();
+		String idStr = path.substring(path.lastIndexOf('/') + 1);
+		int id = Integer.parseInt(idStr);
+    	
+		Uri temp2 = insertTUGStandard();
+    	String path2 = temp2.getPath();
+		String idStr2 = path2.substring(path2.lastIndexOf('/') + 1);
+		int id2 = Integer.parseInt(idStr2);
+		
+    	values = new ContentValues();
+    	values.put(TestMeasureSpec.FK_TEST, id);
+    	values.put(TestMeasureSpec.FK_STANDARDS, id2);    
+    	temp = myCR.insert(TestMeasureSpec.CONTENT_URI, values);
+    }
+    
+    public Uri insertTUGResults(int time){
+    	Cursor cursor = null;
+    	Cursor cursor2 = null;
+    	Cursor cursor3 = null;
+    	try{
+	        String selection = Standards.MEASURE_TYPE + " = \"" + "WalkingSpeed" + "\"";
+	    	String[] projection = {Standards._ID};
+	    		    	
+	    	cursor2 = myCR.query(Standards.CONTENT_URI, 
+	    		             projection, selection, null,
+	    		    	       null);
+	    	boolean temp;
+	    	if(cursor2.moveToFirst() != false){
+	    		temp = cursor2.moveToLast();
+		    	String selection2 = TestMeasureSpec.FK_STANDARDS + " = \"" + cursor2.getString(0) + "\"";
+		    	String[] projection2 = {TestMeasureSpec._ID};
+		    	cursor = myCR.query(TestMeasureSpec.CONTENT_URI, 
+	    	             projection2, selection2, null,
+	    	    	       null);
+	    	}
+	    	String selection3 = TestSpec.NAME + " = \"" + "TUGTest" + "\"";
+	    	String[] projection3 = {TestSpec._ID};
+	    	cursor3 = myCR.query(TestSpec.CONTENT_URI, 
+   	             projection3, selection3, null,
+   	    	       null);
+	    	int id = -1;
+	    	if(temp = cursor3.moveToFirst()){
+	    		ContentValues values = new ContentValues();
+	    		values.put(TestLog.FK_TEST, Integer.parseInt(cursor3.getString(0)));
+	    		// here the risk can be set based on calculations
+	    		values.put(TestLog.TOTAL_RISK, "0");
+	    		Uri testLogUri = myCR.insert(TestLog.CONTENT_URI, values);
+	    		
+	        	String path = testLogUri.getPath();
+	    		String idStr = path.substring(path.lastIndexOf('/') + 1);
+	    		id = Integer.parseInt(idStr);
+	    	}
+	    	
+	    	ContentValues values = new ContentValues();
+	    	values.put(TestMeasureLog.VALUE, time);
+	    	if(temp = cursor.moveToFirst()){
+	    		values.put(TestMeasureLog.FK_MEASURE_SPEC, Integer.parseInt(cursor.getString(0)));
+	    	}
+	    	if(id != -1)
+	    		values.put(TestMeasureLog.FK_TEST_LOG, id);
+	    	
+	    	return myCR.insert(TestMeasureLog.CONTENT_URI, values);
+	    	
+    	}catch(SQLiteException e){
+    		Log.i("SQLiteException when getting Standards and Test IDs", "error: " + e);
+    		return null;
+    	}
     }
 }

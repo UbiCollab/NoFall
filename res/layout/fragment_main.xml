@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/custom_button"
         android:onClick="OpenUserActivity"
-        android:text="@string/btnStartRegTxt" />
+        android:text="User" />
 
     <Button
         android:id="@+id/fragment_main_btn_Help"
@@ -40,39 +40,47 @@
         android:text="TUG" />
 
     <Button
+        android:id="@+id/fragment_main_btn_Pedometer"
+        style="@style/button_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fragment_main_btn_Survey"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/custom_button"
+        android:onClick="OpenPedometerActivity"
+        android:text="Pedometer" />
+
+    <Button
         android:id="@+id/fragment_main_btn_Survey"
         style="@style/button_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/fragment_main_btn_Test"
-        android:layout_below="@+id/btnXYPlot"
-        android:layout_marginTop="15dp"
+        android:layout_below="@+id/fragment_main_btn_Test"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/custom_button"
         android:onClick="OpenSurveyActivity"
         android:text="Survey" />
+
+    <Button
+        android:id="@+id/Button01"
+        style="@style/button_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/fragment_main_btn_Pedometer"
+        android:layout_below="@+id/fragment_main_btn_Pedometer"
+        android:background="@drawable/custom_button"
+        android:onClick="OpenPieChartActivity"
+        android:text="Piechart" />
 
     <Button
         android:id="@+id/btnXYPlot"
         style="@style/button_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/fragment_main_btn_Test"
-        android:layout_below="@+id/fragment_main_btn_Test"
-        android:layout_marginTop="82dp"
+        android:layout_alignRight="@+id/Button01"
+        android:layout_below="@+id/Button01"
         android:background="@drawable/custom_button"
         android:onClick="OpenXYPlotActivity"
         android:text="XYPlot" />
-
-    <Button
-        android:id="@+id/fragment_main_btn_Pedometer"
-        style="@style/button_text"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/fragment_main_btn_Survey"
-        android:layout_below="@+id/fragment_main_btn_Survey"
-        android:layout_marginBottom="56dp"
-        android:background="@drawable/custom_button"
-        android:onClick="OpenPedometerActivity"
-        android:text="Pedometer" />
 
 </RelativeLayout>

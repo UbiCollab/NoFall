@@ -33,4 +33,15 @@
         android:onClick="OpenSelectMedActivity"
         android:text="@string/btnStart" />
 
+    <Button
+        android:id="@+id/activity_TUG_btn_saveRes"
+        style="@style/button_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/activity_TUG_btn_StartTUG"
+        android:layout_below="@+id/activity_TUG_btn_StartTUG"
+        android:background="@drawable/custom_button"
+        android:onClick="SaveResults"
+        android:text="@string/btnSave" />
+
 </RelativeLayout>
