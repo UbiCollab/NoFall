@@ -1,7 +1,7 @@
 package ntnu.master.nofall.platform.database.sensor;
 
+import ntnu.master.nofall.platform.provider.RiskDefContract.RiskDefinition;
 import ntnu.master.nofall.platform.provider.SensorContract.SensorSpec;
-import ntnu.master.nofall.platform.provider.StandardContract.Standards;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -10,15 +10,13 @@ public class SensorSpecTable {
 	private static final String DATABASE_CREATE = "create table "
 			+ SensorSpec.TABLE_NAME + "(" 
 			+ SensorSpec._ID + " integer primary key autoincrement, " 
-			+ SensorSpec.OWNER_ID + " text not null, " 
-			+ SensorSpec.SENSOR_ATTACHMENT + " text not null, " 
-			+ SensorSpec.SENSOR_PLACEMENT + " text not null, "
+			+ SensorSpec.OWNER_ID + " text not null, " 			
 			+ SensorSpec.ACCURACY + " integer, " 
 			+ SensorSpec.NAME + " text not null, "
 			+ SensorSpec.CREATED_DATE + " integer," 
 		    + SensorSpec.MODIFIED_DATE + " integer,"
-			+ SensorSpec.FK_STANDARDS + " integer, " 
-			+ " FOREIGN KEY ("+ SensorSpec.FK_STANDARDS + ") REFERENCES " + Standards.TABLE_NAME + " ("+ Standards._ID + ") ON DELETE CASCADE );";
+			+ SensorSpec.FK_RISK_DEF + " integer, " 
+			+ " FOREIGN KEY ("+ SensorSpec.FK_RISK_DEF + ") REFERENCES " + RiskDefinition.TABLE_NAME + " ("+ RiskDefinition._ID + ") ON DELETE CASCADE );";
 
 	public static void onCreate(SQLiteDatabase database) {
 		try {

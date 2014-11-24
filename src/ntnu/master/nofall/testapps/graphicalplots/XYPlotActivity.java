@@ -31,8 +31,6 @@ public class XYPlotActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// fun little snippet that prevents users from taking screenshots
-		// on ICS+ devices :-)
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
 				WindowManager.LayoutParams.FLAG_SECURE);
 
@@ -49,7 +47,7 @@ public class XYPlotActivity extends Activity {
 		int temp = 0;
 		NoFallDBHelper db = new NoFallDBHelper(this);
 		Log.i("Getting movement speed", "yeeahh");
-		Cursor cur = db.getMovementSpeed();
+		Cursor cur = db.getNumberOfSteps();
 		movementSpeed = new Number[cur.getCount()];
 		//createdDate = new Number[cur.getCount()];
 		while(cur.moveToNext()){
@@ -61,34 +59,7 @@ public class XYPlotActivity extends Activity {
 		cur.close();
 
 		// Turn the above arrays into XYSeries':
-//		XYSeries series1 = new SimpleXYSeries(Arrays.asList(series1Numbers), // SimpleXYSeries
-//																				// takes
-//																				// a
-//																				// List
-//																				// so
-//																				// turn
-//																				// our
-//																				// array
-//																				// into
-//																				// a
-//																				// List
-//				SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, // Y_VALS_ONLY means use
-//														// the element index as
-//														// the x value
-//				"Series1"); // Set the display title of the series
-
-		// same as above
-		//XYSeries series2 = new SimpleXYSeries(Arrays.asList(createdDate), Arrays.asList(movementSpeed), "Series2");
 		XYSeries series2 = new SimpleXYSeries( Arrays.asList(movementSpeed), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Movement Speed");
-		// Create a formatter to use for drawing a series using
-		// LineAndPointRenderer
-		//LineAndPointFormatter series1Format = new LineAndPointFormatter(Color.RED, Color.GREEN, Color.BLUE, null);
-
-
-		// add a new series' to the xyplot:
-		//plot.addSeries(series1, series1Format);
-
-		// same as above:
 		LineAndPointFormatter series2Format = new LineAndPointFormatter(Color.GREEN, Color.BLUE, Color.RED, null);
 
 		plot.addSeries(series2, series2Format);

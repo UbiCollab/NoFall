@@ -1,6 +1,6 @@
 package ntnu.master.nofall.platform.database.test;
 
-import ntnu.master.nofall.platform.provider.StandardContract.StandardsRiskMap;
+import ntnu.master.nofall.platform.provider.RiskDefContract.RefRiskLevels;
 import ntnu.master.nofall.platform.provider.TestContract.TestQuestionRiskSpec;
 import ntnu.master.nofall.platform.provider.TestContract.TestQuestionSpec;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,10 +15,12 @@ public class TestQuestionRiskSpecTable {
 		      + TestQuestionRiskSpec.ANSWER + " text not null, "
 		      + TestQuestionRiskSpec.CREATED_DATE + " integer," 
 		      + TestQuestionRiskSpec.MODIFIED_DATE + " integer,"
-		      + TestQuestionRiskSpec.FK_RISK_STAND_MAP + " integer, " 
-		      + TestQuestionRiskSpec.FK_TEST_QUESTION + " integer, "
-		      + " FOREIGN KEY ("+TestQuestionRiskSpec.FK_RISK_STAND_MAP+") REFERENCES "+StandardsRiskMap.TABLE_NAME+" ("+StandardsRiskMap._ID+") ON DELETE CASCADE"
-		      + " FOREIGN KEY ("+TestQuestionRiskSpec.FK_TEST_QUESTION+") REFERENCES "+TestQuestionSpec.TABLE_NAME+" ("+TestQuestionSpec._ID+") ON DELETE CASCADE );";
+		      + TestQuestionRiskSpec.FK_REF_RISK_LEVELS + " integer, " 
+		      + TestQuestionRiskSpec.FK_TEST_QUESTION_SPEC + " integer, "
+		      + " FOREIGN KEY ("+TestQuestionRiskSpec.FK_REF_RISK_LEVELS+") " +
+		      		"REFERENCES "+RefRiskLevels.TABLE_NAME+" ("+RefRiskLevels._ID+") ON DELETE CASCADE"
+		      + " FOREIGN KEY ("+TestQuestionRiskSpec.FK_TEST_QUESTION_SPEC+") " +
+		      		"REFERENCES "+TestQuestionSpec.TABLE_NAME+" ("+TestQuestionSpec._ID+") ON DELETE CASCADE );";
 
 	public static void onCreate(SQLiteDatabase database) {
 		try

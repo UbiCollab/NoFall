@@ -12,11 +12,10 @@ public class TestLogTable {
 		      + "(" 
 		      + TestLog._ID   + " integer primary key autoincrement, " 
 		      + TestLog.DATE + " date, "
-		      + TestLog.TOTAL_RISK + " integer," 
 		      + TestLog.CREATED_DATE + " integer," 
 		      + TestLog.MODIFIED_DATE + " integer,"
-		      + TestLog.FK_TEST + " integer, "
-		      + " FOREIGN KEY ("+TestLog.FK_TEST+") REFERENCES "+TestSpec.TABLE_NAME+" ("+TestSpec._ID+") ON DELETE CASCADE );";
+		      + TestLog.FK_TEST_SPEC + " integer, "
+		      + " FOREIGN KEY ("+TestLog.FK_TEST_SPEC+") REFERENCES "+TestSpec.TABLE_NAME+" ("+TestSpec._ID+") ON DELETE CASCADE );";
 
 	public static void onCreate(SQLiteDatabase database) {
 		try

@@ -17,6 +17,53 @@ public final class MedicationContract {
 	 * @author Finn
 	 *
 	 */
+	public static final class MedicationSpec implements BaseColumns {
+        // This class cannot be instantiated
+        private MedicationSpec() {}
+        
+        public static final int MED_SPEC = 56;
+        public static final int MED_SPEC_ID = 66;
+        
+        public static final String TABLE_NAME = "tblMedSpec";
+    	
+        public static final Uri CONTENT_URI = Uri.parse("content://" + AuthorityContract.AUTHORITY + "/" + TABLE_NAME);
+        
+        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+    			+ "/" + TABLE_NAME;
+
+        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+    			+ "/" + TABLE_NAME;
+        
+    	public static final String NAME = "name";	
+    	
+    	public static final String DESCRIPTION = "description";	
+    	
+    	public static final String FK_RISK_DEF = "fkRiskDef";    	
+        
+        /**
+         * The default sort order for this table
+         */
+         public static final String DEFAULT_SORT_ORDER = "modified DESC";
+         
+         /**
+          * The timestamp for when the note was created
+          * <P>Type: INTEGER (long from System.curentTimeMillis())</P>
+          */
+         public static final String CREATED_DATE = "created";
+
+         /**
+          * The timestamp for when the note was last modified
+          * <P>Type: INTEGER (long from System.curentTimeMillis())</P>
+          */
+         public static final String MODIFIED_DATE = "modified";
+    	
+	}
+	
+	/**
+	 * Medication Spec table
+	 * @author Finn
+	 *
+	 */
 	public static final class MedicationType implements BaseColumns {
         // This class cannot be instantiated
         private MedicationType() {}
@@ -34,9 +81,7 @@ public final class MedicationContract {
         public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
     			+ "/" + TABLE_NAME;
         
-    	public static final String NAME = "name";	
-    	
-    	public static final String FK_RISK_STAND_MAP = "fkRiskStandMap";
+    	public static final String NAME = "name";	    	
     	
     	public static final String FK_MEDICATION_CATEGORY = "fkMedicationCategory";
         
@@ -64,9 +109,9 @@ public final class MedicationContract {
 	 * @author Finn
 	 *
 	 */
-	public static final class MedicationCategorySpec implements BaseColumns {
+	public static final class MedicationCategory implements BaseColumns {
         // This class cannot be instantiated
-        private MedicationCategorySpec() {}
+        private MedicationCategory() {}
        
         public static final int MED_CAT = 13;
         public static final int MED_CAT_ID = 23;
@@ -81,9 +126,7 @@ public final class MedicationContract {
         public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
     			+ "/" + TABLE_NAME;
         
-    	public static final String NAME = "name";
-    	
-    	public static final String OWNER_ID = "owner";
+    	public static final String NAME = "name";    	
         
         /**
          * The default sort order for this table
@@ -129,7 +172,7 @@ public final class MedicationContract {
     	
     	public static final String DATE = "date";
         
-    	public static final String FK_RISK_STAND_MAP = "fkRiskStandMap";
+    	public static final String FK_MED_SPEC = "fkMedSpec";
     	
         /**
          * The default sort order for this table
@@ -171,7 +214,7 @@ public final class MedicationContract {
         public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
     			+ "/" + TABLE_NAME;
         
-    	public static final String FK_MED_TYPE_SPEC = "fkMedTypeSpec";
+    	public static final String FK_MED_TYPE = "fkMedType";
     	
     	public static final String FK_MED_LOG = "fkMedLog";
         

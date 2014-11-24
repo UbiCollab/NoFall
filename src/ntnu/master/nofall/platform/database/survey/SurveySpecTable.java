@@ -13,6 +13,7 @@ public class SurveySpecTable {
 		      + SurveySpec._ID   + " integer primary key autoincrement, " 
 		      + SurveySpec.OWNER_ID + " text not null, "
 		      + SurveySpec.NAME + " text not null, "  
+		      + SurveySpec.DESCRIPTION + " text, " 
 		      + User.CREATED_DATE + " integer," 
 		      + User.MODIFIED_DATE + " integer" + ");";
 

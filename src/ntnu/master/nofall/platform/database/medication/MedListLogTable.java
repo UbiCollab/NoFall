@@ -14,9 +14,9 @@ public class MedListLogTable {
 		      + MedicationListLog._ID   + " integer primary key autoincrement, " 
 		      + MedicationListLog.CREATED_DATE + " integer," 
 		      + MedicationListLog.MODIFIED_DATE + " integer,"
-		      + MedicationListLog.FK_MED_TYPE_SPEC + " integer, "
+		      + MedicationListLog.FK_MED_TYPE + " integer, "
 		      + MedicationListLog.FK_MED_LOG + " integer, "
-		      + " FOREIGN KEY ("+MedicationListLog.FK_MED_TYPE_SPEC+") REFERENCES "+MedicationType.TABLE_NAME+" ("+MedicationType._ID+") ON DELETE CASCADE"
+		      + " FOREIGN KEY ("+MedicationListLog.FK_MED_TYPE+") REFERENCES "+MedicationType.TABLE_NAME+" ("+MedicationType._ID+") ON DELETE CASCADE"
 		      + " FOREIGN KEY ("+MedicationListLog.FK_MED_LOG+") REFERENCES "+MedicationLog.TABLE_NAME+" ("+MedicationLog._ID+") ON DELETE CASCADE );";
 
 	public static void onCreate(SQLiteDatabase database) {

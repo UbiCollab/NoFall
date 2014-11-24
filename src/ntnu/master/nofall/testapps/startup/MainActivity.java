@@ -1,4 +1,4 @@
-package ntnu.master.nofall.testapps.activity;
+package ntnu.master.nofall.testapps.startup;
 
 import ntnu.master.nofall.R;
 import ntnu.master.nofall.testapps.graphicalplots.SimplePieChartActivity;
