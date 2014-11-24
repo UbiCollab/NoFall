@@ -2,7 +2,7 @@ package ntnu.master.nofall.testapps.medication;
 
 import ntnu.master.nofall.R;
 import ntnu.master.nofall.platform.database.NoFallDBHelper;
-import ntnu.master.nofall.testapps.activity.MainActivity;
+import ntnu.master.nofall.testapps.startup.MainActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;

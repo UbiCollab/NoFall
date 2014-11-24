@@ -1,6 +1,6 @@
 package ntnu.master.nofall.platform.database.test;
 
-import ntnu.master.nofall.platform.provider.StandardContract.Standards;
+import ntnu.master.nofall.platform.provider.RiskDefContract.MeasureStandards;
 import ntnu.master.nofall.platform.provider.TestContract.TestMeasureSpec;
 import ntnu.master.nofall.platform.provider.TestContract.TestSpec;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,9 +14,9 @@ public class TestMeasureSpecTable {
 			+ TestMeasureSpec.CREATED_DATE + " integer," 
 		    + TestMeasureSpec.MODIFIED_DATE + " integer,"
 			+ TestMeasureSpec.FK_TEST + " integer, " 
-			+ TestMeasureSpec.FK_STANDARDS + " integer, "
+			+ TestMeasureSpec.FK_RISK_DEF + " integer, "
 			+ " FOREIGN KEY (" + TestMeasureSpec.FK_TEST + ") REFERENCES " + TestSpec.TABLE_NAME + " (" + TestSpec._ID + ") ON DELETE CASCADE"
-			+ " FOREIGN KEY (" + TestMeasureSpec.FK_STANDARDS + ") REFERENCES " + Standards.TABLE_NAME + " (" + Standards._ID + ") ON DELETE CASCADE );";
+			+ " FOREIGN KEY (" + TestMeasureSpec.FK_RISK_DEF + ") REFERENCES " + MeasureStandards.TABLE_NAME + " (" + MeasureStandards._ID + ") ON DELETE CASCADE );";
 
 	public static void onCreate(SQLiteDatabase database) {
 		try {

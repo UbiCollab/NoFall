@@ -1,8 +1,7 @@
 package ntnu.master.nofall.platform.database.medication;
 
-import ntnu.master.nofall.platform.provider.MedicationContract.MedicationCategorySpec;
+import ntnu.master.nofall.platform.provider.MedicationContract.MedicationCategory;
 import ntnu.master.nofall.platform.provider.MedicationContract.MedicationType;
-import ntnu.master.nofall.platform.provider.StandardContract.StandardsRiskMap;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -13,12 +12,11 @@ public class MedicationTypeTable {
 		      + "(" 
 		      + MedicationType._ID   + " integer primary key autoincrement, " 
 		      + MedicationType.NAME + " text not null, " 
-		      + MedicationType.FK_RISK_STAND_MAP + " integer, "
 		      + MedicationType.FK_MEDICATION_CATEGORY + " integer, "
 		      + MedicationType.CREATED_DATE + " integer," 
 		      + MedicationType.MODIFIED_DATE + " integer,"
-		      + " FOREIGN KEY ("+MedicationType.FK_RISK_STAND_MAP+") REFERENCES "+StandardsRiskMap.TABLE_NAME+" ("+StandardsRiskMap._ID+") ON DELETE CASCADE"
-		      + " FOREIGN KEY ("+MedicationType.FK_MEDICATION_CATEGORY+") REFERENCES "+MedicationCategorySpec.TABLE_NAME+" ("+MedicationCategorySpec._ID+") ON DELETE CASCADE );";
+		      + " FOREIGN KEY ("+MedicationType.FK_MEDICATION_CATEGORY+") " +
+		      		"REFERENCES "+MedicationCategory.TABLE_NAME+" ("+MedicationCategory._ID+") ON DELETE CASCADE );";
 
 	public static void onCreate(SQLiteDatabase database) {
 		try

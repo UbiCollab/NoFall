@@ -5,15 +5,16 @@ import java.util.ArrayList;
 import ntnu.master.nofall.R;
 import ntnu.master.nofall.platform.database.medication.MedListLogTable;
 import ntnu.master.nofall.platform.database.medication.MedLogTable;
-import ntnu.master.nofall.platform.database.medication.MedicationCategorySpecTable;
+import ntnu.master.nofall.platform.database.medication.MedicationCategoryTable;
+import ntnu.master.nofall.platform.database.medication.MedicationSpecTable;
 import ntnu.master.nofall.platform.database.medication.MedicationTypeTable;
+import ntnu.master.nofall.platform.database.riskdefinitions.MeasureStandardsTable;
+import ntnu.master.nofall.platform.database.riskdefinitions.RefRiskLevelsTable;
+import ntnu.master.nofall.platform.database.riskdefinitions.RiskDefinitionTable;
+import ntnu.master.nofall.platform.database.riskdefinitions.RiskMapTable;
+import ntnu.master.nofall.platform.database.sensor.SensorLogItemTable;
 import ntnu.master.nofall.platform.database.sensor.SensorLogTable;
-import ntnu.master.nofall.platform.database.sensor.SensorRiskSpecTable;
 import ntnu.master.nofall.platform.database.sensor.SensorSpecTable;
-import ntnu.master.nofall.platform.database.standards.StandardForeignTable;
-import ntnu.master.nofall.platform.database.standards.StandardNoFallRiskTable;
-import ntnu.master.nofall.platform.database.standards.StandardRiskMapTable;
-import ntnu.master.nofall.platform.database.standards.StandardsTable;
 import ntnu.master.nofall.platform.database.survey.SurveyAnswerLogTable;
 import ntnu.master.nofall.platform.database.survey.SurveyLogTable;
 import ntnu.master.nofall.platform.database.survey.SurveyQRiskSpecTable;
@@ -22,20 +23,19 @@ import ntnu.master.nofall.platform.database.survey.SurveySpecTable;
 import ntnu.master.nofall.platform.database.test.TestAnswerLogTable;
 import ntnu.master.nofall.platform.database.test.TestLogTable;
 import ntnu.master.nofall.platform.database.test.TestMeasureLogTable;
-import ntnu.master.nofall.platform.database.test.TestMeasureRiskSpecTable;
 import ntnu.master.nofall.platform.database.test.TestMeasureSpecTable;
 import ntnu.master.nofall.platform.database.test.TestQuestionRiskSpecTable;
 import ntnu.master.nofall.platform.database.test.TestQuestionSpecTable;
 import ntnu.master.nofall.platform.database.test.TestSpecTable;
 import ntnu.master.nofall.platform.database.user.UserTable;
 import ntnu.master.nofall.platform.database.user.UserTotalRiskLogTable;
-import ntnu.master.nofall.platform.provider.MedicationContract.MedicationCategorySpec;
+import ntnu.master.nofall.platform.provider.MedicationContract.MedicationCategory;
 import ntnu.master.nofall.platform.provider.MedicationContract.MedicationListLog;
 import ntnu.master.nofall.platform.provider.MedicationContract.MedicationLog;
 import ntnu.master.nofall.platform.provider.MedicationContract.MedicationType;
+import ntnu.master.nofall.platform.provider.RiskDefContract.MeasureStandards;
 import ntnu.master.nofall.platform.provider.SensorContract.SensorLog;
 import ntnu.master.nofall.platform.provider.SensorContract.SensorSpec;
-import ntnu.master.nofall.platform.provider.StandardContract.Standards;
 import ntnu.master.nofall.platform.provider.TestContract.TestLog;
 import ntnu.master.nofall.platform.provider.TestContract.TestMeasureLog;
 import ntnu.master.nofall.platform.provider.TestContract.TestMeasureSpec;
@@ -60,7 +60,7 @@ import android.util.Log;
 public class NoFallDBHelper extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "nofall.db";
-	private static final int DATABASE_VERSION = 11;
+	private static final int DATABASE_VERSION = 13;
 
 	private ContentResolver myCR;
 	
@@ -93,21 +93,22 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		UserTotalRiskLogTable.onCreate(database);
 		
 		// Medication tables
+		MedicationSpecTable.onCreate(database);
 		MedicationTypeTable.onCreate(database);
-		MedicationCategorySpecTable.onCreate(database);
+		MedicationCategoryTable.onCreate(database);
 		MedLogTable.onCreate(database);
 		MedListLogTable.onCreate(database);
 		
 		// Sensor tables
 		SensorLogTable.onCreate(database);
-		SensorRiskSpecTable.onCreate(database);
+		SensorLogItemTable.onCreate(database);
 		SensorSpecTable.onCreate(database);
 		
 		// Standards tables
-		StandardForeignTable.onCreate(database);
-		StandardNoFallRiskTable.onCreate(database);
-		StandardRiskMapTable.onCreate(database);
-		StandardsTable.onCreate(database);
+		RiskDefinitionTable.onCreate(database);
+		RefRiskLevelsTable.onCreate(database);
+		RiskMapTable.onCreate(database);
+		MeasureStandardsTable.onCreate(database);
 		
 		// Survey tables
 		SurveyAnswerLogTable.onCreate(database);
@@ -120,7 +121,6 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		TestAnswerLogTable.onCreate(database);
 		TestLogTable.onCreate(database);
 		TestMeasureLogTable.onCreate(database);
-		TestMeasureRiskSpecTable.onCreate(database);
 		TestMeasureSpecTable.onCreate(database);
 		TestQuestionSpecTable.onCreate(database);
 		TestQuestionRiskSpecTable.onCreate(database);
@@ -141,10 +141,10 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		database.execSQL("PRAGMA foreign_keys=ON");
 		
 		// Standards tables
-		StandardsTable.onUpgrade(database, oldVersion, newVersion);
-		StandardRiskMapTable.onUpgrade(database, oldVersion, newVersion);
-		StandardForeignTable.onUpgrade(database, oldVersion, newVersion);
-		StandardNoFallRiskTable.onUpgrade(database, oldVersion, newVersion);
+		MeasureStandardsTable.onUpgrade(database, oldVersion, newVersion);
+		RiskMapTable.onUpgrade(database, oldVersion, newVersion);
+		RiskDefinitionTable.onUpgrade(database, oldVersion, newVersion);
+		RefRiskLevelsTable.onUpgrade(database, oldVersion, newVersion);
 		
 		// User tables
 		UserTable.onUpgrade(database, oldVersion, newVersion);
@@ -152,13 +152,13 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		
 		// Medication tables
 		MedicationTypeTable.onUpgrade(database, oldVersion, newVersion);
-		MedicationCategorySpecTable.onUpgrade(database, oldVersion, newVersion);
+		MedicationCategoryTable.onUpgrade(database, oldVersion, newVersion);
 		MedLogTable.onUpgrade(database, oldVersion, newVersion);
 		MedListLogTable.onUpgrade(database, oldVersion, newVersion);
 		
 		// Sensor tables
 		SensorLogTable.onUpgrade(database, oldVersion, newVersion);
-		SensorRiskSpecTable.onUpgrade(database, oldVersion, newVersion);
+		SensorLogItemTable.onUpgrade(database, oldVersion, newVersion);
 		SensorSpecTable.onUpgrade(database, oldVersion, newVersion);						
 		
 		// Survey tables
@@ -172,7 +172,6 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		TestAnswerLogTable.onUpgrade(database, oldVersion, newVersion);
 		TestLogTable.onUpgrade(database, oldVersion, newVersion);
 		TestMeasureLogTable.onUpgrade(database, oldVersion, newVersion);
-		TestMeasureRiskSpecTable.onUpgrade(database, oldVersion, newVersion);
 		TestMeasureSpecTable.onUpgrade(database, oldVersion, newVersion);
 		TestQuestionSpecTable.onUpgrade(database, oldVersion, newVersion);
 		TestQuestionRiskSpecTable.onUpgrade(database, oldVersion, newVersion);
@@ -259,9 +258,8 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		try{
 			for (Category cat : category_array) {
 				//Add the name of the category to the cat table
-				values.put(MedicationCategorySpec.NAME, cat.category_name);
-				values.put(MedicationCategorySpec.OWNER_ID, "NoFall");
-				int catID = (int)db.insert(MedicationCategorySpec.TABLE_NAME, null, values);
+				values.put(MedicationCategory.NAME, cat.category_name);
+				int catID = (int)db.insert(MedicationCategory.TABLE_NAME, null, values);
 				
 				//Add all medications in category to medication table
 				for (int i = 0; i < cat.subcategory_array.size(); i++) {
@@ -309,9 +307,9 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	public Cursor getMedCategories(){
 		Cursor cursor = null;
 		try{
-			String[] projection = {MedicationCategorySpec._ID, MedicationCategorySpec.NAME};
+			String[] projection = {MedicationCategory._ID, MedicationCategory.NAME};
 	    	
-			cursor = myCR.query(MedicationCategorySpec.CONTENT_URI, 
+			cursor = myCR.query(MedicationCategory.CONTENT_URI, 
 			              projection, null, null, null);
 			return cursor;
 		}catch(SQLiteException e){
@@ -340,7 +338,7 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	 */
 	public Uri insertRegistreredMedication(int medID, int listID){
 		ContentValues values = new ContentValues();
-		values.put(MedicationListLog.FK_MED_TYPE_SPEC, medID);
+		values.put(MedicationListLog.FK_MED_TYPE, medID);
 		values.put(MedicationListLog.FK_MED_LOG, listID);
 		
 		Uri temp = myCR.insert(MedicationListLog.CONTENT_URI, values);
@@ -363,7 +361,7 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		
 	}
 	
-    public void insertMovementSpeedToDB(int speed, int numOfReg){
+    public void insertNumberOfStepsToDB(int speed, int numOfReg){
     	Cursor cursor = null;
     	try{
 	    	String selection = SensorSpec.NAME + " = \"" + "pedometer" + "\"";
@@ -375,10 +373,8 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 			boolean temp = cursor.moveToFirst();
 	    	if(temp == true){
 	        	ContentValues values = new ContentValues();
-	        	values.put(SensorLog.VALUE, speed);
-	        	values.put(SensorLog.NUM_OF_REG, numOfReg);
-	        	Log.w("Inserting steps", "Number of: "+numOfReg);
-	        	values.put(SensorLog.FK_SENSOR, cursor.getString(0));
+	        	values.put(SensorLog.VALUE_AVERAGE, numOfReg);
+	        	values.put(SensorLog.FK_SENSOR_SPEC, cursor.getString(0));
 	        	values.put(SensorLog.CREATED_DATE, Utils.currentTimeInMillis()/1000);
 	        	myCR.insert(SensorLog.CONTENT_URI, values);
     	}else{
@@ -394,56 +390,11 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
     	}
     }
     
-	/**
-	 * Gets the number of steps registered by the pedometer
-	 * @return Curs 0 = value
-	 */
-    public Cursor getNumberOfSteps(){
-    	Cursor cursor1 = null;
-    	Cursor cursor = null;
-    	try{
-	        String selection = SensorSpec.NAME + " = \"" + "pedometer" + "\"";
-	    	String[] projection = {SensorSpec._ID};
-	    		    	
-	    	cursor1 = myCR.query(SensorSpec.CONTENT_URI, 
-	    		             projection, selection, null,
-	    		    	       null);
-	    	boolean temp;
-	    	if(cursor1.moveToLast() != false){
-	    		temp = cursor1.moveToLast();
-		    	
-		    	Log.i("Getting ID for pedometer", cursor1.getString(0));
-		    		
-		    	String selection2 = SensorLog.FK_SENSOR + " = \"" + cursor1.getString(0) + "\"";
-		    	String[] projection2 = {SensorLog.NUM_OF_REG};
-		    	cursor = myCR.query(SensorLog.CONTENT_URI, 
-	    	             projection2, selection2, null,
-	    	    	       null);
-		    	temp = cursor.moveToFirst();
-		    	Log.i("Getting value for movementspeed", "movetofirst" + temp);
-	    	}	    		    			    	
-	    		
-	    	return cursor;
-    	}catch(SQLiteException e){
-    		Log.i("SQLiteException when inserting movement speed", "error: " + e);
-    		return null;
-    	}finally{
-    		if(cursor != null){
-    			cursor.close();
-    			cursor = null;
-    		}
-    		if(cursor1 != null){
-    			cursor1.close();
-    			cursor1 = null;
-    		}
-    	}
-    }
-    
     /**
      * Gets the values related to the sensor pedometer
      * @return Cursor 0 = Value
      */
-    public Cursor getMovementSpeed(){
+    public Cursor getNumberOfSteps(){
     	Cursor cursor1 = null;
     	Cursor cursor = null;
     	try{
@@ -459,8 +410,8 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		    	
 		    	Log.i("Getting ID for pedometer", cursor1.getString(0));
 		    		
-		    	String selection2 = SensorLog.FK_SENSOR + " = \"" + cursor1.getString(0) + "\"";
-		    	String[] projection2 = {SensorLog.VALUE};
+		    	String selection2 = SensorLog.FK_SENSOR_SPEC + " = \"" + cursor1.getString(0) + "\"";
+		    	String[] projection2 = {SensorLog.VALUE_AVERAGE};
 		    	cursor = myCR.query(SensorLog.CONTENT_URI, 
 	    	             projection2, selection2, null,
 	    	    	       null);
@@ -574,17 +525,15 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
     	values.put(SensorSpec.NAME, "pedometer");
     	values.put(SensorSpec.ACCURACY, "50");
     	values.put(SensorSpec.OWNER_ID, "Mobile");
-    	values.put(SensorSpec.SENSOR_ATTACHMENT, "mobile");
-    	values.put(SensorSpec.SENSOR_PLACEMENT, "pocket");
     	myCR.insert(SensorSpec.CONTENT_URI, values);
     }
     
     public Uri insertTUGStandard(){
     	ContentValues values = new ContentValues();
-    	values.put(Standards.MEASURE_TYPE, "WalkingSpeed");
-    	values.put(Standards.DATA_TYPE, "int");
-    	values.put(Standards.DATA_UNIT, "meter/second");
-    	Uri temp = myCR.insert(Standards.CONTENT_URI, values);
+    	values.put(MeasureStandards.MEASURE_TYPE, "WalkingSpeed");
+    	values.put(MeasureStandards.DATA_TYPE, "int");
+    	values.put(MeasureStandards.DATA_UNIT, "meter/second");
+    	Uri temp = myCR.insert(MeasureStandards.CONTENT_URI, values);
     	
     	return temp;
     }
@@ -606,7 +555,7 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		
     	values = new ContentValues();
     	values.put(TestMeasureSpec.FK_TEST, id);
-    	values.put(TestMeasureSpec.FK_STANDARDS, id2);    
+    	values.put(TestMeasureSpec.FK_RISK_DEF, id2);    
     	temp = myCR.insert(TestMeasureSpec.CONTENT_URI, values);
     }
     
@@ -615,16 +564,16 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
     	Cursor cursor2 = null;
     	Cursor cursor3 = null;
     	try{
-	        String selection = Standards.MEASURE_TYPE + " = \"" + "WalkingSpeed" + "\"";
-	    	String[] projection = {Standards._ID};
+	        String selection = MeasureStandards.MEASURE_TYPE + " = \"" + "WalkingSpeed" + "\"";
+	    	String[] projection = {MeasureStandards._ID};
 	    		    	
-	    	cursor2 = myCR.query(Standards.CONTENT_URI, 
+	    	cursor2 = myCR.query(MeasureStandards.CONTENT_URI, 
 	    		             projection, selection, null,
 	    		    	       null);
 	    	boolean temp;
 	    	if(cursor2.moveToFirst() != false){
 	    		temp = cursor2.moveToLast();
-		    	String selection2 = TestMeasureSpec.FK_STANDARDS + " = \"" + cursor2.getString(0) + "\"";
+		    	String selection2 = TestMeasureSpec.FK_RISK_DEF + " = \"" + cursor2.getString(0) + "\"";
 		    	String[] projection2 = {TestMeasureSpec._ID};
 		    	cursor = myCR.query(TestMeasureSpec.CONTENT_URI, 
 	    	             projection2, selection2, null,
@@ -638,9 +587,8 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	    	int id = -1;
 	    	if(temp = cursor3.moveToFirst()){
 	    		ContentValues values = new ContentValues();
-	    		values.put(TestLog.FK_TEST, Integer.parseInt(cursor3.getString(0)));
+	    		values.put(TestLog.FK_TEST_SPEC, Integer.parseInt(cursor3.getString(0)));
 	    		// here the risk can be set based on calculations
-	    		values.put(TestLog.TOTAL_RISK, "0");
 	    		Uri testLogUri = myCR.insert(TestLog.CONTENT_URI, values);
 	    		
 	        	String path = testLogUri.getPath();

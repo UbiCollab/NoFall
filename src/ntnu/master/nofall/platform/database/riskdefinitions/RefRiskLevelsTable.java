@@ -1,19 +1,19 @@
-package ntnu.master.nofall.platform.database.standards;
+package ntnu.master.nofall.platform.database.riskdefinitions;
 
-import ntnu.master.nofall.platform.provider.StandardContract.StandardsNoFall;
+import ntnu.master.nofall.platform.provider.RiskDefContract.RefRiskLevels;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-public class StandardNoFallRiskTable {
+public class RefRiskLevelsTable {
 	// Database creation SQL statement
 	  private static final String DATABASE_CREATE = "create table " 
-		      + StandardsNoFall.TABLE_NAME
+		      + RefRiskLevels.TABLE_NAME
 		      + "(" 
-		      + StandardsNoFall._ID   + " integer primary key autoincrement, "
-		      + StandardsNoFall.NAME + " text not null, "
-		      + StandardsNoFall.DESCRIPTION + " text not null, " 
-		      + StandardsNoFall.CREATED_DATE + " integer," 
-		      + StandardsNoFall.MODIFIED_DATE + " integer"+ ");";
+		      + RefRiskLevels._ID   + " integer primary key autoincrement, "
+		      + RefRiskLevels.NAME + " text not null, "
+		      + RefRiskLevels.DESCRIPTION + " text, " 
+		      + RefRiskLevels.CREATED_DATE + " integer," 
+		      + RefRiskLevels.MODIFIED_DATE + " integer"+ ");";
 	
 		public static void onCreate(SQLiteDatabase database) {
 			try
@@ -31,7 +31,7 @@ public class StandardNoFallRiskTable {
 			Log.w("Throwing DB", "Upgrading database from version "
 					+ oldVersion + " to " + newVersion
 					+ ", which will destroy all old data");
-			database.execSQL("DROP TABLE IF EXISTS " + StandardsNoFall.TABLE_NAME);
+			database.execSQL("DROP TABLE IF EXISTS " + RefRiskLevels.TABLE_NAME);
 			onCreate(database);
 		}
 }

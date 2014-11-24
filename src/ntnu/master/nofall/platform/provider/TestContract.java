@@ -37,6 +37,8 @@ public final class TestContract {
     	public static final String NAME = "name";
     	
     	public static final String OWNER_ID = "ownerId";
+    	
+    	public static final String DESCRIPTION = "description";
 
         /**
          * The default sort order for this table
@@ -84,9 +86,7 @@ public final class TestContract {
     	
     	public static final String DATE = "date";
     	
-    	public static final String TOTAL_RISK = "totalRisk";
-    	
-    	public static final String FK_TEST = "fkTest";
+    	public static final String FK_TEST_SPEC = "fkTestSpec";
 
         /**
          * The default sort order for this table
@@ -182,7 +182,7 @@ public final class TestContract {
     	
     	public static final String QUESTION = "question";
     	
-    	public static final String FK_TEST = "fkTestSpec";
+    	public static final String FK_TEST_SPEC = "fkTestSpec";
     	
         /**
          * The default sort order for this table
@@ -230,9 +230,9 @@ public final class TestContract {
         
     	public static final String ANSWER = "answer";
     	
-    	public static final String FK_RISK_STAND_MAP = "fkRiskStandMap";
+    	public static final String FK_REF_RISK_LEVELS = "fkRRefRiskLevels";
     	
-    	public static final String FK_TEST_QUESTION = "fkTestQuestion";
+    	public static final String FK_TEST_QUESTION_SPEC = "fkTestQuestionSpec";
     	
         /**
          * The default sort order for this table
@@ -280,7 +280,7 @@ public final class TestContract {
         
     	public static final String FK_TEST = "fkTest";
     	
-    	public static final String FK_STANDARDS = "fkStandards";
+    	public static final String FK_RISK_DEF = "fkRiskDef";
         
         /**
          * The default sort order for this table
@@ -350,54 +350,5 @@ public final class TestContract {
          */
         public static final String MODIFIED_DATE = "modified";
 
-    }   
-    
-    /**
-     * TestMeasureRiskSpec table
-     * @author Finn
-     *
-     */
-    public static final class TestMeasureRiskSpec implements BaseColumns {
-        // This class cannot be instantiated
-        private TestMeasureRiskSpec() {}
-        
-    	public static final String TABLE_NAME = "tblTestMeasureRiskSpec";
-    	
-    	 /**
-         * The content:// style URL for this table
-         */
-        public static final Uri CONTENT_URI = Uri.parse("content://" + AuthorityContract.AUTHORITY + "/" + TABLE_NAME);
-
-        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-    			+ "/" + TABLE_NAME;
-
-        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
-    			+ "/" + TABLE_NAME;
-    	 
-        public static final int TEST_MEASURE_RISK = 55;
-        
-    	public static final int TEST_MEASURE_RISK_ID = 65;
-    	
-    	public static final String FK_MEASURE_SPEC = "fkTestMeasureSpec";
-    	
-    	public static final String FK_RISK_STAND_MAP = "fkRiskStandMap";
-    	
-        /**
-         * The default sort order for this table
-         */
-        public static final String DEFAULT_SORT_ORDER = "modified DESC";
-        
-        /**
-         * The timestamp for when the note was created
-         * <P>Type: INTEGER (long from System.curentTimeMillis())</P>
-         */
-        public static final String CREATED_DATE = "created";
-
-        /**
-         * The timestamp for when the note was last modified
-         * <P>Type: INTEGER (long from System.curentTimeMillis())</P>
-         */
-        public static final String MODIFIED_DATE = "modified";
-
-    }
+    }       
 }

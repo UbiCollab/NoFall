@@ -14,8 +14,8 @@ public class TestQuestionSpecTable {
 		      + TestQuestionSpec.QUESTION + " text not null, "
 		      + TestQuestionSpec.CREATED_DATE + " integer," 
 		      + TestQuestionSpec.MODIFIED_DATE + " integer,"
-		      + TestQuestionSpec.FK_TEST + " integer, "
-		      + " FOREIGN KEY ("+TestQuestionSpec.FK_TEST+") REFERENCES "+TestSpec.TABLE_NAME+" ("+TestSpec._ID+") ON DELETE CASCADE );";
+		      + TestQuestionSpec.FK_TEST_SPEC + " integer, "
+		      + " FOREIGN KEY ("+TestQuestionSpec.FK_TEST_SPEC+") REFERENCES "+TestSpec.TABLE_NAME+" ("+TestSpec._ID+") ON DELETE CASCADE );";
 
 	public static void onCreate(SQLiteDatabase database) {
 		try

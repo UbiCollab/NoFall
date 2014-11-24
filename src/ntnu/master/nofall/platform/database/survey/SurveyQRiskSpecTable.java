@@ -1,6 +1,6 @@
 package ntnu.master.nofall.platform.database.survey;
 
-import ntnu.master.nofall.platform.provider.StandardContract.StandardsRiskMap;
+import ntnu.master.nofall.platform.provider.RiskDefContract.RefRiskLevels;
 import ntnu.master.nofall.platform.provider.SurveyContract.SurveyQuestionRiskSpec;
 import ntnu.master.nofall.platform.provider.SurveyContract.SurveyQuestionSpec;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,12 +13,14 @@ public class SurveyQRiskSpecTable {
 		      + "(" 
 		      + SurveyQuestionRiskSpec._ID   + " integer primary key autoincrement, " 
 		      + SurveyQuestionRiskSpec.ANSWER + " text not null, "  
-		      + SurveyQuestionRiskSpec.FK_RISK_STAND_MAP + " integer, " 
-		      + SurveyQuestionRiskSpec.FK_SURVEY_QUESTION + " integer, "
+		      + SurveyQuestionRiskSpec.FK_REF_RISK_LEVELS + " integer, " 
+		      + SurveyQuestionRiskSpec.FK_SURVEY_QUESTION_SPEC + " integer, "
 		      + SurveyQuestionRiskSpec.CREATED_DATE + " integer," 
 		      + SurveyQuestionRiskSpec.MODIFIED_DATE + " integer,"
-		      + " FOREIGN KEY ("+SurveyQuestionRiskSpec.FK_RISK_STAND_MAP+") REFERENCES "+StandardsRiskMap.TABLE_NAME+" ("+StandardsRiskMap._ID+") ON DELETE CASCADE"
-		      + " FOREIGN KEY ("+SurveyQuestionRiskSpec.FK_SURVEY_QUESTION+") REFERENCES "+SurveyQuestionSpec.TABLE_NAME+" ("+SurveyQuestionSpec._ID+") ON DELETE CASCADE );";
+		      + " FOREIGN KEY ("+SurveyQuestionRiskSpec.FK_REF_RISK_LEVELS+") " +
+		      		"REFERENCES "+RefRiskLevels.TABLE_NAME+" ("+RefRiskLevels._ID+") ON DELETE CASCADE"
+		      + " FOREIGN KEY ("+SurveyQuestionRiskSpec.FK_SURVEY_QUESTION_SPEC+") " +
+		      		"REFERENCES "+SurveyQuestionSpec.TABLE_NAME+" ("+SurveyQuestionSpec._ID+") ON DELETE CASCADE );";
 
 	public static void onCreate(SQLiteDatabase database) {
 		try

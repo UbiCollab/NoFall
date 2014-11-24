@@ -42,6 +42,8 @@ public final class SurveyContract {
     	
     	public static final String OWNER_ID = "ownerId";
     	
+    	public static final String DESCRIPTION = "description";
+    	
        	/**
          * The default sort order for this table
          */
@@ -88,9 +90,7 @@ public final class SurveyContract {
 
     	public static final String DATE = "date";
     	
-    	public static final String CALCULATED_RISK = "calculatedRisk";
-    	
-    	public static final String FK_SURVEY = "fkSurvey";
+    	public static final String FK_SURVEY_SPEC = "fkSurveySpec";
     	
        	/**
          * The default sort order for this table
@@ -136,7 +136,7 @@ public final class SurveyContract {
     	
     	public static final int SURVEY_ANSWER_LOG_ID = 45;
     	
-    	public static final String FK_SURVEY_LOG = "fkSurvey";
+    	public static final String FK_SURVEY_LOG = "fkSurveyLog";
     	
     	public static final String FK_SURVEY_Q_RISK_SPEC = "fkSurveyQRisk";
     	
@@ -186,7 +186,7 @@ public final class SurveyContract {
     	
     	public static final String QUESTION = "question";
 
-    	public static final String FK_SURVEY = "fkSurvey";
+    	public static final String FK_SURVEY_SPEC = "fkSurveySpec";
     	
        	/**
          * The default sort order for this table
@@ -234,9 +234,9 @@ public final class SurveyContract {
     	
     	public static final String ANSWER = "answer";
     	
-    	public static final String FK_RISK_STAND_MAP = "fkRiskStandMap";
+    	public static final String FK_REF_RISK_LEVELS = "fkRefRiskLevels";
     	
-    	public static final String FK_SURVEY_QUESTION = "fkSurveyQuestion";
+    	public static final String FK_SURVEY_QUESTION_SPEC = "fkSurveyQuestionSpec";
     	
        	/**
          * The default sort order for this table

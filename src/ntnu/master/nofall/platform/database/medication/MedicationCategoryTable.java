@@ -1,20 +1,19 @@
-package ntnu.master.nofall.platform.database.standards;
+package ntnu.master.nofall.platform.database.medication;
 
-import ntnu.master.nofall.platform.provider.StandardContract.Standards;
+import ntnu.master.nofall.platform.provider.MedicationContract.MedicationCategory;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-public class StandardsTable {
+public class MedicationCategoryTable {	
+
 	// Database creation SQL statement
 	  private static final String DATABASE_CREATE = "create table " 
-		      + Standards.TABLE_NAME
+		      + MedicationCategory.TABLE_NAME
 		      + "(" 
-		      + Standards._ID   + " integer primary key autoincrement, " 
-		      + Standards.MEASURE_TYPE + " text not null, "
-		      + Standards.DATA_TYPE + " text not null, "
-		      + Standards.DATA_UNIT + " text not null, "
-		      + Standards.CREATED_DATE + " integer," 
-		      + Standards.MODIFIED_DATE + " integer"+ ");";
+		      + MedicationCategory._ID   + " integer primary key autoincrement, "
+		      + MedicationCategory.NAME + " text not null, "
+		      + MedicationCategory.CREATED_DATE + " integer," 
+		      + MedicationCategory.MODIFIED_DATE + " integer" + ");";
 
 	public static void onCreate(SQLiteDatabase database) {
 		try
@@ -32,7 +31,7 @@ public class StandardsTable {
 		Log.w("Throwing DB", "Upgrading database from version "
 				+ oldVersion + " to " + newVersion
 				+ ", which will destroy all old data");
-		database.execSQL("DROP TABLE IF EXISTS " + Standards.TABLE_NAME);
+		database.execSQL("DROP TABLE IF EXISTS " + MedicationCategory.TABLE_NAME);
 		onCreate(database);
 	}
 }

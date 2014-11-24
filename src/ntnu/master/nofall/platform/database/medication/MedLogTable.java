@@ -1,7 +1,7 @@
 package ntnu.master.nofall.platform.database.medication;
 
 import ntnu.master.nofall.platform.provider.MedicationContract.MedicationLog;
-import ntnu.master.nofall.platform.provider.StandardContract.StandardsRiskMap;
+import ntnu.master.nofall.platform.provider.MedicationContract.MedicationSpec;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -15,8 +15,8 @@ public class MedLogTable {
 		      + MedicationLog.NUMBER_OF + " integer, "
 		      + MedicationLog.CREATED_DATE + " integer," 
 		      + MedicationLog.MODIFIED_DATE + " integer,"
-		      + MedicationLog.FK_RISK_STAND_MAP + " integer, "
-		      + " FOREIGN KEY ("+MedicationLog.FK_RISK_STAND_MAP+") REFERENCES "+StandardsRiskMap.TABLE_NAME+" ("+StandardsRiskMap._ID+") ON DELETE CASCADE );";
+		      + MedicationLog.FK_MED_SPEC + " integer, "
+		      + " FOREIGN KEY ("+MedicationLog.FK_MED_SPEC+") REFERENCES "+MedicationSpec.TABLE_NAME+" ("+MedicationSpec._ID+") ON DELETE CASCADE );";
 
 	public static void onCreate(SQLiteDatabase database) {
 		try

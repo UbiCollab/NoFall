@@ -14,8 +14,8 @@ public class SurveyQuestionSpecTable {
 		      + SurveyQuestionSpec.QUESTION + " text not null, "
 		      + SurveyQuestionSpec.CREATED_DATE + " integer," 
 		      + SurveyQuestionSpec.MODIFIED_DATE + " integer,"
-		      + SurveyQuestionSpec.FK_SURVEY + " integer, "
-		      + " FOREIGN KEY ("+SurveyQuestionSpec.FK_SURVEY+") REFERENCES "+SurveySpec.TABLE_NAME+" ("+SurveySpec._ID+") ON DELETE CASCADE );";
+		      + SurveyQuestionSpec.FK_SURVEY_SPEC + " integer, "
+		      + " FOREIGN KEY ("+SurveyQuestionSpec.FK_SURVEY_SPEC+") REFERENCES "+SurveySpec.TABLE_NAME+" ("+SurveySpec._ID+") ON DELETE CASCADE );";
 
 	public static void onCreate(SQLiteDatabase database) {
 		try

@@ -12,14 +12,11 @@ public class SensorLogTable {
 	      + "(" 
 	      + SensorLog._ID   + " integer primary key autoincrement, " 
 	      + SensorLog.DATE + " date, "  
-	      + SensorLog.VALUE + " integer, " 
 	      + SensorLog.VALUE_AVERAGE + " integer, "
-	      + SensorLog.NUM_OF_REG + " integer, "
-	      + SensorLog.LAST_READING + " integer, "
 	      + SensorLog.CREATED_DATE + " integer," 
 	      + SensorLog.MODIFIED_DATE + " integer,"
-	      + SensorLog.FK_SENSOR + " integer, "
-	      + " FOREIGN KEY ("+SensorLog.FK_SENSOR+") REFERENCES "+SensorSpec.TABLE_NAME+" ("+SensorSpec._ID+") ON DELETE CASCADE );";
+	      + SensorLog.FK_SENSOR_SPEC + " integer, "
+	      + " FOREIGN KEY ("+SensorLog.FK_SENSOR_SPEC+") REFERENCES "+SensorSpec.TABLE_NAME+" ("+SensorSpec._ID+") ON DELETE CASCADE );";
 
 	public static void onCreate(SQLiteDatabase database) {
 		try

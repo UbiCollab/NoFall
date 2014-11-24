@@ -11,12 +11,11 @@ public class SurveyLogTable {
 		      + SurveyLog.TABLE_NAME
 		      + "(" 
 		      + SurveyLog._ID   + " integer primary key autoincrement, " 
-		      + SurveyLog.CALCULATED_RISK + " integer, "  
 		      + SurveyLog.DATE + " date, " 
-		      + SurveyLog.FK_SURVEY + " integer, "
+		      + SurveyLog.FK_SURVEY_SPEC + " integer, "
 		      + SurveyLog.CREATED_DATE + " integer," 
 		      + SurveyLog.MODIFIED_DATE + " integer,"
-		      + " FOREIGN KEY ("+SurveyLog.FK_SURVEY+") REFERENCES "+SurveySpec.TABLE_NAME+" ("+SurveySpec._ID+") ON DELETE CASCADE );";
+		      + " FOREIGN KEY ("+SurveyLog.FK_SURVEY_SPEC+") REFERENCES "+SurveySpec.TABLE_NAME+" ("+SurveySpec._ID+") ON DELETE CASCADE );";
 
 	public static void onCreate(SQLiteDatabase database) {
 		try
