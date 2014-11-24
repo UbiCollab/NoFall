@@ -1,4 +1,4 @@
 NoFall
 ======
 
-My master thesis for a fall prevention application for senior citizens.
+My master thesis for a framework for fall preventative mobile applications for senior citizens.
