@@ -180,7 +180,7 @@ public class StepService extends Service {
         mSensorManager.unregisterListener(mStepDetector);
         
         db.insertNumberOfStepsToDB((int)mSpeed, mSteps);
-		//db.onetimeinsertsensor();
+		db.oneTimeInsertSensor();
         Log.i("INSERTED MOVSPEED", "speed is " + mPace + " num of steps is " + mSteps);
 
         // Tell the user we stopped.

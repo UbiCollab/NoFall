@@ -88,9 +88,7 @@ public final class SensorContract {
         
         public static final int SENS_LOG = 18;
         
-        public static final int SENS_LOG_ID = 28;
-        
-    	public static final String DATE = "date";
+        public static final int SENS_LOG_ID = 28;        
     	
     	public static final String VALUE_AVERAGE = "valueAverage";
     	

@@ -8,15 +8,15 @@ import android.util.Log;
 public class SensorLogTable {
 	// Database creation SQL statement
 	private static final String DATABASE_CREATE = "create table " 
-	      + SensorLog.TABLE_NAME
-	      + "(" 
-	      + SensorLog._ID   + " integer primary key autoincrement, " 
-	      + SensorLog.DATE + " date, "  
-	      + SensorLog.VALUE_AVERAGE + " integer, "
-	      + SensorLog.CREATED_DATE + " integer," 
-	      + SensorLog.MODIFIED_DATE + " integer,"
-	      + SensorLog.FK_SENSOR_SPEC + " integer, "
-	      + " FOREIGN KEY ("+SensorLog.FK_SENSOR_SPEC+") REFERENCES "+SensorSpec.TABLE_NAME+" ("+SensorSpec._ID+") ON DELETE CASCADE );";
+		      + SensorLog.TABLE_NAME
+		      + "(" 
+		      + SensorLog._ID   + " integer primary key autoincrement, " 
+		      + SensorLog.VALUE_AVERAGE + " integer, " 
+		      + SensorLog.START_TIME + " integer, "
+		      + SensorLog.CREATED_DATE + " integer," 
+		      + SensorLog.MODIFIED_DATE + " integer,"
+		      + SensorLog.FK_SENSOR_SPEC + " integer, "
+		      + " FOREIGN KEY ("+SensorLog.FK_SENSOR_SPEC+") REFERENCES "+SensorSpec.TABLE_NAME+" ("+SensorSpec._ID+") ON DELETE CASCADE );";
 
 	public static void onCreate(SQLiteDatabase database) {
 		try

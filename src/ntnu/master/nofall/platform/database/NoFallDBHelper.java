@@ -60,7 +60,7 @@ import android.util.Log;
 public class NoFallDBHelper extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "nofall.db";
-	private static final int DATABASE_VERSION = 13;
+	private static final int DATABASE_VERSION = 16;
 
 	private ContentResolver myCR;
 	
@@ -88,6 +88,12 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase database) {
 		database.execSQL("PRAGMA foreign_keys=ON");
 		
+		// MeasureStandards tables
+		MeasureStandardsTable.onCreate(database);
+		RefRiskLevelsTable.onCreate(database);
+		RiskDefinitionTable.onCreate(database);
+		RiskMapTable.onCreate(database);
+		
 		// Use tables
 		UserTable.onCreate(database);
 		UserTotalRiskLogTable.onCreate(database);
@@ -100,15 +106,9 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		MedListLogTable.onCreate(database);
 		
 		// Sensor tables
+		SensorSpecTable.onCreate(database);
 		SensorLogTable.onCreate(database);
 		SensorLogItemTable.onCreate(database);
-		SensorSpecTable.onCreate(database);
-		
-		// Standards tables
-		RiskDefinitionTable.onCreate(database);
-		RefRiskLevelsTable.onCreate(database);
-		RiskMapTable.onCreate(database);
-		MeasureStandardsTable.onCreate(database);
 		
 		// Survey tables
 		SurveyAnswerLogTable.onCreate(database);
@@ -118,13 +118,14 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		SurveySpecTable.onCreate(database);
 		
 		// Test tables
-		TestAnswerLogTable.onCreate(database);
+		TestSpecTable.onCreate(database);
 		TestLogTable.onCreate(database);
-		TestMeasureLogTable.onCreate(database);
 		TestMeasureSpecTable.onCreate(database);
+		TestAnswerLogTable.onCreate(database);
+		TestMeasureLogTable.onCreate(database);
 		TestQuestionSpecTable.onCreate(database);
 		TestQuestionRiskSpecTable.onCreate(database);
-		TestSpecTable.onCreate(database);
+		
 		
 		// Test data generation
 		getMedicationDataFromXML();
@@ -140,26 +141,27 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 			int newVersion) {
 		database.execSQL("PRAGMA foreign_keys=ON");
 		
-		// Standards tables
+		// MeasureStandards tables
 		MeasureStandardsTable.onUpgrade(database, oldVersion, newVersion);
-		RiskMapTable.onUpgrade(database, oldVersion, newVersion);
-		RiskDefinitionTable.onUpgrade(database, oldVersion, newVersion);
 		RefRiskLevelsTable.onUpgrade(database, oldVersion, newVersion);
+		RiskDefinitionTable.onUpgrade(database, oldVersion, newVersion);
+		RiskMapTable.onUpgrade(database, oldVersion, newVersion);
 		
-		// User tables
+		// Use tables
 		UserTable.onUpgrade(database, oldVersion, newVersion);
 		UserTotalRiskLogTable.onUpgrade(database, oldVersion, newVersion);
 		
 		// Medication tables
-		MedicationTypeTable.onUpgrade(database, oldVersion, newVersion);
+		MedicationSpecTable.onUpgrade(database, oldVersion, newVersion);
 		MedicationCategoryTable.onUpgrade(database, oldVersion, newVersion);
+		MedicationTypeTable.onUpgrade(database, oldVersion, newVersion);
 		MedLogTable.onUpgrade(database, oldVersion, newVersion);
 		MedListLogTable.onUpgrade(database, oldVersion, newVersion);
 		
 		// Sensor tables
+		SensorSpecTable.onUpgrade(database, oldVersion, newVersion);
 		SensorLogTable.onUpgrade(database, oldVersion, newVersion);
 		SensorLogItemTable.onUpgrade(database, oldVersion, newVersion);
-		SensorSpecTable.onUpgrade(database, oldVersion, newVersion);						
 		
 		// Survey tables
 		SurveyAnswerLogTable.onUpgrade(database, oldVersion, newVersion);
@@ -169,13 +171,13 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		SurveySpecTable.onUpgrade(database, oldVersion, newVersion);
 		
 		// Test tables
-		TestAnswerLogTable.onUpgrade(database, oldVersion, newVersion);
+		TestSpecTable.onUpgrade(database, oldVersion, newVersion);
 		TestLogTable.onUpgrade(database, oldVersion, newVersion);
-		TestMeasureLogTable.onUpgrade(database, oldVersion, newVersion);
 		TestMeasureSpecTable.onUpgrade(database, oldVersion, newVersion);
+		TestAnswerLogTable.onUpgrade(database, oldVersion, newVersion);
+		TestMeasureLogTable.onUpgrade(database, oldVersion, newVersion);
 		TestQuestionSpecTable.onUpgrade(database, oldVersion, newVersion);
 		TestQuestionRiskSpecTable.onUpgrade(database, oldVersion, newVersion);
-		TestSpecTable.onUpgrade(database, oldVersion, newVersion);
 		
 		getMedicationDataFromXML();
 		Log.i("XML", "Got data from XML -> Going to insert to DB");
@@ -361,6 +363,35 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
 		
 	}
 	
+	   public void insertStepsToDB(int speed, int numOfReg){
+	    	Cursor cursor = null;
+	    	try{
+		    	String selection = SensorSpec.NAME + " = \"" + "pedometer" + "\"";
+				String[] projection = {SensorSpec._ID};
+				    	
+				cursor = myCR.query(SensorSpec.CONTENT_URI, 
+				              projection, selection, null,
+				    	        null);
+				boolean temp = cursor.moveToFirst();
+		    	if(temp == true){
+		        	ContentValues values = new ContentValues();
+		        	values.put(SensorLog.VALUE_AVERAGE, numOfReg);
+		        	values.put(SensorLog.FK_SENSOR_SPEC, cursor.getString(0));
+		        	values.put(SensorLog.CREATED_DATE, Utils.currentTimeInMillis()/1000);
+		        	myCR.insert(SensorLog.CONTENT_URI, values);
+	    	}else{
+	    		Log.i("Did not find sensor", "pedometer");
+	    	}
+	    	}catch(SQLiteException e){
+	    		Log.i("SQLiteException when inserting movement speed", "error: " + e);
+	    	}finally{
+	    		if(cursor != null){
+	    			cursor.close();
+	    			cursor = null;
+	    		}
+	    	}
+	    }
+	
     public void insertNumberOfStepsToDB(int speed, int numOfReg){
     	Cursor cursor = null;
     	try{
@@ -521,11 +552,26 @@ public class NoFallDBHelper extends SQLiteOpenHelper {
     }
     
     public void oneTimeInsertSensor(){
-    	ContentValues values = new ContentValues();
-    	values.put(SensorSpec.NAME, "pedometer");
-    	values.put(SensorSpec.ACCURACY, "50");
-    	values.put(SensorSpec.OWNER_ID, "Mobile");
-    	myCR.insert(SensorSpec.CONTENT_URI, values);
+    	Cursor cursor = null;
+    	try{
+        	String selection = SensorSpec.NAME + " = \"" + "pedometer" + "\"";
+    		String[] projection = {SensorSpec._ID};
+    		    	
+    		cursor = myCR.query(SensorSpec.CONTENT_URI, 
+    		              projection, selection, null,
+    		    	        null);
+    		boolean temp = cursor.moveToFirst();
+        	if(temp != true){
+    	    	ContentValues values = new ContentValues();
+    	    	values.put(SensorSpec.NAME, "pedometer");
+    	    	values.put(SensorSpec.ACCURACY, "50");
+    	    	values.put(SensorSpec.OWNER_ID, "Mobile");
+    	    	myCR.insert(SensorSpec.CONTENT_URI, values);
+    	    	Log.i("pedoes", "inserted pedo");
+        	}
+    	}catch(SQLiteException e){
+			Log.i("SQLiteException when getting data for user survey risk", "error: " + e);
+    	}
     }
     
     public Uri insertTUGStandard(){
