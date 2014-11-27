@@ -34,7 +34,7 @@ public class SensorLogItemTable {
 			Log.w("Throwing DB", "Upgrading database from version "
 					+ oldVersion + " to " + newVersion
 					+ ", which will destroy all old data");
-			database.execSQL("DROP TABLE IF EXISTS " + SensorLog.TABLE_NAME);
+			database.execSQL("DROP TABLE IF EXISTS " + SensorLogItem.TABLE_NAME);
 			onCreate(database);
 		}
 }

@@ -35,7 +35,7 @@ public class TestAnswerLogTable {
 		Log.w("Throwing DB", "Upgrading database from version "
 				+ oldVersion + " to " + newVersion
 				+ ", which will destroy all old data");
-		database.execSQL("DROP TABLE IF EXISTS " + TestLog.TABLE_NAME);
+		database.execSQL("DROP TABLE IF EXISTS " + TestAnswerLog.TABLE_NAME);
 		onCreate(database);
 	}
 }

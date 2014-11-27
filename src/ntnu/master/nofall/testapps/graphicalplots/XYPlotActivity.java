@@ -49,7 +49,13 @@ public class XYPlotActivity extends Activity {
 		Log.i("Getting movement speed", "yeeahh");
 		Cursor cur = db.getNumberOfSteps();
 		movementSpeed = new Number[cur.getCount()];
+		
 		//createdDate = new Number[cur.getCount()];
+		cur.moveToFirst();
+		Log.i("number of steps", "is " + cur.getString(0));
+		movementSpeed[temp] = Integer.parseInt(cur.getString(0));
+		temp++;
+		
 		while(cur.moveToNext()){
 			movementSpeed[temp] = Integer.parseInt(cur.getString(0));
 			//createdDate[temp] = Integer.parseInt(cur.getString(1));
